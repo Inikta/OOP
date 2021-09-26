@@ -1,16 +1,17 @@
+package ru.nsu.nikita;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.nsu.nikita.Pyramid_sort;
 
-public class test1 {
-    private final Pyramid_sort psort = new Pyramid_sort();
+public class PyramidSortTests {
+    private final PyramidSort pyramidSort = new PyramidSort();
 
     @Test
     void emptyArray() {
         int arr[] = {};
         int ref[] = {};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -19,7 +20,7 @@ public class test1 {
         int arr[] = {5, 4, 3, 2, 1};
         int ref[] = {1, 2, 3, 4, 5};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -28,25 +29,25 @@ public class test1 {
         int arr[] = {0, 0, 0, 0, 0};
         int ref[] = {0, 0, 0, 0, 0};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
     @Test
-    void oneArray() {
+    void oneElementArray() {
         int arr[] = {1};
         int ref[] = {1};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
     @Test
-    void twoArray() {
+    void twoElementsArray() {
         int arr[] = {2, 1};
         int ref[] = {1, 2};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -55,7 +56,7 @@ public class test1 {
         int arr[] = {1, 2, 3, 4, 5};
         int ref[] = {1, 2, 3, 4, 5};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -64,7 +65,7 @@ public class test1 {
         int arr[] = {101, -6, -154, 77, 0, 1, 1, 101, 8, 9, -6};
         int ref[] = {-154, -6, -6, 0, 1, 1, 8, 9, 77, 101, 101};
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -79,7 +80,7 @@ public class test1 {
             ref[i] = 1 + i;
         }
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 
@@ -94,7 +95,7 @@ public class test1 {
             ref[i] = 1 + i;
         }
 
-        psort.sort(arr);
+        pyramidSort.sort(arr);
         Assertions.assertArrayEquals(ref, arr);
     }
 }

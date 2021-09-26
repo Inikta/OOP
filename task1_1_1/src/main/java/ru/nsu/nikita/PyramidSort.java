@@ -1,6 +1,6 @@
 package ru.nsu.nikita;
 
-public class Pyramid_sort {
+public class PyramidSort {
     public static void sort(int arr[]) {        //Main method - calls maxHeap method and sorts array in loop
         int count = arr.length;
         maxHeap(arr, count);
