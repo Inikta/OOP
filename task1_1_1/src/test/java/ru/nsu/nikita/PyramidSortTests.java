@@ -70,7 +70,7 @@ public class PyramidSortTests {
     }
 
     @Test
-    void Array1000() {
+    void thousandElementsArray() {
         int arr[] = new int[1000];
         int ref[] = new int[1000];
 
@@ -85,7 +85,7 @@ public class PyramidSortTests {
     }
 
     @Test
-    void Array10000() {
+    void tenThousandElementsArray() {
         int arr[] = new int[10000];
         int ref[] = new int[10000];
 
