@@ -12,9 +12,11 @@ public class MyStackTests {
         Assertions.assertThrows(EmptyStackException.class, stack::pop);
     }
 
+    //one immutable dots array for all tests
+    final Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4)};
+
     @Test
     void pushPopTest () {
-        Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4),};
         MyStack <Dot> ref = new MyStack<>();
         MyStack <Dot> stack = new MyStack<>();
 
@@ -29,7 +31,6 @@ public class MyStackTests {
 
     @Test
     void pushPopStackTest () {
-        Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4),};
         MyStack <Dot> dotsStack = new MyStack<>();
         MyStack <Dot> stack = new MyStack<>();
 
@@ -48,8 +49,7 @@ public class MyStackTests {
     }
 
     @Test
-    void CounterTest () {
-        Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4),};
+    void counterTest () {
         MyStack <Dot> dotsStack = new MyStack<>();
         MyStack <Dot> stack = new MyStack<>();
 
@@ -69,7 +69,6 @@ public class MyStackTests {
 
     @Test
     void iteratorTest () {
-        Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4),};
         MyStack <Dot> dotsStack = new MyStack<>();
 
         Dot[] res = {null, null, null, null};       //array, which will be filled with elements from dotsStack
@@ -78,10 +77,9 @@ public class MyStackTests {
             dotsStack.push(dot);
         }
 
-        StackIterator <Dot> dotIterator = new StackIterator<>(dotsStack);       //create new stackIterator for dotsStack
         int i = 0;
-        while (dotIterator.hasNext()) {     //add elements from dotsStack to res by for-each loop
-            res[i] = dotIterator.next();
+        for (Dot dot : dotsStack) {    //add elements from dotsStack to res by for-each loop
+            res[i] = dot;
             i++;
         }
 
