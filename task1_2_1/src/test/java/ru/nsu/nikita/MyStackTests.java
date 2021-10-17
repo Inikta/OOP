@@ -7,8 +7,8 @@ import java.util.EmptyStackException;
 
 public class MyStackTests {
     @Test
-    void emptyStackTest () {        //pop from empty stack
-        MyStack <Dot> stack = new MyStack<>();
+    void emptyStackTest() {        //pop from empty stack
+        MyStack<Dot> stack = new MyStack<>();
         Assertions.assertThrows(EmptyStackException.class, stack::pop);
     }
 
@@ -16,9 +16,9 @@ public class MyStackTests {
     final Dot[] dots = {new Dot(1, 1), new Dot(2, 2), new Dot(3, 3), new Dot(4, 4)};
 
     @Test
-    void pushPopTest () {
-        MyStack <Dot> ref = new MyStack<>();
-        MyStack <Dot> stack = new MyStack<>();
+    void pushPopTest() {
+        MyStack<Dot> ref = new MyStack<>();
+        MyStack<Dot> stack = new MyStack<>();
 
         ref.push(dots[0]);      //make reference stack
         stack.push(dots[0]);    //fill stack with elements
@@ -30,9 +30,9 @@ public class MyStackTests {
     }
 
     @Test
-    void pushPopStackTest () {
-        MyStack <Dot> dotsStack = new MyStack<>();
-        MyStack <Dot> stack = new MyStack<>();
+    void pushPopStackTest() {
+        MyStack<Dot> dotsStack = new MyStack<>();
+        MyStack<Dot> stack = new MyStack<>();
 
         Dot[] ref1 = {dots[0], dots[1]};        //make reference stacks
         Dot[] ref2 = {dots[3], dots[2]};
@@ -42,16 +42,16 @@ public class MyStackTests {
         }
 
         stack.pushStack(dotsStack);             //push dotsStack to stack
-        MyStack <Dot> tempStack = stack.popStack(2);    //pop stack of 2 elements and save
+        MyStack<Dot> tempStack = stack.popStack(2);    //pop stack of 2 elements and save
 
         Assertions.assertArrayEquals(ref1, stack.getStack());       //checks if left in stack elements are right
         Assertions.assertArrayEquals(ref2, tempStack.getStack());   //checks if popped stack is right
     }
 
     @Test
-    void counterTest () {
-        MyStack <Dot> dotsStack = new MyStack<>();
-        MyStack <Dot> stack = new MyStack<>();
+    void counterTest() {
+        MyStack<Dot> dotsStack = new MyStack<>();
+        MyStack<Dot> stack = new MyStack<>();
 
         int ref1 = 2;
         int ref2 = 2;
@@ -61,15 +61,15 @@ public class MyStackTests {
         }
 
         stack.pushStack(dotsStack);     //push dotsStack to stack
-        MyStack <Dot> tempStack = stack.popStack(2);    //pop stack of 2 elements and save
+        MyStack<Dot> tempStack = stack.popStack(2);    //pop stack of 2 elements and save
 
         Assertions.assertEquals(ref1, stack.count());       //checks if left in stack elements amount is right
         Assertions.assertEquals(ref2, tempStack.count());   //checks if popped stack size is right
     }
 
     @Test
-    void iteratorTest () {
-        MyStack <Dot> dotsStack = new MyStack<>();
+    void iteratorTest() {
+        MyStack<Dot> dotsStack = new MyStack<>();
 
         Dot[] res = {null, null, null, null};       //array, which will be filled with elements from dotsStack
 

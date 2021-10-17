@@ -18,8 +18,11 @@ public class StackIterator<T> implements Iterator<T> {
     public T next() {
         if (hasNext()) {
             cnt++;
-            return stackArr[cnt - 1];}     //if next element exists, return it
-        else {throw new EmptyStackException();}       //else throw exception
+            return stackArr[cnt - 1];
+        }     //if next element exists, return it
+        else {
+            throw new EmptyStackException();
+        }       //else throw exception
     }
 
     public boolean hasNext() {      //checks if any elements left in array
