@@ -69,10 +69,7 @@ public class MyStack<T> implements Iterable<T> {
         return new StackIterator<>(this);
     }
 
-    @SuppressWarnings("unchecked")
-    public T[] getStack() {             //return stack array
-        Object[] res = new Object[top];
-        System.arraycopy(stack, 0, res, 0, top);
-        return (T[]) res;
+    public T[] getStack() { //return stack array
+        return Arrays.copyOf(stack, top);
     }
 }

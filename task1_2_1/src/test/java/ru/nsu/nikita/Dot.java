@@ -1,10 +1,10 @@
 package ru.nsu.nikita;
 
 public class Dot {      //class for tests
-    private int x;
-    private int y;
+    public final int x;
+    public final int y;
 
-    public Dot (int a, int b) {
+    public Dot(int a, int b) {
         this.x = a;
         this.y = b;
     }
