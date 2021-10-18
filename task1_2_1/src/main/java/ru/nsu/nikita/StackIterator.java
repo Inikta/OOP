@@ -4,7 +4,6 @@ import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class StackIterator<T> implements Iterator<T> {
-
     private int cnt;        //counter for elements returning method .next()
     private final int amount;     //size of array
     private final T[] stackArr;
@@ -17,12 +16,10 @@ public class StackIterator<T> implements Iterator<T> {
 
     public T next() {
         if (hasNext()) {
-            cnt++;
-            return stackArr[cnt - 1];
-        }     //if next element exists, return it
-        else {
-            throw new EmptyStackException();
-        }       //else throw exception
+            return stackArr[++cnt - 1];     //if next element exists, return it
+        } else {
+            throw new EmptyStackException();    //else throw exception
+        }
     }
 
     public boolean hasNext() {      //checks if any elements left in array
