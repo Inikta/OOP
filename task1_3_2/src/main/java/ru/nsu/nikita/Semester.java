@@ -1,50 +1,154 @@
 package ru.nsu.nikita;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class Semester {
-    private final Subject[] subjects;
+    private final ArrayList<Subject> subjects;
     public double minScholarship;
     public double maxScholarship;
 
-    public Semester(Subject[] subs, double min, double max) {       //constructor for ready Subject array
-        this.subjects = subs;
+    /*
+     * constructor for ready Subject array
+     */
+
+    public Semester(Subject[] subs, double min, double max) {
+        this.subjects = (ArrayList<Subject>) Arrays.stream(subs).toList();
         setScholarshipBounds(min, max);
     }
 
-    public Semester(String[] subjectsStr, int[] grades, String[] teachers,          //constructor for separated data
-                    double min, double max) throws IncorrectTableException {
-        this.subjects = new Subject[Math.max(Math.max(subjectsStr.length, grades.length), teachers.length)];
-        for (int i = 0; i < subjects.length; i++) {
-            try {                                                           //checks if arrays are of the same size or grades are correct
-                this.subjects[i] = new Subject(teachers[i], subjectsStr[i], grades[i]);
-            } catch (IndexOutOfBoundsException | IllegalArgumentException badData) {               //if not throw exception
-                throw new IncorrectTableException("Table array or its data is constructed incorrectly.");
-            }
+    /*
+     * constructor for separated data
+     * throws exception, if data arrays are not the same size
+     * sets scholarship bounds for this semester
+     */
+
+    public Semester(String[] subjectsStr, String[] teachers, int[] grades,
+                    double min, double max) throws IncorrectTableException, NullPointerException {
+        if (subjectsStr.length != grades.length || subjectsStr.length != teachers.length) {
+            throw new IncorrectTableException("Table array or its data is constructed incorrectly.");
+        }
+        this.subjects = new ArrayList<>();
+        for (int i = 0; i < subjectsStr.length; i++) {
+            Subject a = new Subject(teachers[i], subjectsStr[i], grades[i]);
+            this.subjects.add(a);
         }
 
-        setScholarshipBounds(min, max);         //set scholarship bounds for this semester
+        setScholarshipBounds(min, max);
     }
+
+    /*
+     * add new subject to the semester
+     */
+
+    public void add(String subject, String teacher, int grade) throws NullPointerException {
+        subjects.add(new Subject(teacher, subject, grade));
+    }
+
+    /*
+     * add subject to the semester
+     */
+
+    public void remove(String subject) {
+        subjects.removeIf(subject1 -> (Objects.equals(subject1.subject, subject)));
+    }
+
+    /*
+     * set subject grade
+     */
+
+    public void setGrade(String subject, int newGrade) throws NoSuchElementException {
+        int ind = 0;
+        for (Subject sub : subjects) {
+            if (Objects.equals(sub.subject, subject)) {
+                Subject tempSubject = subjects.get(ind);
+                tempSubject.setGrade(newGrade);
+                subjects.set(ind, tempSubject);
+                break;
+            }
+            ind++;
+        }
+        throw new NoSuchElementException();
+    }
+
+    // * sets scholarship bounds for this semester
 
     public void setScholarshipBounds(double min, double max) {
         this.minScholarship = min;
         this.maxScholarship = max;
     }
 
-    public String[] semesterToStringArray() {           //string array representation of this semester table
-        String[] table = new String[subjects.length];
-        for (int i = 0; i < subjects.length; i++) {
-            table[i] = subjects[i].subjectToString();
+    /*
+     * string representation of this semester table
+     */
+
+    @Override
+    public String toString() {
+        StringBuilder table = new StringBuilder();
+        for (Subject subject : subjects) {
+            table.append(subject.toString()).append("\n");
         }
-        return table;
+        return table.toString();
     }
 
-    public float getAverage() {         //compute average grade of the semester
+    /*
+     * get subjects string array
+     */
+
+    public String[] getSubjects() {
+        String[] res = new String[subjects.size()];
+        for (int i = 0; i < subjects.size(); i++) {
+            res[i] = subjects.get(i).getSubject();
+        }
+
+        return res;
+    }
+
+    /*
+     * get teachers string array
+     */
+
+    public String[] getTeachers() {
+        String[] res = new String[subjects.size()];
+        for (int i = 0; i < subjects.size(); i++) {
+            res[i] = subjects.get(i).getTeacher();
+        }
+
+        return res;
+    }
+
+    /*
+     * get grades int array
+     */
+
+    public int[] getGrades() {
+        int[] res = new int[subjects.size()];
+        for (int i = 0; i < subjects.size(); i++) {
+            res[i] = subjects.get(i).getGrade();
+        }
+
+        return res;
+    }
+
+    /*
+     * compute average grade of the semester
+     * translates "pass" to 5 and "fail" to 2
+     * if subject has not been graded yet, ignores and not counts it
+     */
+
+    public float getAverage() {
         int subjectAmount = 0;
         int sumGrades = 0;
         for (Subject sub : subjects) {
+            if (sub.grade == -1) {
+                continue;
+            }
             subjectAmount++;
-            if (sub.grade > 1) {        //differential grade
+            if (sub.grade > 1) {
                 sumGrades += sub.grade;
-            } else if (sub.grade == 0) {  //pass-or-fail grade
+            } else if (sub.grade == 0) {
                 sumGrades += 2;
             } else {
                 sumGrades += 5;
@@ -54,11 +158,15 @@ public class Semester {
         return (float) sumGrades / (float) subjectAmount;
     }
 
-    public float[] countGradesPercentage() {            //count percentage for each grade
+    /*
+     * count percentage for each grade
+     */
+
+    public float[] countGradesPercentage() {
         float[] gradesPercentage = new float[4];
         int[] gradeCounts = {0, 0, 0, 0};
-        int gradesAmount = subjects.length;
-        for (Subject sub : subjects) {                  //counters for each grade
+        int gradesAmount = subjects.size();
+        for (Subject sub : subjects) {
             switch (sub.grade) {
                 case 0, 2 -> gradeCounts[0]++;
                 case 3 -> gradeCounts[1]++;
@@ -73,25 +181,26 @@ public class Semester {
         return gradesPercentage;
     }
 
-    public double getScholarship() {        //return scholarship of this semester
+    /*
+     * return scholarship of this semester
+     * if there are grades <= 3 or fail, then there is no scholarship :(
+     * if there are no satisfactory grades and good grades >= 2, then return minimal scholarship
+     * if there are no satisfactory grades and good grades < 2, then return maximal scholarship
+     */
+
+    public double getScholarship() {
         int goodGrades = 0;
-        double scholarship = 0;
         for (Subject sub : subjects) {
-            if (sub.grade < 4 && sub.grade != 1) {            //if there are grades <= 3 or fail, then there is no scholarship :(
-                scholarship = 0;
-                return scholarship;
-            } else if (sub.grade == 4) {     //if there are no satisfactory grades and good grades >= 2, then return minimal scholarship
+            if (sub.grade < 4 && sub.grade != 1) {
+                return 0;
+            } else if (sub.grade == 4) {
                 goodGrades++;
                 if (goodGrades > 2) {
-                    scholarship = minScholarship;
-                    return scholarship;
+                    return minScholarship;
                 }
             }
         }
-        if (goodGrades <= 2) {          //if there are no satisfactory grades and good grades < 2, then return maximal scholarship
-            scholarship = maxScholarship;
-        }
 
-        return scholarship;
+        return maxScholarship;
     }
 }
