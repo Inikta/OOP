@@ -1,12 +1,17 @@
 package ru.nsu.nikita;
 
-import ru.nsu.nikita.operation.Operations;
+import ru.nsu.nikita.operation.*;
+
+import java.util.Arrays;
 
 public class Calculator {
     private final String expression;
     private double result;
     private int offset;
 
+    /*
+     * Initialize and compute expression result
+     */
     public Calculator(String expression) {
         this.expression = expression + "\0";
         this.result = 0;
@@ -19,6 +24,9 @@ public class Calculator {
         return result;
     }
 
+    /*
+     * Reads number (double or int) and moves offset in string
+     */
     private String readNum() {
         StringBuilder res = new StringBuilder();
         while (expression.charAt(offset) >= '0' && expression.charAt(offset) <= '9' || expression.charAt(offset) == '.') {
@@ -27,97 +35,84 @@ public class Calculator {
         return res.toString();
     }
 
-    private int check() {
+    /*
+     * Determines how next argument should be interpreted by comparing string part beginning
+     * from current offset with references:
+     * 1. Returns "num", if digit was found
+     * 2. Returns "end", if "\0" or "\n" were found
+     * 3. Returns the operation name, if predefined operation name was found
+     * Else throws IllegalArgumentException
+     */
+    private String check() {
         while (expression.charAt(offset) == ' ') {
             offset++;
         }
 
         if (expression.charAt(offset) >= '0' && expression.charAt(offset) <= '9') {
-            return 0;
+            return "num";
+        } else if (expression.charAt(offset) == '\0' || expression.charAt(offset) == '\n') {
+            return "end";
         } else {
-            int opCode = 1;
-            for (String op : Operations.unary) {
+            String[] bundle = OperationsBundle.getAllOperations();
+            for (String op : bundle) {
                 if (expression.regionMatches(offset, op, 0, op.length())) {
                     offset += op.length();
-                    return opCode + 100;
+                    return op;
                 }
-                opCode++;
             }
-
-            opCode = 1;
-            for (String op : Operations.binary) {
-                if (expression.regionMatches(offset, op, 0, op.length())) {
-                    offset += op.length();
-                    return opCode + 200;
-                }
-                opCode++;
-            }
+            throw new IllegalArgumentException();
         }
 
-        throw new IllegalArgumentException();
     }
 
+    /*
+     * Inner class, which recursively allows computing of expression result.
+     * Checks what to do, and returns double value on every recursion step.
+     * 1. Returns double value, if it is number.
+     * 2. Returns 0, if end of expression was found.
+     * 3. Defines operation, checks if it is binary or not and makes computation.
+     */
     private class Pair {
         public double result;
 
         private Pair() {
-            double elem1;
-            double elem2;
+            double arg1;
+            double arg2;
 
-            int sign = check();
-            switch (sign) {
-                case 0 -> {
-                    elem1 = Double.parseDouble(readNum());
-                    this.result = elem1;
+            String operation = check();
+            if (operation.equals("num")) {
+                arg1 = Double.parseDouble(readNum());
+                this.result = arg1;
+            } else if (operation.equals("end")) {
+                this.result = 0;
+            } else {
+                String[] binaryBundle = OperationsBundle.getBinaryOperations();
+
+                new Operation();
+                Operation currentOperation;
+                switch (operation) {
+                    case "sin" -> currentOperation = new Sinus();
+                    case "cos" -> currentOperation = new Cosine();
+                    case "deg" -> currentOperation = new ToDegrees();
+                    case "sqrt" -> currentOperation = new SquareRoot();
+                    case "+" -> currentOperation = new Addition();
+                    case "-" -> currentOperation = new Subtraction();
+                    case "*" -> currentOperation = new Production();
+                    case "/" -> currentOperation = new Division();
+                    case "pow" -> currentOperation = new Exponentiation();
+                    case "log" -> currentOperation = new LogN();
+                    default -> throw new IllegalArgumentException();
                 }
-                case 101 -> {
-                    elem1 = Operations.sinus(new Pair().result);
-                    this.result = elem1;
+
+                boolean binary = Arrays.asList(binaryBundle).contains(operation);
+                arg1 = new Pair().result;
+                if (binary) {
+                    arg2 = new Pair().result;
+                    this.result = currentOperation.compute(arg1, arg2);
+                } else {
+                    this.result = currentOperation.compute(arg1);
                 }
-                case 102 -> {
-                    elem1 = Operations.cosine(new Pair().result);
-                    this.result = elem1;
-                }
-                case 103 -> {
-                    elem1 = Operations.sqrt(new Pair().result);
-                    this.result = elem1;
-                }
-                case 104 -> {
-                    elem1 = new Pair().result;
-                    this.result = Operations.naturalLog(elem1);
-                }
-                case 105 -> {
-                    elem1 = Operations.convertDegToDouble(Double.parseDouble(readNum()));
-                    this.result = elem1;
-                }
-                case 201 -> {
-                    elem1 = new Pair().result;
-                    elem2 = new Pair().result;
-                    this.result = Operations.power(elem1, elem2);
-                }
-                case 202 -> {
-                    elem1 = new Pair().result;
-                    elem2 = new Pair().result;
-                    this.result = Operations.addition(elem1, elem2);
-                }
-                case 203 -> {
-                    elem1 = new Pair().result;
-                    elem2 = new Pair().result;
-                    this.result = Operations.subtraction(elem1, elem2);
-                }
-                case 204 -> {
-                    elem1 = new Pair().result;
-                    elem2 = new Pair().result;
-                    this.result = Operations.production(elem1, elem2);
-                }
-                case 205 -> {
-                    elem1 = new Pair().result;
-                    elem2 = new Pair().result;
-                    this.result = Operations.division(elem1, elem2);
-                }
-                default -> throw new IllegalArgumentException();
             }
         }
     }
-
 }
