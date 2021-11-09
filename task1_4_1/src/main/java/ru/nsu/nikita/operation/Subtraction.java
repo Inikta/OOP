@@ -1,10 +1,8 @@
 package ru.nsu.nikita.operation;
 
-public class Subtraction extends Operation  {
-
-    @Override
-    public double compute(double arg1) {
-        return -arg1;
+public class Subtraction extends Operation {
+    public Subtraction() {
+        this.unary = false;
     }
 
     @Override

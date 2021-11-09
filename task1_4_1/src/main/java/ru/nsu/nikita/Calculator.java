@@ -2,8 +2,6 @@ package ru.nsu.nikita;
 
 import ru.nsu.nikita.operation.*;
 
-import java.util.Arrays;
-
 public class Calculator {
     private final String expression;
     private double result;
@@ -16,8 +14,10 @@ public class Calculator {
         this.expression = expression + "\0";
         this.result = 0;
         this.offset = 0;
-        Pair expressionParser = new Pair();
-        this.result = expressionParser.result;
+    }
+
+    public void compute() {
+        this.result = Pair();
     }
 
     public double getResult() {
@@ -53,7 +53,7 @@ public class Calculator {
         } else if (expression.charAt(offset) == '\0' || expression.charAt(offset) == '\n') {
             return "end";
         } else {
-            String[] bundle = OperationsBundle.getAllOperations();
+            String[] bundle = OperationFabric.allOperations;
             for (String op : bundle) {
                 if (expression.regionMatches(offset, op, 0, op.length())) {
                     offset += op.length();
@@ -70,48 +70,26 @@ public class Calculator {
      * Checks what to do, and returns double value on every recursion step.
      * 1. Returns double value, if it is number.
      * 2. Returns 0, if end of expression was found.
-     * 3. Defines operation, checks if it is binary or not and makes computation.
+     * 3. Gets operation by OperationFabric, checks if it is unary or not and makes computation.
      */
-    private class Pair {
-        public double result;
+    private double Pair() {
+        double arg1;
+        double arg2;
 
-        private Pair() {
-            double arg1;
-            double arg2;
+        String operation = check();
 
-            String operation = check();
-            if (operation.equals("num")) {
-                arg1 = Double.parseDouble(readNum());
-                this.result = arg1;
-            } else if (operation.equals("end")) {
-                this.result = 0;
+        if (operation.equals("num")) {
+            return Double.parseDouble(readNum());
+        } else if (operation.equals("end")) {
+            return 0;
+        } else {
+            Operation currentOperation = OperationFabric.getOperation(operation);
+            arg1 = Pair();
+            if (!currentOperation.unary) {
+                arg2 = Pair();
+                return currentOperation.compute(arg1, arg2);
             } else {
-                String[] binaryBundle = OperationsBundle.getBinaryOperations();
-
-                new Operation();
-                Operation currentOperation;
-                switch (operation) {
-                    case "sin" -> currentOperation = new Sinus();
-                    case "cos" -> currentOperation = new Cosine();
-                    case "deg" -> currentOperation = new ToDegrees();
-                    case "sqrt" -> currentOperation = new SquareRoot();
-                    case "+" -> currentOperation = new Addition();
-                    case "-" -> currentOperation = new Subtraction();
-                    case "*" -> currentOperation = new Production();
-                    case "/" -> currentOperation = new Division();
-                    case "pow" -> currentOperation = new Exponentiation();
-                    case "log" -> currentOperation = new LogN();
-                    default -> throw new IllegalArgumentException();
-                }
-
-                boolean binary = Arrays.asList(binaryBundle).contains(operation);
-                arg1 = new Pair().result;
-                if (binary) {
-                    arg2 = new Pair().result;
-                    this.result = currentOperation.compute(arg1, arg2);
-                } else {
-                    this.result = currentOperation.compute(arg1);
-                }
+                return currentOperation.compute(arg1);
             }
         }
     }

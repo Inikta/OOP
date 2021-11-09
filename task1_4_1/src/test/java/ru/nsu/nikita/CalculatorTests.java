@@ -8,14 +8,15 @@ public class CalculatorTests {
     @Test
     void emptyTest() {
         String expression = "";
-        double result =  new Calculator(expression).getResult();
-        Assertions.assertEquals(0, result);
+        Calculator calculator =  new Calculator(expression);
+        calculator.compute();
+        Assertions.assertEquals(0, calculator.getResult());
     }
 
     @Test
     void illegalArgument() {
         String expression = "+ a i";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Calculator(expression).getResult());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Calculator(expression).compute());
     }
 
     /*
@@ -25,7 +26,9 @@ public class CalculatorTests {
     @Test
     void taskExpressionTest() {
         String expression = "sin + - 1 2 1";
-        Assertions.assertEquals(0, new Calculator(expression).getResult());
+        Calculator calculator =  new Calculator(expression);
+        calculator.compute();
+        Assertions.assertEquals(0, calculator.getResult());
     }
 
     /*
@@ -39,8 +42,19 @@ public class CalculatorTests {
     void longExpressionTest() {
         String expression = "* - + 10.5 * log 5 pow 2 3 * 5 / cos deg180 sin deg90 sqrt4";
         double ref = 56.751006598945605993612149331619;
-        Calculator calc = new Calculator(expression);
-        double result = calc.getResult();
+        Calculator calculator =  new Calculator(expression);
+        calculator.compute();
+        double result = calculator.getResult();
+        Assertions.assertEquals(ref, result, 4);
+    }
+
+    @Test
+    void longExpressionSpacesTest() {
+        String expression = "*     -     + 10.5 *  log 5    pow 2 3 * 5 /    cos deg       180 sin   deg90 sqrt    4";
+        double ref = 56.751006598945605993612149331619;
+        Calculator calculator =  new Calculator(expression);
+        calculator.compute();
+        double result = calculator.getResult();
         Assertions.assertEquals(ref, result, 4);
     }
 }
