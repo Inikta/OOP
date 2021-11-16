@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_json_bind_api_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo/src/main/java/ru/nsu/nikita/javafxtest/demo/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/Pyramid_sort_test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/main/java/ru/nsu/nikita/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/main/java/ru/nsu/nikita/Pyramid_sort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/test/java/test1.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="20nns03LdbibeNipmynRGKixww4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/java" />
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.proportion" value="0.10289991" />
+    <property name="project.structure.side.proportion" value="0.63607925" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="" />
+      <created>1636689425148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636689425148</updated>
+      <workItem from="1636689427532" duration="2621000" />
+      <workItem from="1636880069867" duration="3000" />
+      <workItem from="1636895958793" duration="1192000" />
+      <workItem from="1637047821507" duration="7000" />
+      <workItem from="1637047910531" duration="800000" />
+      <workItem from="1637049062340" duration="12000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

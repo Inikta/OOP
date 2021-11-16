@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.fasterxml.jackson.core" type="JsonBinding">
+    <properties version="1.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javax.json.bind-api-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
