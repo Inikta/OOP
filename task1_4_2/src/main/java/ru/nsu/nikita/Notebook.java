@@ -49,15 +49,10 @@ public class Notebook {
         File[] jsonFiles = new File(path).listFiles();
         ArrayList<Note> notes = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        if (jsonFiles != null) {
-            for (File file : jsonFiles) {
-                notes.add(mapper.readValue(file, Note.class));
-            }
-            return notes;
+        for (File file : jsonFiles) {
+            notes.add(mapper.readValue(file, Note.class));
         }
-        else {
-            return new ArrayList<>();
-        }
+        return notes;
     }
 
     /**
@@ -75,7 +70,7 @@ public class Notebook {
         } catch (IOException excIo) {
             throw new IOException();
         }
-        book.add(note);
+        this.book.add(note);
     }
 
     /**
@@ -104,7 +99,7 @@ public class Notebook {
      * @return returns ArrayList of notes
      */
     public ArrayList<Note> getAll() {
-        return book;
+        return this.book;
     }
 
     /**

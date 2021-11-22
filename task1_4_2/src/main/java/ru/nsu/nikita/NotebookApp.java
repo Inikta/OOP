@@ -16,8 +16,9 @@ import java.util.ArrayList;
 @CommandLine.Command(name = "notebook")
 public class NotebookApp {
 
-    private final String path;
+    private String path;
     private final Notebook notebook;
+    private static String directoryName;
 
     /**
      * Constructor with <i>path</i> designation.
@@ -27,7 +28,8 @@ public class NotebookApp {
      */
     public NotebookApp(String directoryName) throws IOException {
         String separator = "/";
-        this.path = ".." + separator + "task1_4_2" + separator + directoryName;
+        this.directoryName = directoryName;
+        this.path = ".." + separator + "task1_4_2" + separator + this.directoryName;
         if (!(new File(path).isDirectory())) {
             if (!(new File(path).mkdir())) {
                 throw new FileNotFoundException();
@@ -42,9 +44,8 @@ public class NotebookApp {
      * @throws IOException throws, if path is incorrect (following from NotebookApp creation)
      */
     public static void main(String[] args) throws IOException {
-        CommandLine notebookCommandLine = new CommandLine(new NotebookApp("notes"));
-        int exitCode = notebookCommandLine.execute(args);
-        System.exit(exitCode);
+        CommandLine notebookCommandLine = new CommandLine(new NotebookApp(directoryName));
+        notebookCommandLine.execute(args);
     }
 
     /**
@@ -104,5 +105,13 @@ public class NotebookApp {
      */
     public Notebook getNotebook() {
         return notebook;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

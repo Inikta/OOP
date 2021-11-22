@@ -12,37 +12,60 @@ public class NotebookAppTests {
     @Test
     public void addTest() throws IOException {
         NotebookApp notebookApp = new NotebookApp("notes");
-        String[] args = {"-add", "Testing Note 1", "Interesting content #1 aaa"};
-        Note referenceNote = new Note("Testing Note 1","Interesting content #1 aaa");
+        String[] args = {"-add", "Remove Test", "Removable note content"};
+        Note referenceNote = new Note("Remove Test", "Removable note content");
         referenceNote.setDateCreation(new Date());
 
         NotebookApp.main(args);
         ArrayList<Note> testNotes = notebookApp.getNotebook().getAll();
 
+        Assertions.assertEquals(referenceNote.getName(), testNotes.get(0).getName());
+        Assertions.assertEquals(referenceNote.getContent(), testNotes.get(0).getContent());
+    }
+
+    @Test
+    public void emptyAddTest() throws IOException {
+        NotebookApp notebookApp = new NotebookApp("notes");
+        String[] args = {"-add", "", ""};
+        Note referenceNote = new Note("", "");
+        referenceNote.setDateCreation(new Date());
+
+        NotebookApp.main(args);
+        ArrayList<Note> testNotes = notebookApp.getNotebook().getAll();
+
+        Assertions.assertEquals(referenceNote.getName(), testNotes.get(1).getName());
+        Assertions.assertEquals(referenceNote.getContent(), testNotes.get(1).getContent());
+    }
+
+    /*@Test
+    public void directoryNotFoundTest() throws IOException {
+        NotebookApp notebookApp = new NotebookApp("notes2");
+        String[] args = {"-add", "Test Note 1", "Content"};
+        Note referenceNote = new Note("Test Note 1", "Content");
+        referenceNote.setDateCreation(new Date());
+
+        notebookApp.main(args);
+        ArrayList<Note> testNotes = notebookApp.getNotebook().getAll();
+
         Assertions.assertEquals(referenceNote.getName(),testNotes.get(0).getName());
         Assertions.assertEquals(referenceNote.getContent(),testNotes.get(0).getContent());
-        Assertions.assertEquals(referenceNote.getDateCreation(),testNotes.get(0).getDateCreation());
-
-    }
+    }*/
 
     @Test
-    public void emptyAddTest() {
+    public void removeTest() throws IOException {
+        NotebookApp notebookApp = new NotebookApp("notes");
+        String[] args1 = {"-add", "Remove Test", "Removable note content"};
+        String[] args2 = {"-rm", "Remove Test"};
+        Note referenceNote = new Note("Test Note 1", "Content");
+        referenceNote.setDateCreation(new Date());
 
-    }
+        notebookApp.main(args1);
+        notebookApp.main(args2);
 
-    @Test
-    public void directoryNotFoundTest() {
+        ArrayList<Note> testNotes = notebookApp.getNotebook().getAll();
 
-    }
-
-    @Test
-    public void removeTest() {
-
-    }
-
-    @Test
-    public void emptyRemoveTest() {
-
+        Assertions.assertEquals(referenceNote.getName(), testNotes.get(1).getName());
+        Assertions.assertEquals(referenceNote.getContent(), testNotes.get(1).getContent());
     }
 
     @Test
