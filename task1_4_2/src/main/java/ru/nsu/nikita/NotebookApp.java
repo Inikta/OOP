@@ -2,8 +2,6 @@ package ru.nsu.nikita;
 
 import picocli.CommandLine;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,11 +28,11 @@ public class NotebookApp {
         String separator = "/";
         this.directoryName = directoryName;
         this.path = ".." + separator + "task1_4_2" + separator + this.directoryName;
-        if (!(new File(path).isDirectory())) {
+        /*if (!(new File(path).isDirectory())) {
             if (!(new File(path).mkdir())) {
                 throw new FileNotFoundException();
             }
-        }
+        }*/
         this.notebook = new Notebook(path);
     }
 

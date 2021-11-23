@@ -4,11 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="" />
+    <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.." afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../demo/src/main/java/ru/nsu/nikita/javafxtest/demo/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jackson_annotations_2_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jackson_databind_2_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/javax_json_bind_api_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/javax_json_processing_1_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/jackson-annotations-2.13.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/jackson-core-2.13.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/jackson-databind-2.13.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javax.json-api-1.1.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javax.json.bind-api-1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/Note 1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes/Testing Note 1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes2/Test Note 1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/Pyramid_sort_test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/main/java/ru/nsu/nikita/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/main/java/ru/nsu/nikita/Pyramid_sort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task1_1_1/Pyramid_sort_test/src/test/java/test1.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -21,7 +66,17 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="task1_4_2" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -50,9 +105,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.10289991" />
-    <property name="project.structure.side.proportion" value="0.63607925" />
+    <property name="project.structure.side.proportion" value="0.104384124" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -101,54 +156,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="NotebookAppTests.directoryNotFoundTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NotebookAppTests.addTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.directoryNotFoundTest&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="NotebookAppTests.emptyAddTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.emptyAddTest&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="NotebookAppTests.incorrectInputAddTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.incorrectInputAddTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.addTest&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -185,21 +198,63 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="NotebookAppTests.showAllTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.showAllTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="task1_4_2 [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.NotebookApp" />
-      <item itemvalue="Gradle.NotebookAppTests.emptyAddTest" />
-      <item itemvalue="Gradle.NotebookAppTests.incorrectInputAddTest" />
-      <item itemvalue="Gradle.NotebookAppTests.directoryNotFoundTest" />
       <item itemvalue="Gradle.NotebookAppTests.removeTest" />
       <item itemvalue="Gradle.NotebookAppTests" />
+      <item itemvalue="Gradle.NotebookAppTests.addTest" />
+      <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
+      <item itemvalue="Gradle.task1_4_2 [dependencies]" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.NotebookAppTests" />
+        <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
+        <item itemvalue="Gradle.task1_4_2 [dependencies]" />
+        <item itemvalue="Gradle.NotebookAppTests.addTest" />
         <item itemvalue="Gradle.NotebookAppTests.removeTest" />
-        <item itemvalue="Gradle.NotebookAppTests.directoryNotFoundTest" />
-        <item itemvalue="Gradle.NotebookAppTests.incorrectInputAddTest" />
-        <item itemvalue="Gradle.NotebookAppTests.emptyAddTest" />
       </list>
     </recent_temporary>
   </component>
@@ -222,6 +277,9 @@
       <workItem from="1637477264764" duration="39000" />
       <workItem from="1637578381525" duration="5768000" />
       <workItem from="1637587117771" duration="6000" />
+      <workItem from="1637652662761" duration="1807000" />
+      <workItem from="1637654911022" duration="319000" />
+      <workItem from="1637657457497" duration="313000" />
     </task>
     <servers />
   </component>
@@ -245,20 +303,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java</url>
-          <line>12</line>
+          <line>22</line>
           <properties class="ru.nsu.nikita.NotebookAppTests" method="addTest">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java</url>
-          <line>66</line>
+          <line>64</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
