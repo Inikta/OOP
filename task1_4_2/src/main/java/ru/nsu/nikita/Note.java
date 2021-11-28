@@ -12,15 +12,15 @@ import java.util.Locale;
  */
 
 public class Note {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.ENGLISH);
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
     private Date dateCreation;
     private String content;
-    public String name;
+    private String name;
 
     /**
      * Default constructor for Jackson usage only
      */
-    public Note () {
+    public Note() {
         this.content = "";
         this.name = "";
         this.dateCreation = new Date();
@@ -28,6 +28,7 @@ public class Note {
 
     /**
      * Standard constructor for usage in program
+     *
      * @param name String name of the note
      * @param text String content of the note
      */
@@ -37,14 +38,19 @@ public class Note {
         this.dateCreation = new Date();
     }
 
+    public static SimpleDateFormat getDateFormatter() {
+        return dateFormatter;
+    }
+
     /**
      * Output format
+     *
      * @return String formatted output
      */
     @Override
-    public String toString () {
+    public String toString() {
         return "Name: " + name + "\n" +
-                "Created: " + dateFormat.format(dateCreation) + "\n" +
+                "Created: " + dateFormatter.format(dateCreation) + "\n" +
                 "Content: \n" + content + "\n";
     }
 
@@ -56,14 +62,6 @@ public class Note {
         return dateCreation;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     /**
      * Pack of field setters
      */
@@ -72,8 +70,16 @@ public class Note {
         this.dateCreation = dateCreation;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
