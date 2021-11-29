@@ -121,7 +121,6 @@ public class Notebook {
 
     public List<Note> getByParameters(String timeStr1, String timeStr2, ArrayList<String> keywords) throws ParseException {
         List<Note> result;
-        //SimpleDateFormat dateFormat = Note.getDateFormat();
         Date time1 = Note.getDateFormatter().parse(timeStr1);
         Date time2 = Note.getDateFormatter().parse(timeStr2);
 

@@ -65,29 +65,25 @@ public class NotebookAppTests {
 
     @Test
     public void showTimePeriodTest() throws IOException {
-        String[][] args = {{"-add", "Test 1", "1 note content"},
-                {"-add", "Test 2", "2 note content"},
-                {"-add", "Test 3", "3 note content"},
-                {"-show", "28.11.2021 15:30:00", "28.11.2021 15:32:00"}};
+        this.notebookApp = new NotebookApp("time_test");
+        String[][] args = {{"-show"},
+                {"-show", "29.11.2021 10:39:00", "29.11.2021 10:41:15"}};
 
         notebookApp.main(args[0]);
+        System.out.println("In time period:\n");
         notebookApp.main(args[1]);
-        notebookApp.main(args[2]);
-        notebookApp.main(args[3]);
     }
 
 
     @Test
     public void showTimePeriodAndKeywordsTest() throws IOException {
-        String[][] args = {{"-add", "Test 1", "1 note content"},
-                {"-add", "Test 2", "2 note content"},
-                {"-add", "Test 3", "3 note content"},
-                {"-show", "28.11.2021 15:30:00", "28.11.2021 15:32:00", "1", "3"}};
+        this.notebookApp = new NotebookApp("time_key_test");
+        String[][] args = {{"-show"},//{"-add", "Test 3", "3 note content"}"",
+                {"-show", "29.11.2021 10:33:00", "29.11.2021 10:34:00", "2"}};
 
         notebookApp.main(args[0]);
+        System.out.println("In time period and with keywords:\n");
         notebookApp.main(args[1]);
-        notebookApp.main(args[2]);
-        notebookApp.main(args[3]);
     }
 
     @Test

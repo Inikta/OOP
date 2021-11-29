@@ -122,6 +122,11 @@ public class NotebookApp {
         return this.notebook.getAll();
     }
 
+    /***
+     * Returns currently used path of json file.
+     * @return path string
+     */
+
     public String getPath() {
         return path;
     }
@@ -129,6 +134,10 @@ public class NotebookApp {
     public void setPath(String path) {
         this.path = path;
     }
+
+    /***
+     * Cleans notebook from notes and deletes json file related to it.
+     */
 
     public void clean() throws IOException {
         notebook.clean();

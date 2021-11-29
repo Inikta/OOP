@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Note.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" afterDir="false" />
     </list>
@@ -85,7 +85,7 @@
       <recent name="ru.nsu.nikita" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.NotebookAppTests.showTimePeriodTest">
+  <component name="RunManager" selected="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest">
     <configuration name="NotebookApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.nsu.nikita.NotebookApp" />
       <module name="task1_4_2.main" />
@@ -163,12 +163,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="NotebookAppTests.showAllTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NotebookAppTests.showTimePeriodAndKeywordsTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.showAllTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.showTimePeriodAndKeywordsTest&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -209,17 +209,17 @@
       <item itemvalue="Application.NotebookApp" />
       <item itemvalue="Gradle.NotebookAppTests" />
       <item itemvalue="Gradle.NotebookAppTests.addTest" />
-      <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
       <item itemvalue="Gradle.NotebookAppTests.helpTest" />
       <item itemvalue="Gradle.NotebookAppTests.showTimePeriodTest" />
+      <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
         <item itemvalue="Gradle.NotebookAppTests.showTimePeriodTest" />
         <item itemvalue="Gradle.NotebookAppTests" />
         <item itemvalue="Gradle.NotebookAppTests.helpTest" />
         <item itemvalue="Gradle.NotebookAppTests.addTest" />
-        <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +249,7 @@
       <workItem from="1637807148740" duration="5341000" />
       <workItem from="1637898261509" duration="4794000" />
       <workItem from="1638087062832" duration="6760000" />
+      <workItem from="1638156229368" duration="1406000" />
     </task>
     <servers />
   </component>
@@ -282,6 +283,22 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java</url>
+          <line>78</line>
+          <properties class="ru.nsu.nikita.NotebookAppTests" method="showTimePeriodAndKeywordsTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java</url>
+          <line>66</line>
+          <properties class="ru.nsu.nikita.NotebookAppTests" method="showTimePeriodTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java</url>
