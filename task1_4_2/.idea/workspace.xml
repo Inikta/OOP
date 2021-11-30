@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="Completed with tests and updated the javadoc comments">
+    <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="Improved tests, added Cloneable to Note.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notes.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Note.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/Notebook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/NotebookAppTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +35,17 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="task1_4_2" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="task1_4_2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="task1_4_2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="shadow" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -56,6 +65,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="20nns03LdbibeNipmynRGKixww4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -69,6 +86,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.10289991" />
     <property name="project.structure.side.proportion" value="0.104384124" />
@@ -85,7 +103,7 @@
       <recent name="ru.nsu.nikita" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.NotebookAppTests">
+  <component name="RunManager" selected="Gradle.task1_4_2 [shadowJar]">
     <configuration name="NotebookApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.nsu.nikita.NotebookApp" />
       <module name="task1_4_2.main" />
@@ -184,23 +202,23 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="NotebookAppTests.showTimePeriodTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="task1_4_2 [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.NotebookAppTests.showTimePeriodTest&quot;" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value="shadowJar" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
@@ -209,17 +227,17 @@
       <item itemvalue="Application.NotebookApp" />
       <item itemvalue="Gradle.NotebookAppTests" />
       <item itemvalue="Gradle.NotebookAppTests.addTest" />
-      <item itemvalue="Gradle.NotebookAppTests.showTimePeriodTest" />
       <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
       <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
+      <item itemvalue="Gradle.task1_4_2 [shadowJar]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.task1_4_2 [shadowJar]" />
         <item itemvalue="Gradle.NotebookAppTests" />
         <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
         <item itemvalue="Gradle.NotebookAppTests.addTest" />
         <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
-        <item itemvalue="Gradle.NotebookAppTests.showTimePeriodTest" />
       </list>
     </recent_temporary>
   </component>
@@ -250,7 +268,8 @@
       <workItem from="1637898261509" duration="4794000" />
       <workItem from="1638087062832" duration="6760000" />
       <workItem from="1638156229368" duration="2801000" />
-      <workItem from="1638238937804" duration="1701000" />
+      <workItem from="1638238937804" duration="2091000" />
+      <workItem from="1638257442665" duration="3988000" />
     </task>
     <task id="LOCAL-00001" summary="Completed with tests and updated the javadoc comments">
       <created>1638158851249</created>
@@ -259,7 +278,21 @@
       <option name="project" value="LOCAL" />
       <updated>1638158851249</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Completed with tests and updated the javadoc comments">
+      <created>1638240765525</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1638240765525</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Improved tests, added Cloneable to Note.">
+      <created>1638240826524</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1638240826524</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,7 +315,8 @@
       <path value="$PROJECT_DIR$/../.." />
     </ignored-roots>
     <MESSAGE value="Completed with tests and updated the javadoc comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed with tests and updated the javadoc comments" />
+    <MESSAGE value="Improved tests, added Cloneable to Note." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved tests, added Cloneable to Note." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

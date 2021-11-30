@@ -16,7 +16,7 @@ import java.util.List;
 public class NotebookApp {
 
     private final Notebook notebook;
-    private final String fileName;
+    private static String fileName = "default_notes";
     private String path;
 
     private NotebookApp notebookApp;
@@ -30,7 +30,7 @@ public class NotebookApp {
         String separator = "/";
         this.fileName = fileName;
         String extension = ".json";
-        this.path = ".." + separator + "task1_4_2" + separator + this.fileName + extension;
+        this.path = ".." + separator + this.fileName + extension;
 
         this.notebook = new Notebook(path);
     }
@@ -41,7 +41,7 @@ public class NotebookApp {
      * @param args arguments specified in command line
      * @throws IOException throws, if path is incorrect (following from NotebookApp creation)
      */
-    public void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         CommandLine notebookCommandLine = new CommandLine(new NotebookApp(fileName));
         notebookCommandLine.execute(args);
     }
