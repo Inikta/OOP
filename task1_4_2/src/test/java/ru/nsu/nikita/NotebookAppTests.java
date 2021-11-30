@@ -25,8 +25,13 @@ public class NotebookAppTests {
 
         notebookApp.main(args1);
         notebookApp.main(args2);
+        List<Note> notes = notebookApp.getNotebook();
 
         Assertions.assertTrue(new File(notebookApp.getPath()).exists());
+        for (Note note : notes) {
+            Assertions.assertEquals(args1[1], note.getName());
+            Assertions.assertEquals(args1[2], note.getContent());
+        }
     }
 
     @Test
@@ -61,6 +66,14 @@ public class NotebookAppTests {
         notebookApp.main(args[1]);
         notebookApp.main(args[2]);
         notebookApp.main(args[3]);
+
+        List<Note> notes = notebookApp.getNotebook();
+
+        Assertions.assertTrue(new File(notebookApp.getPath()).exists());
+        for (int i = 0; i < notes.size(); i++) {
+            Assertions.assertEquals(args[i][1], notes.get(i).getName());
+            Assertions.assertEquals(args[i][2], notes.get(i).getContent());
+        }
     }
 
     @Test

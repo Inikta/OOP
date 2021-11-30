@@ -11,7 +11,7 @@ import java.util.Locale;
  * - <i>content</i> - text content of the note
  */
 
-public class Note {
+public class Note implements Cloneable {
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
     private Date dateCreation;
     private String content;
@@ -84,5 +84,14 @@ public class Note {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Note clone() {
+        try {
+            return (Note) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

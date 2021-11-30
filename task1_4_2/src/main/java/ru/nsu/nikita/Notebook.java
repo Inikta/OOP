@@ -23,10 +23,10 @@ import java.util.stream.Stream;
  */
 
 public class Notebook {
-    private List<Note> book;
     private final ObjectMapper jsonMapper = new ObjectMapper();
-    private File jsonFile;
     private final String path;
+    private List<Note> book;
+    private File jsonFile;
 
     /**
      * Notebook constructor. Extracts and sorts notes in order of creation.
@@ -105,7 +105,10 @@ public class Notebook {
      * @return returns ArrayList of notes
      */
     public List<Note> getAll() {
-        return this.book;
+        return this.book
+                .stream()
+                .map(Note::clone)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -147,8 +150,7 @@ public class Notebook {
         book = new ArrayList<>();
         if (!jsonFile.exists()) {
             jsonFile = new File(path);
-        }
-        else {
+        } else {
             jsonMapper.writeValue(jsonFile, book);
         }
     }
