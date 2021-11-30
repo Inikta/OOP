@@ -85,7 +85,7 @@
       <recent name="ru.nsu.nikita" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.NotebookApp">
+  <component name="RunManager" selected="Gradle.NotebookAppTests">
     <configuration name="NotebookApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.nsu.nikita.NotebookApp" />
       <module name="task1_4_2.main" />
@@ -215,9 +215,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.NotebookAppTests" />
         <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
         <item itemvalue="Gradle.NotebookAppTests.addTest" />
-        <item itemvalue="Gradle.NotebookAppTests" />
         <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
         <item itemvalue="Gradle.NotebookAppTests.showTimePeriodTest" />
       </list>
