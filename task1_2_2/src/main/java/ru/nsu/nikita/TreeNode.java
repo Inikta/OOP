@@ -1,55 +1,61 @@
 package ru.nsu.nikita;
 
-import com.sun.source.tree.Tree;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class TreeNode<T> implements Iterable<T> {
-    private LinkedList<TreeNode<T>> children;
-    private List<Integer> branchLengths;
-    private Integer nodeLayer;
-    private Integer layersAmount;
-    private Integer childrenAmount;
+    private List<TreeNode<T>> children;
+    private int childrenAmount;
     private TreeNode<T> parent;
     private T content;
-    private Integer distinctionIndex;
-    private static enum mode {bfs, dfs};
-    private static mode traverseMode;
+    private static boolean traverseMode;
 
     public TreeNode(T content) {
         this.content = content;
-        this.distinctionIndex = 0;
         this.parent = null;
-        this.children = new LinkedList<>();
+        this.children = new ArrayList<>(0);
         this.childrenAmount = 0;
-        this.branchLengths = new ArrayList<>(0);
-        traverseMode = mode.bfs;
-        this.nodeLayer = 0;
-        this.layersAmount = 0;
+        traverseMode = false;
     }
 
-    public TreeNode(T content, TreeNode<T> parent, Integer distinctionIndex) {
+    public TreeNode(T content, TreeNode<T> parent) {
         this.content = content;
         this.parent = parent;
-        this.children = new LinkedList<>();
+        this.children = new ArrayList<>(0);
         this.childrenAmount = 0;
-        this.branchLengths = new ArrayList<>(0);
-        this.distinctionIndex = distinctionIndex;
         traverseMode = parent.getTraverseMode();
     }
 
-    @Override
-    public TreeNodeIterator<T> iterator() {
-        return new TreeNodeIterator<>(this);
+    public TreeNode<T> add(T content, int parentIndex) throws NoSuchElementException {
+        TreeIterator<T> localIterator = this.iterator();
+        while (localIterator.previousIndex() != parentIndex - 1) {
+            localIterator.next();
+        }
+        localIterator.add(content);
+
+        return localIterator.getTree();
     }
 
-    public Integer getChildrenAmount() {
+    public void remove(int index) {
+        TreeIterator<T> localIterator = this.iterator();
+        while (localIterator.previousIndex() != index - 1) {
+            localIterator.next();
+        }
+        localIterator.remove();
+    }
+
+    @Override
+    public TreeIterator<T> iterator() {
+        return new TreeIterator<>(this, traverseMode);
+    }
+
+    public int getChildrenAmount() {
         return childrenAmount;
     }
 
-    public LinkedList<TreeNode<T>> getChildren() {
+    public List<TreeNode<T>> getChildren() {
         return children;
     }
 
@@ -61,16 +67,27 @@ public class TreeNode<T> implements Iterable<T> {
         return content;
     }
 
-    public Integer getDistinctionIndex() {
-        return distinctionIndex;
-    }
-
-    public mode getTraverseMode() {
+    public boolean getTraverseMode() {
         return traverseMode;
     }
 
-    public void setTraverseMode(mode newTraverseMode) {
+    public void setTraverseMode(boolean newTraverseMode) {
         traverseMode = newTraverseMode;
     }
 
+    public TreeNode<T> getParent() {
+        return parent;
+    }
+
+    public void setParent(TreeNode<T> parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public String toString() {
+        String contentStr = content.toString();
+        return "Parent: " + parent.toString() + "\n" +
+                "Content: " + contentStr + "\n" +
+                "Children: " + children.toString() + "\n";
+    }
 }
