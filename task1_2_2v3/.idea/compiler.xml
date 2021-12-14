@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="task1_2_2v3.task1_2_2v3.main" target="16" />
+      <module name="task1_2_2v3.task1_2_2v3.test" target="16" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
