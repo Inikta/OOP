@@ -10,8 +10,6 @@ public class Tree<T> implements Iterable<T> {
 
     private TreeSettings settings;
 
-    private List<TreeNode<T>> queue;
-
     public Tree(T rootContent, TreeSettings settings) {
         this.root = new TreeNode<>(rootContent, null);
 
@@ -19,32 +17,25 @@ public class Tree<T> implements Iterable<T> {
         this.nodesList.add(root);
 
         this.settings = settings;
-
-        this.queue = new ArrayList<>(0);
-        this.queue.add(root);
     }
 
     public List<TreeNode<T>> getSearchSortedNodes(TreeNode<T> currentNode) {
-        List<TreeNode<T>> result = new ArrayList<>();
-        result.add(currentNode);
-        if (settings.getTraverseParameter() == TreeSettings.traverseMode.bfs) {
-            for (TreeNode<T> node : queue) {
-                for (TreeNode<T> child : queue.get(0).getChildren()) {
-                    if (!child.isChecked()) {
-                        queue.add(child);
-                        child.setChecked(true);
-                        result.add(child);
-                    }
-                }
-                queue.remove(node);
-            }
-        } else if (settings.getTraverseParameter() == TreeSettings.traverseMode.dfs) {
-            for (TreeNode<T> node : currentNode.getChildren()) {
-                result.addAll(getSearchSortedNodes(node));
-            }
-        }
+        SearchAlgorithms<T> traverseAlgorithm = new SearchAlgorithms<>();
 
-        return result;
+        if (settings.getTraverseParameter() == TreeSettings.traverseMode.bfs) {
+            List<TreeNode<T>> queue = new ArrayList<>();
+            queue.add(currentNode);
+            currentNode.setChecked(true);
+
+            return traverseAlgorithm.BFS(queue);
+
+        } else if (settings.getTraverseParameter() == TreeSettings.traverseMode.dfs) {
+            currentNode.setChecked(true);
+
+            return traverseAlgorithm.DFS(currentNode);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public void add(T content, int parentIndex) {
@@ -53,6 +44,7 @@ public class Tree<T> implements Iterable<T> {
             localIterator.next();
         }
         localIterator.add(content);
+        nodesList = getSearchSortedNodes(root);
     }
 
     public void remove(int index) {
@@ -61,6 +53,7 @@ public class Tree<T> implements Iterable<T> {
             localIterator.next();
         }
         localIterator.remove();
+        nodesList = getSearchSortedNodes(root);
     }
 
 

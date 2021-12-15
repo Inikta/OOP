@@ -66,61 +66,64 @@ public class TreeIterator<T> implements ListIterator<T> {
     public void add(T content) {
 
         //Problems with indexes
-        TreeNode<T> leftNeighbor = tree.getNodesList().get(previousIndex()).getParent();
-        TreeNode<T> rightNeighbor = tree.getNodesList().get(nextIndex()).getParent();
-
-        TreeNode<T> leftNeighborParent = tree.getNodesList().get(previousIndex() - 1).getParent();
-        TreeNode<T> rightNeighborParent = tree.getNodesList().get(nextIndex()).getParent();
-
-        if (leftNeighborParent == rightNeighborParent) {
-            leftNeighborParent.getChildren().add(
-                    leftNeighborParent.getChildren().indexOf(lastReferredTo),
-                    new TreeNode<>(content, leftNeighborParent)
-            );
-            tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighborParent), leftNeighborParent);
-        } else {
-            if (settings.insertParameter == TreeSettings.insertSetting.no) {
-                leftNeighborParent.getChildren().add(new TreeNode<>(content, leftNeighborParent));
-                tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighborParent), leftNeighborParent);
-            } else if (settings.insertParameter == TreeSettings.insertSetting.insertBeforeSingle) {
-                if (leftNeighbor == rightNeighborParent) {
-                    int insertionChildrenIndex = leftNeighbor.getChildren().indexOf(rightNeighbor);
-                    TreeNode<T> insertion = new TreeNode<>(content, leftNeighbor);
-                    insertion.getChildren().add(rightNeighbor);
-                    rightNeighbor.setParent(insertion);
-
-                    leftNeighbor.getChildren().remove(rightNeighbor);
-                    leftNeighbor.getChildren().add(insertionChildrenIndex, insertion);
-
-                    tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighbor), leftNeighbor);
-                    tree.getNodesList().set(tree.getNodesList().indexOf(rightNeighbor), rightNeighbor);
-                } else {
-                    leftNeighbor.getChildren().add(new TreeNode<>(content, leftNeighbor));
-                    tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighbor), leftNeighbor);
-                }
-            } else if (settings.insertParameter == TreeSettings.insertSetting.insertBeforeBunch) {
-                if (leftNeighbor == rightNeighborParent) {
-                    int insertionChildrenIndex = leftNeighbor.getChildren().indexOf(rightNeighbor);
-                    TreeNode<T> insertion = new TreeNode<>(content, leftNeighbor);
-                    insertion.getChildren().addAll(leftNeighbor.getChildren());
-                    leftNeighbor.getChildren().forEach(child -> child.setParent(insertion));
-
-                    leftNeighbor.getChildren().remove(rightNeighbor);
-                    leftNeighbor.getChildren().add(insertionChildrenIndex, insertion);
-
-                    tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighbor), leftNeighbor);
-                    tree.getNodesList().stream()
-                            .filter(node -> node.getParent() == leftNeighbor)
-                            .forEach(node -> node.setParent(insertion));
-                } else {
-                    leftNeighbor.getChildren().add(new TreeNode<>(content, leftNeighbor));
-                    tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighbor), leftNeighbor);
-                }
-            }
-
+        TreeNode<T> leftNeighbor = tree.getNodesList().get(previousIndex());
+        TreeNode<T> rightNeighbor;
+        try {rightNeighbor = tree.getNodesList().get(nextIndex());}
+        catch (IndexOutOfBoundsException indexException) {
+            rightNeighbor = null;
         }
 
-        nodesAmount = tree.getSearchSortedNodes(tree.getRoot()).size();
+        TreeNode<T> leftNeighborParent = leftNeighbor.getParent();
+        TreeNode<T> rightNeighborParent;
+        try {rightNeighborParent = rightNeighbor.getParent();}
+        catch (NullPointerException nullPointerException) {
+            rightNeighborParent = null;
+        }
+
+        if (leftNeighborParent == null) {
+            leftNeighbor.getChildren().add(new TreeNode<>(content, leftNeighbor));
+            //tree.getNodesList().set(tree.getNodesList().indexOf(leftNeighbor), leftNeighbor);
+        }
+        else {
+            if (leftNeighborParent == rightNeighborParent) {
+                leftNeighborParent.getChildren().add(
+                        leftNeighborParent.getChildren().indexOf(lastReferredTo),
+                        new TreeNode<>(content, leftNeighborParent)
+                );
+            } else {
+                if (settings.insertParameter == TreeSettings.insertSetting.no) {
+                    leftNeighborParent.getChildren().add(new TreeNode<>(content, leftNeighborParent));
+                } else if (settings.insertParameter == TreeSettings.insertSetting.insertBeforeSingle) {
+                    if (leftNeighbor == rightNeighborParent) {
+                        int insertionChildrenIndex = leftNeighbor.getChildren().indexOf(rightNeighbor);
+                        TreeNode<T> insertion = new TreeNode<>(content, leftNeighbor);
+                        insertion.getChildren().add(rightNeighbor);
+                        rightNeighbor.setParent(insertion);
+
+                        leftNeighbor.getChildren().remove(rightNeighbor);
+                        leftNeighbor.getChildren().add(insertionChildrenIndex, insertion);
+                    } else {
+                        leftNeighbor.getChildren().add(new TreeNode<>(content, leftNeighbor));
+                    }
+                } else if (settings.insertParameter == TreeSettings.insertSetting.insertBeforeBunch) {
+                    if (leftNeighbor == rightNeighborParent) {
+                        int insertionChildrenIndex = leftNeighbor.getChildren().indexOf(rightNeighbor);
+                        TreeNode<T> insertion = new TreeNode<>(content, leftNeighbor);
+                        insertion.getChildren().addAll(leftNeighbor.getChildren());
+                        leftNeighbor.getChildren().forEach(child -> child.setParent(insertion));
+
+                        leftNeighbor.getChildren().remove(rightNeighbor);
+                        leftNeighbor.getChildren().add(insertionChildrenIndex, insertion);
+
+                    } else {
+                        leftNeighbor.getChildren().add(new TreeNode<>(content, leftNeighbor));
+                    }
+                }
+
+            }
+        }
+
+        nodesAmount ++; //= tree.getSearchSortedNodes(tree.getRoot()).size();
     }
 
     @Override
@@ -134,16 +137,11 @@ public class TreeIterator<T> implements ListIterator<T> {
             lastReferredToParent.getChildren().remove(lastReferredTo);
             lastReferredToParent.getChildren().addAll(toRemoveChildIndex, lastReferredTo.getChildren());
 
-            tree.getNodesList().set(tree.getNodesList().indexOf(lastReferredToParent), lastReferredToParent);
-            tree.getNodesList().stream()
-                    .filter(node -> node.getParent() == lastReferredTo)
-                    .forEach(node -> node.setParent(lastReferredToParent));
-
         } else if (settings.getRemoveParameter() == TreeSettings.removeSetting.deleteSubBranches) {
             tree.getNodesList().remove(lastReferredTo);
         }
 
-        nodesAmount = tree.getSearchSortedNodes(tree.getRoot()).size();
+        nodesAmount --;//= tree.getSearchSortedNodes(tree.getRoot()).size();
     }
 
     @Override
