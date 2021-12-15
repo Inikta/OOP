@@ -30,7 +30,7 @@ public class NotebookApp {
         String separator = "/";
         this.fileName = fileName;
         String extension = ".json";
-        this.path = ".." + separator + this.fileName + extension;
+        this.path = ".." + separator + "task1_4_2" + separator + this.fileName + extension;
 
         this.notebook = new Notebook(path);
     }

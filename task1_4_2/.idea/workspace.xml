@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dec08e54-217c-4bab-b904-9fa5a53f7b50" name="Changes" comment="Improved tests, added Cloneable to Note.">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notes.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/NotebookApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../time_key_test.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../time_test.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +85,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -103,7 +107,7 @@
       <recent name="ru.nsu.nikita" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.task1_4_2 [shadowJar]">
+  <component name="RunManager" selected="Gradle.NotebookAppTests">
     <configuration name="NotebookApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.nsu.nikita.NotebookApp" />
       <module name="task1_4_2.main" />
@@ -233,8 +237,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.task1_4_2 [shadowJar]" />
         <item itemvalue="Gradle.NotebookAppTests" />
+        <item itemvalue="Gradle.task1_4_2 [shadowJar]" />
         <item itemvalue="Gradle.NotebookAppTests.showAllTest" />
         <item itemvalue="Gradle.NotebookAppTests.addTest" />
         <item itemvalue="Gradle.NotebookAppTests.showTimePeriodAndKeywordsTest" />
@@ -270,6 +274,7 @@
       <workItem from="1638156229368" duration="2801000" />
       <workItem from="1638238937804" duration="2091000" />
       <workItem from="1638257442665" duration="3988000" />
+      <workItem from="1639566330246" duration="361000" />
     </task>
     <task id="LOCAL-00001" summary="Completed with tests and updated the javadoc comments">
       <created>1638158851249</created>
