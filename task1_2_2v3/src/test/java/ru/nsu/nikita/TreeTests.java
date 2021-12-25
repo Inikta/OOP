@@ -1,7 +1,7 @@
 package ru.nsu.nikita;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.nsu.nikita.Node;
 
 public class TreeTests {
 
@@ -17,13 +17,53 @@ public class TreeTests {
     }
 
     @Test
-    void add() {
-        Node<String> tree = new Node<>("A");
-        tree.add("B", 0, Node.AddMode.ADD_AS_CHILD);
-        tree.add("C", 0, Node.AddMode.ADD_AS_CHILD);
-        tree.add("BA", 1, Node.AddMode.ADD_AS_CHILD);
-        tree.add("BB", 1, Node.AddMode.ADD_AS_CHILD);
-        tree.add("BC", 1, Node.AddMode.ADD_AS_CHILD);
+    void addBFS() {
+        Node<String> tree = new Node<>("A", Node.TraverseMode.BFS);
+        tree.add("1", 0, Node.AddMode.ADD_AS_CHILD);
+        tree.add("2", 0, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("11", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("12", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("13", 1, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("21", 2, Node.AddMode.ADD_AS_CHILD);
+        tree.add("22", 2, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("14", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("141", 6, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("221", 8, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("2211", 9, Node.AddMode.ADD_AS_CHILD);
+
+        Assertions.assertEquals(12, tree.getTree().size());
+        Assertions.assertEquals("141", tree.find(9).getContent());
+    }
+
+    @Test
+    void addDFS() {
+        Node<String> tree = new Node<>("A", Node.TraverseMode.DFS);
+        tree.add("1", 0, Node.AddMode.ADD_AS_CHILD);
+        tree.add("2", 0, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("11", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("12", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("13", 1, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("21", 5, Node.AddMode.ADD_AS_CHILD);
+        tree.add("22", 5, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("14", 1, Node.AddMode.ADD_AS_CHILD);
+        tree.add("141", 5, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("221", 9, Node.AddMode.ADD_AS_CHILD);
+
+        tree.add("2211", 10, Node.AddMode.ADD_AS_CHILD);
+
+        Assertions.assertEquals(12, tree.getTree().size());
+        Assertions.assertEquals("2211", tree.find(10).getContent());
+
+
     }
 
     @Test

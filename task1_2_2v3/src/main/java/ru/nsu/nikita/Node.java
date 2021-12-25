@@ -31,7 +31,7 @@ public class Node<T> implements Iterable<Node<T>> {
         this.nodeIndex = 0;
 
         this.currentTraverseMode = TraverseMode.BFS;
-        this.tree = getTree(currentTraverseMode);
+        this.tree = makeTree(currentTraverseMode);
 
         this.checked = false;
     }
@@ -47,7 +47,7 @@ public class Node<T> implements Iterable<Node<T>> {
         this.nodeIndex = 0;
 
         this.currentTraverseMode = mode;
-        this.tree = getTree(currentTraverseMode);
+        this.tree = makeTree(currentTraverseMode);
 
         this.checked = false;
     }
@@ -57,13 +57,13 @@ public class Node<T> implements Iterable<Node<T>> {
      * @param parent node, which is obe level high and to which this node is added as a child.
      */
     public Node(T content, Node<T> parent) {
-        setParent(parent);
         this.content = content;
         this.children = new ArrayList<>();
         this.nodeIndex = parent.getChildren().size() - 1;
+        setParent(parent);
 
         this.currentTraverseMode = parent.getCurrentTraverseMode();
-        this.tree = getTree(currentTraverseMode);
+        this.tree = makeTree(currentTraverseMode);
 
         this.checked = false;
     }
@@ -72,8 +72,8 @@ public class Node<T> implements Iterable<Node<T>> {
      * @param mode traversing mode for the (sub-)tree having this node as root. Available modes: BFS (breadth-first search), DFS (depth-first search).
      * @return list of all tree nodes sorted by search algorithm.
      */
-    public List<Node<T>> getTree(TraverseMode mode) {
-        return getTree(mode, new ArrayList<>());
+    public List<Node<T>> makeTree(TraverseMode mode) {
+        return makeTree(mode, new ArrayList<>(), this);
     }
 
     /** Get all nodes for which this node is the root. List is sorted in order of traversing (BFS, DFS).
@@ -81,16 +81,17 @@ public class Node<T> implements Iterable<Node<T>> {
      * @param queue queue of checked nodes, whose children should be checked. Is used for standard BFS (breadth-first search) algorithm.
      * @return list of all tree nodes sorted by search algorithm.
      */
-    public List<Node<T>> getTree(TraverseMode mode, List<Node<T>> queue) {
+    private List<Node<T>> makeTree(TraverseMode mode, List<Node<T>> queue, Node<T> root) {
         currentTraverseMode = mode;
         List<Node<T>> result = new ArrayList<>();
         List<Node<T>> newQueue = new ArrayList<>();
 
-        if (!this.isChecked()) {        //проьлема с чекингом
+        if (this == root && !this.isChecked()) {        //проьлема с чекингом
             if (mode == TraverseMode.BFS) {
                 queue.add(this);
             }
             this.setChecked(true);
+            result.add(this);
         }
 
         if (mode == TraverseMode.BFS) {
@@ -104,17 +105,27 @@ public class Node<T> implements Iterable<Node<T>> {
                 }
             }
             if (!newQueue.isEmpty()) {
-                result.addAll(getTree(mode, newQueue));
+                result.addAll(makeTree(mode, newQueue, root));
             }
+
+            if (this == root) {
+                result.forEach(node -> node.setChecked(false));
+            }
+
             return result;
 
         } else if (mode == TraverseMode.DFS) {
             for (Node<T> child : children) {
                 if (!child.isChecked()) {
                     child.setChecked(true);
-                    result.addAll(child.getTree(mode, null));
+                    result.addAll(child.makeTree(mode, null, root));
                 }
             }
+
+            if (this.getParent() == null) {
+                result.forEach(node -> node.setChecked(false));
+            }
+
             return result;
         }
 
@@ -129,7 +140,7 @@ public class Node<T> implements Iterable<Node<T>> {
      * @return required node.
      */
     public Node<T> find(int index) {
-        return this.getTree(currentTraverseMode, new ArrayList<>()).get(index);
+        return this.makeTree(currentTraverseMode).get(index);
     }
 
     /** Return the node located by index. Indexes are determined by search algorithm specified as searchMode used for this tree.
@@ -138,7 +149,7 @@ public class Node<T> implements Iterable<Node<T>> {
      * @return required node.
      */
     public Node<T> find(int index, TraverseMode searchMode) {
-        List<Node<T>> tempList = this.getTree(searchMode, new ArrayList<>());
+        List<Node<T>> tempList = this.makeTree(searchMode);
         return tempList.get(index);
     }
 
@@ -154,14 +165,14 @@ public class Node<T> implements Iterable<Node<T>> {
      */
     public void add(T content, int index, AddMode addMode, TraverseMode traverseMode) {
 
-        if (index > getTree(currentTraverseMode).size()) {
+        if (index > makeTree(currentTraverseMode).size()) {
             throw new IndexOutOfBoundsException("Wrong index value.\n");
         }
 
         if (traverseMode != currentTraverseMode) {
             setCurrentTraverseMode(traverseMode);
-            setTree(getTree(currentTraverseMode));
-            tree.forEach(node -> node.setTree(node.getTree(currentTraverseMode)));
+            setTree(makeTree(currentTraverseMode));
+            tree.forEach(node -> node.setTree(node.makeTree(currentTraverseMode)));
         }
 
         if (addMode == AddMode.ADD_AS_CHILD) {
@@ -169,9 +180,10 @@ public class Node<T> implements Iterable<Node<T>> {
                 throw new IndexOutOfBoundsException("Invalid index value in \"ADD_AS_CHILD\" mode.\n");
             }
             Node<T> parent = find(index, currentTraverseMode);
-            parent.getChildren().add(
+            new Node<>(content, parent);
+            /*parent.getChildren().add(
                     parent.getChildren().size(),
-                    new Node<>(content, parent));
+                    new Node<>(content, parent));*/
 
         } else if (addMode == AddMode.ADD_AS_NEIGHBOR) {
             if (index < 0) {
@@ -240,8 +252,8 @@ public class Node<T> implements Iterable<Node<T>> {
 
         }
 
-        setTree(getTree(currentTraverseMode));
-        tree.forEach(node -> node.setTree(node.getTree(currentTraverseMode)));
+        setTree(makeTree(currentTraverseMode));
+        tree.forEach(node -> node.setTree(node.makeTree(currentTraverseMode)));
     }
 
     /** Add new node to the tree. Different modes are used for adding node in different situations:
@@ -266,10 +278,10 @@ public class Node<T> implements Iterable<Node<T>> {
             parent.getChildren().remove(chosenNode);
 
         } else if (mode == RemoveMode.DELETE_SUBBRANCH) {
-            chosenNode.getTree(currentTraverseMode).forEach(node -> node.setChildren(null));
-            chosenNode.getTree(currentTraverseMode).forEach(node -> node.setTree(null));
-            chosenNode.getTree(currentTraverseMode).forEach(node -> node.setContent(null));
-            chosenNode.getTree(currentTraverseMode).forEach(node -> node.setParent(null));
+            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setChildren(null));
+            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setTree(null));
+            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setContent(null));
+            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setParent(null));
 
             chosenNode.setChildren(null);
             chosenNode.setTree(null);
@@ -279,8 +291,8 @@ public class Node<T> implements Iterable<Node<T>> {
             parent.getChildren().remove(chosenNode);
         }
 
-        setTree(getTree(currentTraverseMode));
-        tree.forEach(node -> node.setTree(node.getTree(currentTraverseMode)));
+        setTree(makeTree(currentTraverseMode));
+        tree.forEach(node -> node.setTree(node.makeTree(currentTraverseMode)));
     }
 
     /** Set new content for the node specified by index.
@@ -379,14 +391,14 @@ public class Node<T> implements Iterable<Node<T>> {
         if (this.parent != null) {
             this.parent.getChildren().remove(this);
             this.parent.setTree(
-                    this.parent.getTree(
+                    this.parent.makeTree(
                             this.parent.getCurrentTraverseMode()));
         }
         if (parent != null) {
             this.parent = parent;
             this.parent.getChildren().add(this);
             this.parent.setTree(
-                    getTree(
+                    makeTree(
                             parent.getCurrentTraverseMode()));
         } else {
             this.parent = null;
@@ -424,6 +436,10 @@ public class Node<T> implements Iterable<Node<T>> {
 
     public int getNodeIndex() {
         return nodeIndex;
+    }
+
+    public List<Node<T>> getTree() {
+        return tree;
     }
 
     @Override
