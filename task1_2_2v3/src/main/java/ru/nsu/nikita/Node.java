@@ -4,11 +4,11 @@ import java.util.*;
 
 public class Node<T> implements Iterable<Node<T>> {
 
-    public static enum AddMode {ADD_AS_CHILD, ADD_AS_NEIGHBOR, INSERT_BEFORE, INSERT_AFTER}
+    public enum AddMode {ADD_AS_CHILD, ADD_AS_NEIGHBOR, INSERT_BEFORE, INSERT_AFTER}
 
-    public static enum RemoveMode {CONCATENATE_SUBBRANCH, DELETE_SUBBRANCH}
+    public enum RemoveMode {CONCATENATE_SUBBRANCH, DELETE_SUBBRANCH}
 
-    public static enum TraverseMode {BFS, DFS}
+    public enum TraverseMode {BFS, DFS}
 
     private List<Node<T>> children;
     private Node<T> parent;
@@ -31,9 +31,9 @@ public class Node<T> implements Iterable<Node<T>> {
         this.nodeIndex = 0;
 
         this.currentTraverseMode = TraverseMode.BFS;
-        this.tree = makeTree(currentTraverseMode);
-
         this.checked = false;
+
+        this.tree = makeTree(currentTraverseMode);
     }
 
     /** ru.nsu.nikita.Node constructor, which is intended to be used for tree creation.
@@ -47,9 +47,9 @@ public class Node<T> implements Iterable<Node<T>> {
         this.nodeIndex = 0;
 
         this.currentTraverseMode = mode;
-        this.tree = makeTree(currentTraverseMode);
-
         this.checked = false;
+
+        this.tree = makeTree(currentTraverseMode);
     }
 
     /** ru.nsu.nikita.Node constructor, which is intended to be used for adding new nodes to existing tree.
@@ -63,9 +63,9 @@ public class Node<T> implements Iterable<Node<T>> {
         setParent(parent);
 
         this.currentTraverseMode = parent.getCurrentTraverseMode();
-        this.tree = makeTree(currentTraverseMode);
-
         this.checked = false;
+
+        this.tree = makeTree(currentTraverseMode);
     }
 
     /** Get all nodes for which this node is the root. List is sorted in order of traversing (BFS, DFS).
@@ -86,8 +86,8 @@ public class Node<T> implements Iterable<Node<T>> {
         List<Node<T>> result = new ArrayList<>();
         List<Node<T>> newQueue = new ArrayList<>();
 
-        if (this == root && !this.isChecked()) {        //проьлема с чекингом
-            if (mode == TraverseMode.BFS) {
+        if (this == root && !this.isChecked()) {
+            if (currentTraverseMode == TraverseMode.BFS) {
                 queue.add(this);
             }
             this.setChecked(true);
@@ -104,34 +104,25 @@ public class Node<T> implements Iterable<Node<T>> {
                     }
                 }
             }
+
             if (!newQueue.isEmpty()) {
                 result.addAll(makeTree(mode, newQueue, root));
             }
 
-            if (this == root) {
-                result.forEach(node -> node.setChecked(false));
-            }
-
-            return result;
-
         } else if (mode == TraverseMode.DFS) {
             for (Node<T> child : children) {
                 if (!child.isChecked()) {
+                    result.add(child);
                     child.setChecked(true);
                     result.addAll(child.makeTree(mode, null, root));
                 }
             }
-
-            if (this.getParent() == null) {
-                result.forEach(node -> node.setChecked(false));
-            }
-
-            return result;
         }
 
-        if (this.getParent() == null) {
+        if (this == root) {
             result.forEach(node -> node.setChecked(false));
         }
+
         return result;
     }
 
@@ -150,6 +141,9 @@ public class Node<T> implements Iterable<Node<T>> {
      */
     public Node<T> find(int index, TraverseMode searchMode) {
         List<Node<T>> tempList = this.makeTree(searchMode);
+        if (index < 0 || tempList.size() <= index) {
+            throw new IndexOutOfBoundsException();
+        }
         return tempList.get(index);
     }
 
@@ -207,9 +201,10 @@ public class Node<T> implements Iterable<Node<T>> {
 
             parent = leftNeighbor.getParent();
             if (!isRightNeighbourExists) {
-                parent.getChildren().add(
+                new Node<>(content, parent);
+                /*parent.getChildren().add(
                         parent.getChildren().size(),
-                        new Node<>(content, parent));
+                        new Node<>(content, parent));*/
             } else {
                 parent.getChildren().add(
                         index + 1,
@@ -274,14 +269,17 @@ public class Node<T> implements Iterable<Node<T>> {
         Node<T> parent = chosenNode.getParent();
 
         if (mode == RemoveMode.CONCATENATE_SUBBRANCH) {
-            chosenNode.getChildren().forEach(node -> node.setParent(parent));
+            List<Node<T>> adopted = chosenNode.getChildren();
+            for (int i = 0; i < adopted.size(); i++) {
+                adopted.get(i).setParent(parent);
+            }
             parent.getChildren().remove(chosenNode);
 
         } else if (mode == RemoveMode.DELETE_SUBBRANCH) {
-            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setChildren(null));
-            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setTree(null));
             chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setContent(null));
             chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setParent(null));
+            chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setChildren(null));
+            chosenNode.getTree().forEach(node -> node.setTree(null));
 
             chosenNode.setChildren(null);
             chosenNode.setTree(null);
@@ -348,7 +346,7 @@ public class Node<T> implements Iterable<Node<T>> {
 
             @Override
             public int previousIndex() {
-                return Math.abs(currentNode - 1);
+                return currentNode - 1;
             }
 
             @Override
@@ -445,10 +443,10 @@ public class Node<T> implements Iterable<Node<T>> {
     @Override
     public String toString() {
         return "ru.nsu.nikita.Node{" +
-                "children=" + children +
+                //"children=" + children +
                 ", parent=" + parent +
                 ", content=" + content +
-                ", nodeIndex=" + nodeIndex +
+                //", nodeIndex=" + nodeIndex +
                 ", currentTraverseMode=" + currentTraverseMode +
                 '}';
     }
