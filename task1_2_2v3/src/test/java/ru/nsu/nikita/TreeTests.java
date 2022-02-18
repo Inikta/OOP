@@ -74,16 +74,17 @@ public class TreeTests {
         tree.add("1", 0, ADD_AS_CHILD);
         tree.add("2", 0, ADD_AS_CHILD);
 
-        tree.add("3", 1, INSERT_BEFORE);        //изменяемая ветка добавляется в конец
+        tree.add("3", 1, INSERT_BEFORE);
         Assertions.assertEquals("3", tree.find(1).getContent());
         Assertions.assertEquals("1", tree.find(3).getContent());
 
         tree.add("4", 0, INSERT_BEFORE);
-        Assertions.assertEquals("4", tree.find(0).getContent());
-        Assertions.assertEquals("A", tree.find(1).getContent());
-        Assertions.assertEquals("3", tree.find(2).getContent());
-        Assertions.assertEquals("2", tree.find(3).getContent());
-        Assertions.assertEquals("1", tree.find(4).getContent());
+
+        Assertions.assertEquals("4", tree.getParent().getContent());
+        Assertions.assertEquals("A", tree.find(0).getContent());
+        Assertions.assertEquals("3", tree.find(1).getContent());
+        Assertions.assertEquals("2", tree.find(2).getContent());
+        Assertions.assertEquals("1", tree.find(3).getContent());
     }
 
     @Test
@@ -95,12 +96,12 @@ public class TreeTests {
         tree.add("3", 1, INSERT_AFTER);
         Assertions.assertEquals("3", tree.find(3).getContent());
 
-        tree.add("4", 0, INSERT_AFTER);     //что-то совсем не так
-        Assertions.assertEquals("4", tree.find(2).getContent());
+        tree.add("4", 0, INSERT_AFTER);
+        Assertions.assertEquals("4", tree.find(1).getContent());
 
         tree.add("5", -1, INSERT_AFTER);
-        Assertions.assertEquals("5", tree.find(0).getContent());
-        Assertions.assertEquals("A", tree.find(1).getContent());
+        Assertions.assertEquals("5", tree.getParent().getContent());
+        Assertions.assertEquals("A", tree.find(0).getContent());
     }
 
     @Test
@@ -121,7 +122,7 @@ public class TreeTests {
 
         tree.add("221", 8, ADD_AS_CHILD);
 
-        tree.add("2211", 9, ADD_AS_CHILD);
+        tree.add("2211", 10, ADD_AS_CHILD);
 
         tree.remove(1, CONCATENATE_SUBBRANCH);
         
@@ -150,7 +151,7 @@ public class TreeTests {
 
         tree.add("221", 8, ADD_AS_CHILD);   //что-то с порядком в tree
 
-        tree.add("2211", 9, ADD_AS_CHILD);
+        tree.add("2211", 10, ADD_AS_CHILD);
 
         tree.remove(1, DELETE_SUBBRANCH);
 

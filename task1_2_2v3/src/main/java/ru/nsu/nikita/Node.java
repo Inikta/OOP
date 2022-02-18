@@ -13,22 +13,19 @@ public class Node<T> implements Iterable<Node<T>> {
     private List<Node<T>> children;
     private Node<T> parent;
     private T content;
-    private int nodeIndex;
 
     private List<Node<T>> tree;
 
     private boolean checked;
 
     private TraverseMode currentTraverseMode;
-
-    /** ru.nsu.nikita.Node constructor, which is intended to be used for tree creation.
+  
      * @param content content, which is contained in this node.
      */
     public Node(T content) {
         this.parent = null;
         this.content = content;
         this.children = new ArrayList<>();
-        this.nodeIndex = 0;
 
         this.currentTraverseMode = TraverseMode.BFS;
         this.checked = false;
@@ -36,15 +33,10 @@ public class Node<T> implements Iterable<Node<T>> {
         this.tree = makeTree(currentTraverseMode);
     }
 
-    /** ru.nsu.nikita.Node constructor, which is intended to be used for tree creation.
-     * @param content content, which is contained in this node.
-     * @param mode traversing mode for the (sub-)tree having this node as root. Available modes: BFS (breadth-first search), DFS (depth-first search).
-     */
     public Node(T content, TraverseMode mode) {
         this.parent = null;
         this.content = content;
         this.children = new ArrayList<>();
-        this.nodeIndex = 0;
 
         this.currentTraverseMode = mode;
         this.checked = false;
@@ -52,21 +44,13 @@ public class Node<T> implements Iterable<Node<T>> {
         this.tree = makeTree(currentTraverseMode);
     }
 
-    /** ru.nsu.nikita.Node constructor, which is intended to be used for adding new nodes to existing tree.
-     * @param content content, which is contained in this node.
-     * @param parent node, which is obe level high and to which this node is added as a child.
-     */
-    public Node(T content, Node<T> parent) {
-        this.content = content;
-        this.children = new ArrayList<>();
-        this.nodeIndex = parent.getChildren().size() - 1;
-        setParent(parent);
 
         this.currentTraverseMode = parent.getCurrentTraverseMode();
         this.checked = false;
 
         this.tree = makeTree(currentTraverseMode);
     }
+
 
     /** Get all nodes for which this node is the root. List is sorted in order of traversing (BFS, DFS).
      * @param mode traversing mode for the (sub-)tree having this node as root. Available modes: BFS (breadth-first search), DFS (depth-first search).
@@ -76,8 +60,10 @@ public class Node<T> implements Iterable<Node<T>> {
         return makeTree(mode, new ArrayList<>(), this);
     }
 
+
     /** Get all nodes for which this node is the root. List is sorted in order of traversing (BFS, DFS).
      * @param mode traversing mode for the (sub-)tree having this node as root. Available modes: BFS (breadth-first search), DFS (depth-first search).
+
      * @param queue queue of checked nodes, whose children should be checked. Is used for standard BFS (breadth-first search) algorithm.
      * @return list of all tree nodes sorted by search algorithm.
      */
@@ -134,6 +120,7 @@ public class Node<T> implements Iterable<Node<T>> {
         return this.makeTree(currentTraverseMode).get(index);
     }
 
+
     /** Return the node located by index. Indexes are determined by search algorithm specified as searchMode used for this tree.
      * @param index position of node in the tree counting from this node.
      * @param searchMode traversing mode (BFS, DFS).
@@ -174,10 +161,8 @@ public class Node<T> implements Iterable<Node<T>> {
                 throw new IndexOutOfBoundsException("Invalid index value in \"ADD_AS_CHILD\" mode.\n");
             }
             Node<T> parent = find(index, currentTraverseMode);
-            new Node<>(content, parent);
-            /*parent.getChildren().add(
-                    parent.getChildren().size(),
-                    new Node<>(content, parent));*/
+
+            new Node<>(content, parent, true);
 
         } else if (addMode == AddMode.ADD_AS_NEIGHBOR) {
             if (index < 0) {
@@ -201,48 +186,54 @@ public class Node<T> implements Iterable<Node<T>> {
 
             parent = leftNeighbor.getParent();
             if (!isRightNeighbourExists) {
-                new Node<>(content, parent);
-                /*parent.getChildren().add(
-                        parent.getChildren().size(),
-                        new Node<>(content, parent));*/
+                new Node<>(content, parent, true);
             } else {
                 parent.getChildren().add(
-                        index + 1,
-                        new Node<>(content, parent));
+                        index,
+                        new Node<>(content, parent, false));
             }
 
         } else if (addMode == AddMode.INSERT_BEFORE) {
             if (index < 0) {
                 throw new IndexOutOfBoundsException("Invalid index value in \"INSERT_BEFORE\" mode.\n");
             }
-
-            Node<T> currentNode = find(index);
+          
+            Node<T> chosenNode = find(index);
             Node<T> insertion = new Node<>(content);
 
-            Node<T> parent = currentNode.getParent();
+            Node<T> parent = chosenNode.getParent();
 
-            insertion.getChildren().add(currentNode);
-            currentNode.setParent(insertion);
+            if (parent != null) {
+                int childIndex = parent.getChildren().indexOf(chosenNode);
 
-            insertion.setParent(parent);
-
-        } else if (addMode == AddMode.INSERT_AFTER) {
-            if (index < -1) {
-                throw new IndexOutOfBoundsException("Invalid index value in \"INSERT_BEFORE\" mode.\n");
+                chosenNode.setParent(insertion);
+                insertion.setParent(parent, childIndex);
+            } else {
+                chosenNode.setParent(insertion);
+                insertion.setParent(null);
             }
 
+        } else if (addMode == AddMode.INSERT_AFTER) {
             Node<T> chosenNode;
-            try {
-                chosenNode = find(index);
-            } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            Node<T> insertion = new Node<>(content);
+
+            if (index < -1 || index > tree.size()) {
+                throw new IndexOutOfBoundsException("Invalid index value in \"INSERT_BEFORE\" mode.\n");
+            } else if (index == -1) {
                 chosenNode = null;
+            } else {
+                chosenNode = find(index);
             }
 
             if (chosenNode == null) {
-                setParent(new Node<>(content));
+                setParent(insertion);
             } else {
-                Node<T> insertion = new Node<>(content, chosenNode);
+                List<Node<T>> nodesToAdopt = chosenNode.getChildren();
+                while (!nodesToAdopt.isEmpty()) {
+                    nodesToAdopt.get(0).setParent(insertion);
+                }
                 insertion.setParent(chosenNode);
+                //insertion.setParent(chosenNode);
             }
 
         }
@@ -251,13 +242,15 @@ public class Node<T> implements Iterable<Node<T>> {
         tree.forEach(node -> node.setTree(node.makeTree(currentTraverseMode)));
     }
 
-    /** Add new node to the tree. Different modes are used for adding node in different situations:
-            * ADD_AS_CHILD - add node as the last child of one specified by index;
-     * ADD_AS_NEIGHBOR - add node as a right neighbor of one specified by index;
-     * INSERT_BEFORE - add node between one specified by index and its parent;
-     * INSERT_AFTER - add node between one specified by index and its children;
+    /**
+     * Add new node to the tree. Different modes are used for adding node in different situations:
+     * <br>ADD_AS_CHILD - add node as the last child of one specified by index.
+     * <br>ADD_AS_NEIGHBOR - add node as a right neighbor of one specified by index.
+     * <br>INSERT_BEFORE - add node between one specified by index and its parent. Does not change the root node of the current tree.
+     * <br>INSERT_AFTER - add node between one specified by index and its children. Does not change the root node of the current tree.
+     *
      * @param content content, which is contained in this node.
-     * @param index position of node in the tree counting from this node.
+     * @param index   position of node in the tree counting from this node.
      * @param addMode modes (flags) for different adding styles.
      */
     public void add(T content, int index, AddMode addMode) {
@@ -266,14 +259,15 @@ public class Node<T> implements Iterable<Node<T>> {
 
     public void remove(int index, RemoveMode mode) {
         Node<T> chosenNode = find(index);
-        Node<T> parent = chosenNode.getParent();
+        Node<T> newParent = chosenNode.getParent();
 
         if (mode == RemoveMode.CONCATENATE_SUBBRANCH) {
-            List<Node<T>> adopted = chosenNode.getChildren();
-            for (int i = 0; i < adopted.size(); i++) {
-                adopted.get(i).setParent(parent);
+            List<Node<T>> nodesToAdopt = chosenNode.getChildren();
+            while (!nodesToAdopt.isEmpty()) {
+                nodesToAdopt.get(0).setParent(newParent);
             }
-            parent.getChildren().remove(chosenNode);
+            newParent.getChildren().remove(chosenNode);
+            setTree(makeTree(currentTraverseMode));
 
         } else if (mode == RemoveMode.DELETE_SUBBRANCH) {
             chosenNode.makeTree(currentTraverseMode).forEach(node -> node.setContent(null));
@@ -286,22 +280,26 @@ public class Node<T> implements Iterable<Node<T>> {
             chosenNode.setContent(null);
             chosenNode.setParent(null);
 
-            parent.getChildren().remove(chosenNode);
+            newParent.getChildren().remove(chosenNode);
         }
 
-        setTree(makeTree(currentTraverseMode));
+        //setTree(makeTree(currentTraverseMode));
         tree.forEach(node -> node.setTree(node.makeTree(currentTraverseMode)));
     }
 
-    /** Set new content for the node specified by index.
-     * @param index position of node in the tree counting from this node.
+    /**
+     * Set new content for the node specified by index.
+     *
+     * @param index   position of node in the tree counting from this node.
      * @param content content, which is contained in this node.
      */
     public void set(int index, T content) {
         find(index).setContent(content);
     }
 
-    /** Get iterator for the (sub-)tree beginning at this node.
+    /**
+     * Get iterator for the (sub-)tree beginning at this node.
+     *
      * @return iterator.
      */
     @Override
@@ -309,7 +307,6 @@ public class Node<T> implements Iterable<Node<T>> {
         return new ListIterator<>() {
 
             private int currentNode = 0;
-            private Node<T> lastReferredTo;
 
             @Override
             public boolean hasNext() {
@@ -382,7 +379,9 @@ public class Node<T> implements Iterable<Node<T>> {
         return children;
     }
 
-    /** Set new parent for this node. Removes this node from children and descendents of previous parent node and sets them for the new one.
+    /**
+     * Set new parent for this node. Removes this node from children and descendents of previous parent node and sets them for the new one.
+     *
      * @param parent new parent for this node.
      */
     public void setParent(Node<T> parent) {
@@ -395,6 +394,25 @@ public class Node<T> implements Iterable<Node<T>> {
         if (parent != null) {
             this.parent = parent;
             this.parent.getChildren().add(this);
+            this.parent.setTree(
+                    this.parent.makeTree(
+                            parent.getCurrentTraverseMode()));
+        } else {
+            this.parent = null;
+        }
+
+    }
+
+    public void setParent(Node<T> parent, int index) {
+        if (this.parent != null) {
+            this.parent.getChildren().remove(this);
+            this.parent.setTree(
+                    this.parent.makeTree(
+                            this.parent.getCurrentTraverseMode()));
+        }
+        if (parent != null) {
+            this.parent = parent;
+            this.parent.getChildren().add(index, this);
             this.parent.setTree(
                     makeTree(
                             parent.getCurrentTraverseMode()));
