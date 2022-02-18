@@ -2,11 +2,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.nsu.nikita.IntegerArrayListGenerator;
+import ru.nsu.nikita.ParallelStreamsPrimeNumbersDetector;
 import ru.nsu.nikita.SequentialStreamPrimeNumbersDetector;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PrimeNumbersTests {
 
@@ -43,8 +46,10 @@ public class PrimeNumbersTests {
     @Test
     public void oneSequentialStreamPositiveArrayTest() {
 
-        Integer[] arrayFalse = {4, 6, 8, 9, 12};
-        Integer[] arrayTrue = {4, 6, 8, 9, 12, 1};
+        List<Integer> arrayFalse = new IntegerArrayListGenerator(100, 0, 50).generate();
+        arrayFalse.add(4);
+        List<Integer> arrayTrue = new IntegerArrayListGenerator(100, 0, 50).generate();
+        arrayFalse.add(5);
 
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse));
         Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
@@ -53,10 +58,41 @@ public class PrimeNumbersTests {
     @Test
     public void oneSequentialStreamArrayTest() {
 
-        Integer[] arrayFalse = {-4, 6, -8, 9, 12};
-        Integer[] arrayTrue = {4, -6, 8, -9, 12, -1};
+        List<Integer> arrayFalse = new IntegerArrayListGenerator(100, -50, 50).generate();
+        arrayFalse.add(-4);
+        List<Integer> arrayTrue = new IntegerArrayListGenerator(100, -50, 50).generate();
+        arrayFalse.add(-5);
 
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse));
         Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
     }
+
+    @Test
+    public void oneSequentialStreamLargeArrayTest() {
+        List<Integer> arrayFalse = new IntegerArrayListGenerator(100000, -100000, 100000).generate();
+        arrayFalse.add(4);
+        List<Integer> arrayTrue = new IntegerArrayListGenerator(10000, -100000, 100000).generate();
+        arrayFalse.add(5);
+
+        System.out.println("Sequential:");
+        SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse);
+        //Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
+    }
+
+    @Test
+    public void parallelStreamsLargeArrayTest() {
+        List<Integer> arrayFalse = new IntegerArrayListGenerator(100000, -100000, 100000).generate();
+        arrayFalse.add(4);
+        List<Integer> arrayTrue = new IntegerArrayListGenerator(10000, -100000, 100000).generate();
+        arrayFalse.add(5);
+
+        System.out.println("Parallel:");
+        ParallelStreamsPrimeNumbersDetector.hasPrime(arrayFalse);
+        //Assertions.assertTrue(ParallelStreamsPrimeNumbersDetector.hasPrime(arrayTrue));
+    }
+
+/*    @Test
+    public void ThreadsLargeArrayTest() {
+
+    }*/
 }
