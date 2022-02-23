@@ -4,10 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/IntegerArrayListGenerator.java" afterDir="false" />
+    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="-">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/DotGraphsDrawer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__info_picocli_picocli_4_6_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/modules/task1_4_2.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/modules/task1_4_2.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../task1_4_2/.idea/runConfigurations.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/MultiThreadPrimeNumbersDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ThreadPrimeNumbersDetector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/IntegerArrayListGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ListGenerators.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ThreadPrimeNumbersDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ThreadPrimeNumbersDetector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PrimeNumbersTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PrimeNumbersTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,12 +73,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.10664171" />
     <property name="project.structure.side.proportion" value="0.66282725" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.PrimeNumbersTests">
     <configuration name="PrimeNumbersTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -80,9 +101,75 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="PrimeNumbersTests.longPrimeNumbersListTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;PrimeNumbersTests.longPrimeNumbersListTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PrimeNumbersTests.parallelStreamsLargeArrayTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;PrimeNumbersTests.parallelStreamsLargeArrayTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PrimeNumbersTests.randomListTimeTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;PrimeNumbersTests.randomListTimeTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.PrimeNumbersTests" />
+        <item itemvalue="Gradle.PrimeNumbersTests.longPrimeNumbersListTest" />
+        <item itemvalue="Gradle.PrimeNumbersTests.randomListTimeTest" />
+        <item itemvalue="Gradle.PrimeNumbersTests.parallelStreamsLargeArrayTest" />
       </list>
     </recent_temporary>
   </component>
@@ -97,6 +184,9 @@
       <workItem from="1644907049803" duration="7410000" />
       <workItem from="1644995574020" duration="5737000" />
       <workItem from="1645126871983" duration="2561000" />
+      <workItem from="1645193771784" duration="2533000" />
+      <workItem from="1645234236770" duration="10000" />
+      <workItem from="1645619767178" duration="3452000" />
     </task>
     <task id="LOCAL-00001" summary="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты.">
       <created>1645009440478</created>
@@ -138,20 +228,21 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты." />
-    <option name="LAST_COMMIT_MESSAGE" value="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты." />
+    <MESSAGE value="-" />
+    <option name="LAST_COMMIT_MESSAGE" value="-" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/PrimeNumbersTests.java</url>
-          <line>26</line>
+          <line>22</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/src/test/java/PrimeNumbersTests.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

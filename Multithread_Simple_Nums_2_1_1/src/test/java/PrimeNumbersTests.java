@@ -1,8 +1,6 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.nsu.nikita.IntegerArrayListGenerator;
+import ru.nsu.nikita.ListGenerators;
 import ru.nsu.nikita.ParallelStreamsPrimeNumbersDetector;
 import ru.nsu.nikita.SequentialStreamPrimeNumbersDetector;
 
@@ -16,79 +14,98 @@ public class PrimeNumbersTests {
     public Instant startTime;
     public Instant endTime;
 
-    @BeforeEach
     public void startTime() {
         startTime = Instant.now();
     }
 
-    @AfterEach
     public void calculateDuration() {
         endTime = Instant.now();
         long time = Duration.between(startTime, endTime).toMillis();
 
         System.out.println(time);
+
     }
 
     @Test
-    public void oneSequentialStreamEmptyArrayTest() {
+    public void algorithmCorrectnessEmptyTest() {
 
         ArrayList<Integer> arrayList = new ArrayList<>();
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(arrayList));
     }
 
     @Test
-    public void oneSequentialStreamZeroTest() {
+    public void algorithmCorrectnessZeroTest() {
         Integer[] array = {0};
 
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(array));
     }
 
     @Test
-    public void oneSequentialStreamPositiveArrayTest() {
+    public void algorithmCorrectnessPositiveListTest() {
 
-        List<Integer> arrayFalse = new IntegerArrayListGenerator(100, 0, 50).generate();
-        arrayFalse.add(4);
-        List<Integer> arrayTrue = new IntegerArrayListGenerator(100, 0, 50).generate();
-        arrayFalse.add(5);
+        Integer[] arrayFalse = {4, 6, 8, 9, 12, 1000000000, 621547828};
+        Integer[] arrayTrue = {4, 6, 8, 9, 12, 1000000000, 621547828, 1};
 
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse));
         Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
     }
 
     @Test
-    public void oneSequentialStreamArrayTest() {
+    public void algorithmCorrectnessAnyListTest() {
 
-        List<Integer> arrayFalse = new IntegerArrayListGenerator(100, -50, 50).generate();
-        arrayFalse.add(-4);
-        List<Integer> arrayTrue = new IntegerArrayListGenerator(100, -50, 50).generate();
-        arrayFalse.add(-5);
+        Integer[] arrayFalse = {4, 6, -8, 9, 12, -1000000000, 621547828};
+        Integer[] arrayTrue = {4, -6, 8, 9, 12, 1000000000, -621547828, -1};
 
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse));
         Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
     }
 
+
     @Test
-    public void oneSequentialStreamLargeArrayTest() {
-        List<Integer> arrayFalse = new IntegerArrayListGenerator(100000, -100000, 100000).generate();
-        arrayFalse.add(4);
-        List<Integer> arrayTrue = new IntegerArrayListGenerator(10000, -100000, 100000).generate();
-        arrayFalse.add(5);
+    public void randomListTimeTest() {
+        List<Integer> randomList = new ListGenerators().generateRandom(1000000, 0, 1000000);
 
         System.out.println("Sequential:");
-        SequentialStreamPrimeNumbersDetector.hasPrime(arrayFalse);
-        //Assertions.assertTrue(SequentialStreamPrimeNumbersDetector.hasPrime(arrayTrue));
+        startTime();
+        SequentialStreamPrimeNumbersDetector.hasPrime(randomList);
+        calculateDuration();
+
+        System.out.println("Parallel:");
+        startTime();
+        ParallelStreamsPrimeNumbersDetector.hasPrime(randomList);
+        calculateDuration();
     }
 
     @Test
-    public void parallelStreamsLargeArrayTest() {
-        List<Integer> arrayFalse = new IntegerArrayListGenerator(100000, -100000, 100000).generate();
-        arrayFalse.add(4);
-        List<Integer> arrayTrue = new IntegerArrayListGenerator(10000, -100000, 100000).generate();
-        arrayFalse.add(5);
+    public void longPrimeNumbersListTest() {
+        List<Integer> primesList = new ListGenerators().generateAllPrimes(0, 1000000);
+
+        System.out.println("Sequential:");
+        startTime();
+        System.out.println(SequentialStreamPrimeNumbersDetector.hasPrime(primesList));
+
+        calculateDuration();
 
         System.out.println("Parallel:");
-        ParallelStreamsPrimeNumbersDetector.hasPrime(arrayFalse);
-        //Assertions.assertTrue(ParallelStreamsPrimeNumbersDetector.hasPrime(arrayTrue));
+        startTime();
+        System.out.println(ParallelStreamsPrimeNumbersDetector.hasPrime(primesList));
+        calculateDuration();
+    }
+
+    @Test
+    public void longNotPrimeNumbersListTest() {
+        List<Integer> primesList = new ListGenerators().generateAllNotPrimes(0, 1000000);
+
+        System.out.println("Sequential:");
+        startTime();
+        System.out.println(SequentialStreamPrimeNumbersDetector.hasPrime(primesList));
+
+        calculateDuration();
+
+        System.out.println("Parallel:");
+        startTime();
+        System.out.println(ParallelStreamsPrimeNumbersDetector.hasPrime(primesList));
+        calculateDuration();
     }
 
 /*    @Test

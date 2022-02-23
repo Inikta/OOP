@@ -36,7 +36,6 @@ public class SequentialStreamPrimeNumbersDetector {
         boolean prime;
         try {
             prime = nums.stream()
-                    .mapToInt(Math::abs)
                     .anyMatch(PrimeNumberCheck::isPrime);
         } catch (NullPointerException nullExc) {
             nullExc.printStackTrace();

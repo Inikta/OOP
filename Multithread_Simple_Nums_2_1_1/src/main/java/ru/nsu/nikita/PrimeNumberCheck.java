@@ -1,7 +1,8 @@
 package ru.nsu.nikita;
 
 public class PrimeNumberCheck {
-    public static boolean isPrime(Integer num) {
+    public static boolean isPrime(Integer number) {
+        Integer num = Math.abs(number);
         if (num != 0) {
             for (int i = 2; i <= Math.floor(Math.sqrt(num)); i++) {
                 if (num % i == 0) {

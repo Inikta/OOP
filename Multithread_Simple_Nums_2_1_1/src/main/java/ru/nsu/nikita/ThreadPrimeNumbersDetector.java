@@ -3,24 +3,18 @@ package ru.nsu.nikita;
 import java.util.ArrayList;
 
 public class ThreadPrimeNumbersDetector extends Thread {
-    private final ArrayList<Integer> nums;
+    private final Integer num;
     private boolean hasPrime;
 
-    public ThreadPrimeNumbersDetector(ArrayList<Integer> nums) {
-        this.nums = nums;
+    public ThreadPrimeNumbersDetector(Integer num) {
+        this.num = num;
         hasPrime = false;
     }
 
     @Override
     public void run() {
         super.run();
-        for (Integer num : nums) {
-            if (PrimeNumberCheck.isPrime(num)) {
-                hasPrime = true;
-                return;
-            }
-            hasPrime = false;
-        }
+        hasPrime = PrimeNumberCheck.isPrime(num);
     }
 
     public boolean getResult() {

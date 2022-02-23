@@ -35,7 +35,6 @@ public class ParallelStreamsPrimeNumbersDetector {
         boolean prime;
         try {
             prime = nums.parallelStream()
-                    .mapToInt(Math::abs)
                     .anyMatch(PrimeNumberCheck::isPrime);
         } catch (NullPointerException nullExc) {
             nullExc.printStackTrace();
