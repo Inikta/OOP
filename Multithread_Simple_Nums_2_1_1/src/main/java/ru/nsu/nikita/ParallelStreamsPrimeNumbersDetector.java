@@ -8,8 +8,8 @@ public class ParallelStreamsPrimeNumbersDetector {
      * One-thread prime numbers detector for integers.
      * Makes list from array and executes method for lists.
      *
-     * @param array - integer numbers array.
-     * @return - true, if prime number was found. Otherwise, false.
+     * @param array integer numbers array.
+     * @return true, if prime number was found. Otherwise, false.
      */
 
     public static Boolean hasPrime(Integer[] array) {
@@ -27,8 +27,8 @@ public class ParallelStreamsPrimeNumbersDetector {
      * Parallel-streamed prime numbers detector for integers.
      * Founds if list contains integer prime number.
      *
-     * @param nums - integer numbers list.
-     * @return - true, if prime number was found. Otherwise, false.
+     * @param nums integer numbers list.
+     * @return true, if prime number was found. Otherwise, false.
      */
 
     public static Boolean hasPrime(List<Integer> nums) {
