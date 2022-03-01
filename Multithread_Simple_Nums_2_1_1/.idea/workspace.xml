@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал." />
+    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -210,7 +212,7 @@
       <workItem from="1645619767178" duration="3452000" />
       <workItem from="1645688756434" duration="51000" />
       <workItem from="1645769478007" duration="1777000" />
-      <workItem from="1646133461631" duration="374000" />
+      <workItem from="1646133461631" duration="490000" />
     </task>
     <task id="LOCAL-00001" summary="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты.">
       <created>1645009440478</created>
@@ -226,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646133534332</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Многое поправил, но еще не доделал.">
+      <created>1646137870574</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646137870574</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
