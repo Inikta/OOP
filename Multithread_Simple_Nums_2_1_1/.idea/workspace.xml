@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал.">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022__9_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022__9_20__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +40,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="lab7" />
+        <entry key="$PROJECT_DIR$/.." value="lab8_prime_nums" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -67,7 +70,7 @@
     <property name="project.structure.side.proportion" value="0.66282725" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager" selected="Gradle.CorrectnessTests.algorithmCorrectnessPositiveListTest">
+  <component name="RunManager" selected="Gradle.DifferentListsTests">
     <configuration name="CorrectnessTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -188,9 +191,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.CorrectnessTests.algorithmCorrectnessPositiveListTest" />
-        <item itemvalue="Gradle.CorrectnessTests" />
         <item itemvalue="Gradle.DifferentListsTests" />
+        <item itemvalue="Gradle.CorrectnessTests" />
+        <item itemvalue="Gradle.CorrectnessTests.algorithmCorrectnessPositiveListTest" />
         <item itemvalue="Gradle.PrimeNumbersTests" />
         <item itemvalue="Gradle.PrimeNumbersTests.longPrimeNumbersListTest" />
       </list>
@@ -309,11 +312,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
           <line>20</line>
           <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

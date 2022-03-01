@@ -15,7 +15,7 @@ public class MultiThreadListCheck {
 
     public static boolean hasPrime(List<Integer> list, int maxThreads) {
         int counter = 0;
-        int hasPrime = 0;
+        boolean hasPrime = false;
         int threadsAmount = getAvailableThreads(maxThreads);
         for (int i = 0; i < list.size(); i += threadsAmount) {
             List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
@@ -23,30 +23,30 @@ public class MultiThreadListCheck {
 
             for (int j = 0; j < threadsAmount; j++) {
                 threads.add(new ThreadPrimeNumberCheck(list.get(counter++)));
-                threads.get(j).setPriority(10 - j);
             }
 
             for (ThreadPrimeNumberCheck thread : threads) {
-                thread.start();
-            }
-
-            for (int j = 0; j < threads.size(); j++) {
-                if (threads.get(j).getResult()) {
-                    hasPrime++;
+                hasPrime = thread.call();
+                if (hasPrime) {
+                    return true;
                 }
             }
 
-            if (hasPrime > 0) {
-                break;
+           // System.out.println("Result: " + hasPrime);
+
+            if (hasPrime) {
+                return true;
             }
         }
 
-        if (hasPrime > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return hasPrime;
     }
+
+    /**
+     * Compares requested amount of threads with number of available ones.
+     * @param maxThreads requested amount of threads.
+     * @return requested amount, if this amount is available. Or available amount, if it is less than requested.
+     */
 
     private static int getAvailableThreads(int maxThreads) {
         int currentAvailable = Runtime.getRuntime().availableProcessors();
@@ -55,7 +55,7 @@ public class MultiThreadListCheck {
         } else {
             System.out.println("There are only "
                     + currentAvailable
-                    + " threads available to use, instead of requested"
+                    + " threads available to use, instead of requested "
                     + maxThreads + ".");
             return currentAvailable;
         }
