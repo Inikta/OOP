@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал.">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022__9_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022__9_20__Changes_.xml" afterDir="false" />
+    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +26,22 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Multithread_Simple_Nums_2_1_1" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Multithread_Simple_Nums_2_1_1" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -44,6 +59,17 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ListGenerators.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="258S6JcZZmgZnW79T8aI4d28M89" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -216,6 +242,7 @@
       <workItem from="1645688756434" duration="51000" />
       <workItem from="1645769478007" duration="1777000" />
       <workItem from="1646133461631" duration="490000" />
+      <workItem from="1646228703378" duration="1807000" />
     </task>
     <task id="LOCAL-00001" summary="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты.">
       <created>1645009440478</created>
@@ -238,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646137870574</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех.">
+      <created>1646139427084</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1646139427084</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +307,8 @@
     <MESSAGE value="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты." />
     <MESSAGE value="-" />
     <MESSAGE value="Многое поправил, но еще не доделал." />
-    <option name="LAST_COMMIT_MESSAGE" value="Многое поправил, но еще не доделал." />
+    <MESSAGE value="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех." />
+    <option name="LAST_COMMIT_MESSAGE" value="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -310,7 +345,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
-          <line>20</line>
+          <line>19</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>

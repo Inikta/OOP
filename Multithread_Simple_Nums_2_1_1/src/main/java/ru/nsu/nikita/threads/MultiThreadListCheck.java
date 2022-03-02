@@ -12,10 +12,9 @@ public class MultiThreadListCheck {
      * @param maxThreads threads amount for computations.
      * @return true, if list has prime numbers. False, otherwise.
      */
-
     public static boolean hasPrime(List<Integer> list, int maxThreads) {
         int counter = 0;
-        boolean hasPrime = false;
+
         int threadsAmount = getAvailableThreads(maxThreads);
         for (int i = 0; i < list.size(); i += threadsAmount) {
             List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
@@ -26,24 +25,19 @@ public class MultiThreadListCheck {
             }
 
             for (ThreadPrimeNumberCheck thread : threads) {
-                hasPrime = thread.call();
-                if (hasPrime) {
+                thread.run();
+                if (thread.hasPrime) {
                     return true;
                 }
             }
-
-           // System.out.println("Result: " + hasPrime);
-
-            if (hasPrime) {
-                return true;
-            }
         }
 
-        return hasPrime;
+        return false;
     }
 
     /**
      * Compares requested amount of threads with number of available ones.
+     *
      * @param maxThreads requested amount of threads.
      * @return requested amount, if this amount is available. Or available amount, if it is less than requested.
      */

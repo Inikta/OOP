@@ -192,9 +192,9 @@ public class DifferentListsTests {
         }
     }
 
-    @Test
-    public void size100000000NotPrimeNumbersListTest() {
-        List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 100000000);
+   /* @Test
+    public void size50000000NotPrimeNumbersListTest() {
+        List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 50000000);
 
         System.out.println("Sequential:");
         startTime();
@@ -214,5 +214,5 @@ public class DifferentListsTests {
             System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
             calculateDuration();
         }
-    }
+    }*/
 }

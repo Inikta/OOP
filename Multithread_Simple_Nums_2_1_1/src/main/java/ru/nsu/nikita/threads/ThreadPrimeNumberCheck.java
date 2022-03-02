@@ -2,14 +2,15 @@ package ru.nsu.nikita.threads;
 
 import ru.nsu.nikita.PrimeNumberCheck;
 
-import java.util.concurrent.Callable;
-
-public class ThreadPrimeNumberCheck implements Callable<Boolean> {
+public class ThreadPrimeNumberCheck implements Runnable {
 
     /**
      * num - integer number, which is going to be checked.
      */
     private final Integer num;
+    volatile boolean hasPrime;
+    volatile boolean finish;
+
     /**
      * Default constructor.
      *
@@ -17,23 +18,21 @@ public class ThreadPrimeNumberCheck implements Callable<Boolean> {
      */
     public ThreadPrimeNumberCheck(Integer num) {
         this.num = num;
+        hasPrime = false;
+        finish = false;
     }
 
     /**
      * The body of the thread, which executes general prime number checking algorithm.
      */
     @Override
-    public Boolean call() {
-        if (PrimeNumberCheck.isPrime(num)) {
-            /*System.out.println(
-                    ": " + hasPrime
-                            + " " + num);*/
-            return true;
-        }
+    public void run() {
+        if (!finish) {
+            hasPrime = (PrimeNumberCheck.isPrime(num));
 
-        /*System.out.println(
-                ": " + hasPrime
-                        + " " + num);*/
-        return false;
+            if (hasPrime) {
+                finish = true;
+            }
+        }
     }
 }
