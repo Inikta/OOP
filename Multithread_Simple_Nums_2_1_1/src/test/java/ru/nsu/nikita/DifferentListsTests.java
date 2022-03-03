@@ -48,8 +48,8 @@ public class DifferentListsTests {
 
             startTime();
             checker.hasPrime();
-            calculateDuration();
             System.out.print(checker.isHasPrimeNumber() + " - ");
+            calculateDuration();
         }
     }
 
@@ -75,8 +75,8 @@ public class DifferentListsTests {
 
             startTime();
             checker.hasPrime();
-            calculateDuration();
             System.out.print(checker.isHasPrimeNumber() + " - ");
+            calculateDuration();
         }
     }
 
@@ -103,8 +103,8 @@ public class DifferentListsTests {
 
             startTime();
             checker.hasPrime();
-            calculateDuration();
             System.out.print(checker.isHasPrimeNumber() + " - ");
+            calculateDuration();
         }
     }
 
@@ -131,8 +131,8 @@ public class DifferentListsTests {
 
             startTime();
             checker.hasPrime();
-            calculateDuration();
             System.out.print(checker.isHasPrimeNumber() + " - ");
+            calculateDuration();
         }
     }
 
@@ -159,8 +159,8 @@ public class DifferentListsTests {
 
             startTime();
             checker.hasPrime();
-            calculateDuration();
             System.out.print(checker.isHasPrimeNumber() + " - ");
+            calculateDuration();
         }
     }
 }
