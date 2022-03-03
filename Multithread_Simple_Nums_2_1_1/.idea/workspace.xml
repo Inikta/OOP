@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал.">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022,_9_20_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_2022__9_20__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022__10_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022__10_53__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ListGenerators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/ThreadPrimeNumberCheck.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,14 +62,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
@@ -102,7 +99,7 @@
     <property name="project.structure.side.proportion" value="0.66282725" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager" selected="Gradle.DifferentListsTests">
+  <component name="RunManager" selected="Gradle.DifferentListsTests.oneLargeNotPrimeList1000Test">
     <configuration name="CorrectnessTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -124,12 +121,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="CorrectnessTests.algorithmCorrectnessAnyListTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="DifferentListsTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.CorrectnessTests.algorithmCorrectnessAnyListTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.DifferentListsTests&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -145,12 +142,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="DifferentListsTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="DifferentListsTests.oneLargeNotPrimeList1000Test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.DifferentListsTests&quot;" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.nikita.DifferentListsTests.oneLargeNotPrimeList1000Test&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -223,11 +220,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.DifferentListsTests.oneLargeNotPrimeList1000Test" />
         <item itemvalue="Gradle.DifferentListsTests" />
         <item itemvalue="Gradle.CorrectnessTests" />
         <item itemvalue="Gradle.DifferentListsTests.size10000NotPrimeNumbersListTest" />
         <item itemvalue="Gradle.DifferentListsTests.size1000NotPrimeNumbersListTest" />
-        <item itemvalue="Gradle.CorrectnessTests.algorithmCorrectnessAnyListTest" />
       </list>
     </recent_temporary>
   </component>
@@ -335,11 +332,6 @@
           <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java</url>
           <line>55</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java</url>

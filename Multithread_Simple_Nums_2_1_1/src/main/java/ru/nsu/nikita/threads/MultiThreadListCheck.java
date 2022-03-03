@@ -8,6 +8,8 @@ import java.util.List;
 public class MultiThreadListCheck {
 
     volatile private boolean hasPrimeNumber = false;
+    private final List<Integer> list;
+    private final int maxThreads;
 
     /**
      * Multiple threads creation and managing method. Makes multi-thread checking of list having prime numbers.
@@ -16,34 +18,35 @@ public class MultiThreadListCheck {
      * @param maxThreads threads amount for computations.
      */
 
-    public void hasPrime(List<Integer> list, int maxThreads) throws InterruptedException {
-        int counter = 0;
+    public MultiThreadListCheck(List<Integer> list, int maxThreads) {
+        this.list = list;
+        this.maxThreads = maxThreads;
+    }
 
+    public void hasPrime() throws InterruptedException {
+        int counter = 0;
         int threadsAmount = getAvailableThreads(maxThreads);
+
         for (int i = 0; i < list.size(); i += threadsAmount) {
+            threadsAmount = Math.min(threadsAmount, list.size() - i);
 
             List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
-            threadsAmount = Math.min(list.size() - i, threadsAmount);
 
             for (int j = 0; j < threadsAmount; j++) {
-                threads.add(new ThreadPrimeNumberCheck(list.get(counter++)));
+                threads.add(new ThreadPrimeNumberCheck(list.get(counter++)));       //create thread for next number
+                threads.get(j).start();                                             //start thread
+                threads.get(j).join();
             }
 
-            for (ThreadPrimeNumberCheck thread : threads) {
-                thread.start();
-            }
-
-            for (ThreadPrimeNumberCheck thread : threads) {
-                thread.join();
+            for (ThreadPrimeNumberCheck t : threads) {                           //wait for tasks complete
+                t.join();
             }
 
             if (hasPrimeNumber) {
                 return;
             }
-
-            //System.out.println("Main: " + hasPrimeNumber);
-            //Thread.sleep(1);
         }
+
     }
 
     /**
@@ -55,7 +58,7 @@ public class MultiThreadListCheck {
 
     private static int getAvailableThreads(int maxThreads) {
         int currentAvailable = Runtime.getRuntime().availableProcessors();
-        if (maxThreads < currentAvailable) {
+        if (maxThreads <= currentAvailable) {
             return maxThreads;
         } else {
             System.out.println("There are only "
@@ -65,6 +68,11 @@ public class MultiThreadListCheck {
             return currentAvailable;
         }
     }
+
+    /**
+     * Get result of the list analysis.
+     * @return True or False.
+     */
 
     public boolean isHasPrimeNumber() {
         return hasPrimeNumber;
@@ -91,8 +99,8 @@ public class MultiThreadListCheck {
          */
         @Override
         public void run() {
-            hasPrimeNumber = (PrimeNumberCheck.isPrime(num));
-           // System.out.println(this.getName() + ": " + num + " - " + hasPrimeNumber);
+            hasPrimeNumber = PrimeNumberCheck.isPrime(num);
+            // System.out.println(this.getName() + ": " + num + " - " + hasPrimeNumber);    - for debugging purposes
         }
     }
 }

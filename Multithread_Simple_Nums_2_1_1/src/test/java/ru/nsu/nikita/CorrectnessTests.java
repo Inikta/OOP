@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CorrectnessTests {
+
+    /**
+     * Tests for checking correctness of used algorithm variations.
+     */
+
     @Test
     public void algorithmCorrectnessEmptyTest() throws InterruptedException {
 
@@ -15,8 +20,8 @@ public class CorrectnessTests {
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(list));
         Assertions.assertFalse(ParallelStreamsPrimeNumbersDetector.hasPrime(list));
 
-        MultiThreadListCheck checker = new MultiThreadListCheck();
-        checker.hasPrime(list, 1);
+        MultiThreadListCheck checker = new MultiThreadListCheck(list, 1);
+        checker.hasPrime();
         Assertions.assertFalse(checker.isHasPrimeNumber());
 
     }
@@ -29,8 +34,8 @@ public class CorrectnessTests {
         Assertions.assertFalse(SequentialStreamPrimeNumbersDetector.hasPrime(list));
         Assertions.assertFalse(ParallelStreamsPrimeNumbersDetector.hasPrime(list));
 
-        MultiThreadListCheck checker = new MultiThreadListCheck();
-        checker.hasPrime(list, 1);
+        MultiThreadListCheck checker = new MultiThreadListCheck(list, 1);
+        checker.hasPrime();
         Assertions.assertFalse(checker.isHasPrimeNumber());
     }
 
@@ -49,12 +54,12 @@ public class CorrectnessTests {
         Assertions.assertFalse(ParallelStreamsPrimeNumbersDetector.hasPrime(listFalse));
         Assertions.assertTrue(ParallelStreamsPrimeNumbersDetector.hasPrime(listTrue));
 
-        MultiThreadListCheck checker1 = new MultiThreadListCheck();
-        checker1.hasPrime(listFalse, 1);
+        MultiThreadListCheck checker1 = new MultiThreadListCheck(listFalse, 1);
+        checker1.hasPrime();
         Assertions.assertFalse(checker1.isHasPrimeNumber());
 
-        MultiThreadListCheck checker2= new MultiThreadListCheck();
-        checker2.hasPrime(listTrue, 1);
+        MultiThreadListCheck checker2= new MultiThreadListCheck(listTrue, 1);
+        checker2.hasPrime();
         Assertions.assertTrue(checker2.isHasPrimeNumber());
     }
 
@@ -73,12 +78,12 @@ public class CorrectnessTests {
         Assertions.assertFalse(ParallelStreamsPrimeNumbersDetector.hasPrime(listFalse));
         Assertions.assertTrue(ParallelStreamsPrimeNumbersDetector.hasPrime(listTrue));
 
-        MultiThreadListCheck checker1 = new MultiThreadListCheck();
-        checker1.hasPrime(listFalse, 1);
+        MultiThreadListCheck checker1 = new MultiThreadListCheck(listFalse, 1);
+        checker1.hasPrime();
         Assertions.assertFalse(checker1.isHasPrimeNumber());
 
-        MultiThreadListCheck checker2= new MultiThreadListCheck();
-        checker2.hasPrime(listTrue, 1);
+        MultiThreadListCheck checker2= new MultiThreadListCheck(listTrue, 1);
+        checker2.hasPrime();
         Assertions.assertTrue(checker2.isHasPrimeNumber());
     }
 }

@@ -58,4 +58,21 @@ public class ListGenerators {
 
         return list;
     }
+
+    /**
+     * Generates list of specified size filled with specified number.
+     * Used for testing with semi-prime number.
+     * @param number number to fill list with.
+     * @param amount size of list.
+     * @return list, filled with number.
+     */
+
+    public List<Integer> generateSpecified(int number, int amount) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+                list.add(number);
+        }
+
+        return list;
+    }
 }
