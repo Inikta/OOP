@@ -1,22 +1,27 @@
 package ru.nsu.nikita.threads;
 
+import ru.nsu.nikita.PrimeNumberCheck;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiThreadListCheck {
+
+    volatile private boolean hasPrimeNumber = false;
 
     /**
      * Multiple threads creation and managing method. Makes multi-thread checking of list having prime numbers.
      *
      * @param list       list of integers to check.
      * @param maxThreads threads amount for computations.
-     * @return true, if list has prime numbers. False, otherwise.
      */
-    public static boolean hasPrime(List<Integer> list, int maxThreads) {
+
+    public void hasPrime(List<Integer> list, int maxThreads) throws InterruptedException {
         int counter = 0;
 
         int threadsAmount = getAvailableThreads(maxThreads);
         for (int i = 0; i < list.size(); i += threadsAmount) {
+
             List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
             threadsAmount = Math.min(list.size() - i, threadsAmount);
 
@@ -25,14 +30,20 @@ public class MultiThreadListCheck {
             }
 
             for (ThreadPrimeNumberCheck thread : threads) {
-                thread.run();
-                if (thread.hasPrime) {
-                    return true;
-                }
+                thread.start();
             }
-        }
 
-        return false;
+            for (ThreadPrimeNumberCheck thread : threads) {
+                thread.join();
+            }
+
+            if (hasPrimeNumber) {
+                return;
+            }
+
+            //System.out.println("Main: " + hasPrimeNumber);
+            //Thread.sleep(1);
+        }
     }
 
     /**
@@ -52,6 +63,36 @@ public class MultiThreadListCheck {
                     + " threads available to use, instead of requested "
                     + maxThreads + ".");
             return currentAvailable;
+        }
+    }
+
+    public boolean isHasPrimeNumber() {
+        return hasPrimeNumber;
+    }
+
+    public class ThreadPrimeNumberCheck extends Thread {
+
+        /**
+         * num - integer number, which is going to be checked.
+         */
+        private final Integer num;
+
+        /**
+         * Default constructor.
+         *
+         * @param num integer number, which is going to be checked.
+         */
+        public ThreadPrimeNumberCheck(Integer num) {
+            this.num = num;
+        }
+
+        /**
+         * The body of the thread, which executes general prime number checking algorithm.
+         */
+        @Override
+        public void run() {
+            hasPrimeNumber = (PrimeNumberCheck.isPrime(num));
+           // System.out.println(this.getName() + ": " + num + " - " + hasPrimeNumber);
         }
     }
 }

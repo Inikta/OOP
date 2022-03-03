@@ -27,7 +27,7 @@ public class DifferentListsTests {
     }
 
     @Test
-    public void randomListTimeTest() {
+    public void randomListTimeTest() throws InterruptedException {
         List<Integer> randomList = new ListGenerators().generateRandom(1000000, 0, 1000000);
 
         System.out.println("Sequential:");
@@ -44,13 +44,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(randomList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(randomList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
     @Test
-    public void longPrimeNumbersListTest() {
+    public void longPrimeNumbersListTest() throws InterruptedException {
         List<Integer> primesList = new ListGenerators().generateAllPrimes(0, 1000000);
 
         System.out.println("Sequential:");
@@ -67,13 +69,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(primesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(primesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
     @Test
-    public void size1000NotPrimeNumbersListTest() {
+    public void size1000NotPrimeNumbersListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 1000);
 
         System.out.println("Sequential:");
@@ -91,13 +95,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(notPrimesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
     @Test
-    public void size10000NotPrimeNumbersListTest() {
+    public void size10000NotPrimeNumbersListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 10000);
 
         System.out.println("Sequential:");
@@ -115,13 +121,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(notPrimesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
     @Test
-    public void size100000NotPrimeNumbersListTest() {
+    public void size100000NotPrimeNumbersListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 100000);
 
         System.out.println("Sequential:");
@@ -139,13 +147,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(notPrimesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
-    @Test
-    public void size1000000NotPrimeNumbersListTest() {
+   /* @Test
+    public void size1000000NotPrimeNumbersListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 1000000);
 
         System.out.println("Sequential:");
@@ -163,13 +173,15 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(notPrimesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
 
     @Test
-    public void size10000000NotPrimeNumbersListTest() {
+    public void size10000000NotPrimeNumbersListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateAllNotPrimes(0, 10000000);
 
         System.out.println("Sequential:");
@@ -187,7 +199,9 @@ public class DifferentListsTests {
         for (int t = 1; t <= maxThreads; t++) {
             System.out.print("\t" + t + "-thread: ");
             startTime();
-            System.out.print(MultiThreadListCheck.hasPrime(notPrimesList, t) + " - ");
+            MultiThreadListCheck checker = new MultiThreadListCheck();
+            checker.hasPrime(notPrimesList, t);
+            System.out.print(checker.isHasPrimeNumber() + " - ");
             calculateDuration();
         }
     }
