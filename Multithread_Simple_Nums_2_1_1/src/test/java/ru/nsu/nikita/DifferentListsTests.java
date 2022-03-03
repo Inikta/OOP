@@ -81,8 +81,64 @@ public class DifferentListsTests {
     }
 
     @Test
+    public void oneSemiPrime1000ListTest() throws InterruptedException {
+        List<Integer> notPrimesList = new ListGenerators().generateSpecified(1048561, 1000);
+        notPrimesList.add(1048571);
+
+        System.out.println("Sequential:");
+        startTime();
+        System.out.println(SequentialStreamPrimeNumbersDetector.hasPrime(notPrimesList));
+
+        calculateDuration();
+
+        System.out.println("Parallel:");
+        startTime();
+        System.out.println(ParallelStreamsPrimeNumbersDetector.hasPrime(notPrimesList));
+        calculateDuration();
+
+        System.out.println("Multi-thread:");
+        for (int t = 1; t <= maxThreads; t++) {
+            System.out.print("\t" + t + "-thread: ");
+            MultiThreadListCheck checker = new MultiThreadListCheck(notPrimesList, t);
+
+            startTime();
+            checker.hasPrime();
+            calculateDuration();
+            System.out.print(checker.isHasPrimeNumber() + " - ");
+        }
+    }
+
+    @Test
     public void oneSemiPrime10000ListTest() throws InterruptedException {
         List<Integer> notPrimesList = new ListGenerators().generateSpecified(1048561, 10000);
+        notPrimesList.add(1048571);
+
+        System.out.println("Sequential:");
+        startTime();
+        System.out.println(SequentialStreamPrimeNumbersDetector.hasPrime(notPrimesList));
+
+        calculateDuration();
+
+        System.out.println("Parallel:");
+        startTime();
+        System.out.println(ParallelStreamsPrimeNumbersDetector.hasPrime(notPrimesList));
+        calculateDuration();
+
+        System.out.println("Multi-thread:");
+        for (int t = 1; t <= maxThreads; t++) {
+            System.out.print("\t" + t + "-thread: ");
+            MultiThreadListCheck checker = new MultiThreadListCheck(notPrimesList, t);
+
+            startTime();
+            checker.hasPrime();
+            calculateDuration();
+            System.out.print(checker.isHasPrimeNumber() + " - ");
+        }
+    }
+
+    @Test
+    public void oneSemiPrime100000ListTest() throws InterruptedException {
+        List<Integer> notPrimesList = new ListGenerators().generateSpecified(1048561, 100000);
         notPrimesList.add(1048571);
 
         System.out.println("Sequential:");

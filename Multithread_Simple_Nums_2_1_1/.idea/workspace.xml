@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Многое поправил, но еще не доделал.">
+    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Добавил join-ы и тест для списка, состоящего только из одного и того же большого непростого числа (semi-prime), но так и не смог исправить долгую работу MultiThreadListCheck.">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022_19_30_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022_19_30__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022__10_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022__10_53__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" afterDir="false" />
     </list>
@@ -71,9 +74,6 @@
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
-  </component>
   <component name="ProjectId" id="258S6JcZZmgZnW79T8aI4d28M89" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -99,7 +99,7 @@
     <property name="project.structure.side.proportion" value="0.66282725" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager" selected="Gradle.DifferentListsTests.oneLargeNotPrimeList1000Test">
+  <component name="RunManager" selected="Gradle.DifferentListsTests">
     <configuration name="CorrectnessTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -220,9 +220,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.DifferentListsTests.oneLargeNotPrimeList1000Test" />
         <item itemvalue="Gradle.DifferentListsTests" />
         <item itemvalue="Gradle.CorrectnessTests" />
+        <item itemvalue="Gradle.DifferentListsTests.oneLargeNotPrimeList1000Test" />
         <item itemvalue="Gradle.DifferentListsTests.size10000NotPrimeNumbersListTest" />
         <item itemvalue="Gradle.DifferentListsTests.size1000NotPrimeNumbersListTest" />
       </list>
@@ -277,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646139427084</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Добавил join-ы и тест для списка, состоящего только из одного и того же большого непростого числа (semi-prime), но так и не смог исправить долгую работу MultiThreadListCheck.">
+      <created>1646313287980</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1646313287980</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,33 +320,16 @@
     <MESSAGE value="-" />
     <MESSAGE value="Многое поправил, но еще не доделал." />
     <MESSAGE value="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех." />
-    <option name="LAST_COMMIT_MESSAGE" value="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех." />
+    <MESSAGE value="Добавил join-ы и тест для списка, состоящего только из одного и того же большого непростого числа (semi-prime), но так и не смог исправить долгую работу MultiThreadListCheck." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил join-ы и тест для списка, состоящего только из одного и того же большого непростого числа (semi-prime), но так и не смог исправить долгую работу MultiThreadListCheck." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java</url>
-          <line>105</line>
-          <properties class="ru.nsu.nikita.DifferentListsTests" method="size10000NotPrimeNumbersListTest">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="20" />
+          <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
