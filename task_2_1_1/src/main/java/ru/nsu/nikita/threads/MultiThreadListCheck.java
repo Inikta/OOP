@@ -7,9 +7,9 @@ import java.util.List;
 
 public class MultiThreadListCheck {
 
-    volatile private boolean hasPrimeNumber = false;
     private final List<Integer> list;
     private final int maxThreads;
+    volatile private boolean hasPrimeNumber = false;
 
     /**
      * Multiple threads creation and managing method. Makes multi-thread checking of list having prime numbers.
@@ -21,32 +21,6 @@ public class MultiThreadListCheck {
     public MultiThreadListCheck(List<Integer> list, int maxThreads) {
         this.list = list;
         this.maxThreads = maxThreads;
-    }
-
-    public void hasPrime() throws InterruptedException {
-        int counter = 0;
-        int threadsAmount = getAvailableThreads(maxThreads);
-
-        for (int i = 0; i < list.size(); i += threadsAmount) {
-            threadsAmount = Math.min(threadsAmount, list.size() - i);
-
-            List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
-
-            for (int j = 0; j < threadsAmount; j++) {
-                threads.add(new ThreadPrimeNumberCheck(list.get(counter++)));       //create thread for next number
-                threads.get(j).start();                                             //start thread
-                threads.get(j).join();
-            }
-
-            for (ThreadPrimeNumberCheck t : threads) {                           //wait for tasks complete
-                t.join();
-            }
-
-            if (hasPrimeNumber) {
-                return;
-            }
-        }
-
     }
 
     /**
@@ -69,8 +43,37 @@ public class MultiThreadListCheck {
         }
     }
 
+    public void hasPrime() throws InterruptedException {
+        int counter = 0;
+        int threadsAmount = getAvailableThreads(maxThreads);
+        List<ThreadPrimeNumberCheck> threads = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i += threadsAmount) {
+            threadsAmount = Math.min(threadsAmount, list.size() - i);
+
+            threads = new ArrayList<>();
+
+            for (int j = 0; j < threadsAmount; j++) {
+                threads.add(new ThreadPrimeNumberCheck(list.get(counter++)));       //create thread for next number
+                threads.get(j).start();                                             //start thread
+            }
+
+            if (hasPrimeNumber) {
+                break;
+            }
+        }
+
+        for (ThreadPrimeNumberCheck t : threads) {
+            if (t.isAlive()) {                      //wait for tasks to complete
+                t.join();
+            }
+        }
+
+    }
+
     /**
      * Get result of the list analysis.
+     *
      * @return True or False.
      */
 
@@ -99,7 +102,9 @@ public class MultiThreadListCheck {
          */
         @Override
         public void run() {
-            hasPrimeNumber = PrimeNumberCheck.isPrime(num);
+            if (PrimeNumberCheck.isPrime(num)) {
+                hasPrimeNumber = PrimeNumberCheck.isPrime(num);
+            }
             // System.out.println(this.getName() + ": " + num + " - " + hasPrimeNumber);    - for debugging purposes
         }
     }

@@ -4,9 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="-">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" afterDir="false" />
+    <list default="true" id="d8b0da1c-14de-4422-bb77-11d787ca925f" name="Changes" comment="Обновил тесты. Теперь количество чисел в списках меняется в соответствии со степенями двойки. В связи с тем, что мультипотоковый вариант работает слишком медленно (а значит что-то неправильно) графики пока не добавляю.">
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022,_10_53_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022_19_30_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022_19_30__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/shelf/Uncommitted_changes_before_Update_at_03_03_2022__10_53__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/test/java/ru/nsu/nikita/CorrectnessTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/test/java/ru/nsu/nikita/DifferentListsTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Multithread_Simple_Nums_2_1_1/src/test/java/ru/nsu/nikita/ListGenerators.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,14 +83,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/PrimeNumberCheck.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/ListGenerators.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/SequentialStreamPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/DifferentListsTests.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/ru/nsu/nikita/CorrectnessTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/ParallelStreamsPrimeNumbersDetector.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="258S6JcZZmgZnW79T8aI4d28M89" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -84,7 +108,6 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/ru/nsu/nikita" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -242,7 +265,8 @@
       <workItem from="1646228703378" duration="1807000" />
       <workItem from="1646282631944" duration="353000" />
       <workItem from="1646286296007" duration="2332000" />
-      <workItem from="1646314054298" duration="742000" />
+      <workItem from="1646314054298" duration="1836000" />
+      <workItem from="1646624626433" duration="1873000" />
     </task>
     <task id="LOCAL-00001" summary="Решил разделить способы разделения по потокам по разным классам. Написал предварительные тесты.">
       <created>1645009440478</created>
@@ -286,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646314025258</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Обновил тесты. Теперь количество чисел в списках меняется в соответствии со степенями двойки. В связи с тем, что мультипотоковый вариант работает слишком медленно (а значит что-то неправильно) графики пока не добавляю.">
+      <created>1646316899914</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1646316899914</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,14 +354,15 @@
     <MESSAGE value="Теперь мультипотоковый алгоритм работает корректно, но почему-то дольше всех." />
     <MESSAGE value="Добавил join-ы и тест для списка, состоящего только из одного и того же большого непростого числа (semi-prime), но так и не смог исправить долгую работу MultiThreadListCheck." />
     <MESSAGE value="-" />
-    <option name="LAST_COMMIT_MESSAGE" value="-" />
+    <MESSAGE value="Обновил тесты. Теперь количество чисел в списках меняется в соответствии со степенями двойки. В связи с тем, что мультипотоковый вариант работает слишком медленно (а значит что-то неправильно) графики пока не добавляю." />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновил тесты. Теперь количество чисел в списках меняется в соответствии со степенями двойки. В связи с тем, что мультипотоковый вариант работает слишком медленно (а значит что-то неправильно) графики пока не добавляю." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/nikita/threads/MultiThreadListCheck.java</url>
-          <line>30</line>
+          <line>51</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
