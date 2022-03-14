@@ -1,30 +1,40 @@
 package ru.nsu.nikita.employes;
 
 import ru.nsu.nikita.Order;
+import ru.nsu.nikita.Pizzeria;
 
-import java.util.concurrent.BlockingQueue;
+import java.util.Deque;
 
-public class Baker implements Runnable {
+public class Baker extends Thread {
 
     private final int bakeTime;
-    private final BlockingQueue<Order> orderQueue;
-    private final BlockingQueue<Order> storageQueue;
-    private boolean done;
+    private final Deque<Order> orderQueue;
+    private final Deque<Order> storageQueue;
+    private final Pizzeria pizzeria;
+    private final int number;
+    private boolean inWork;
     private Order currentOrder;
 
-    public Baker(int bakeTime,
-                 BlockingQueue<Order> orderQueue,
-                 BlockingQueue<Order> storageQueue) {
+    public Baker(int number,
+                 int bakeTime,
+                 Pizzeria pizzeria) {
+        this.number = number;
+        this.pizzeria = pizzeria;
         this.bakeTime = bakeTime;
-        done = false;
+        inWork = false;
 
-        this.orderQueue = orderQueue;
-        this.storageQueue = storageQueue;
+        this.orderQueue = pizzeria.getOrdersQueue();
+        this.storageQueue = pizzeria.getStorageQueue();
     }
 
     @Override
     public void run() {
         while (!currentOrder.isEndWork()) {
+            synchronized (orderQueue) {
+                currentOrder = orderQueue.pop();
+            }
+            orderQueue.notifyAll();
+
             try {
                 makePizza();
             } catch (InterruptedException e) {
@@ -32,32 +42,50 @@ public class Baker implements Runnable {
             }
 
             try {
-                pushToStorage();
+                synchronized (storageQueue) {
+                    if (storageQueue.size() < pizzeria.getStorageSize()) {
+                        pushToStorage();
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            setDone(true);
+            storageQueue.notifyAll();
         }
     }
 
     private void makePizza() throws InterruptedException {
-        currentOrder = orderQueue.take();
+        inWork = true;
         wait(bakeTime);
         currentOrder.setReady(true);
     }
 
     public void pushToStorage() throws InterruptedException {
-        if (storageQueue.remainingCapacity() > 0) {
-            storageQueue.put(currentOrder);
-            done = true;
-        }
+        storageQueue.push(currentOrder);
+        inWork = false;
     }
 
     public boolean isDone() {
-        return done;
+        return inWork;
     }
 
     public void setDone(boolean done) {
-        this.done = done;
+        this.inWork = done;
+    }
+
+    public int getBakeTime() {
+        return bakeTime;
+    }
+
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public void setCurrentOrder(Order currentOrder) {
+        this.currentOrder = currentOrder;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

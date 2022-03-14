@@ -4,6 +4,7 @@ public class Order {
 
     private final int number;
     private boolean ready;
+    private boolean delivered;
 
     private boolean endWork;
 
@@ -11,6 +12,7 @@ public class Order {
         number = orderNum;
         ready = false;
         endWork = false;
+        delivered = false;
     }
 
     public int getNumber() {
@@ -31,5 +33,23 @@ public class Order {
 
     public void setEndWork(boolean endWork) {
         this.endWork = endWork;
+    }
+
+    public boolean isDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        this.delivered = delivered;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "number=" + number +
+                ", ready=" + ready +
+                ", delivered=" + delivered +
+                ", endWork=" + endWork +
+                '}';
     }
 }
