@@ -1,28 +1,38 @@
 package ru.nsu.nikita.employes;
 
 import ru.nsu.nikita.Order;
+import ru.nsu.nikita.Pizzeria;
 
-import java.util.concurrent.BlockingQueue;
+import java.util.Deque;
 
-public class Supplier implements Runnable {
+public class Supplier extends Thread {
     private final int deliveryTime;
     private final int maxBagSize;
-    private final BlockingQueue<Order> storageQueue;
+    private final Deque<Order> storageQueue;
     private int bagFilling;
     private Order lastOrder;
 
-    public Supplier(int deliveryTime,
+    private final int number;
+
+    public Supplier(int number,
+                    int deliveryTime,
                     int maxBagSize,
-                    BlockingQueue<Order> storageQueue) {
+                    Pizzeria pizzeria) {
+        this.number = number;
         this.deliveryTime = deliveryTime;
         this.maxBagSize = maxBagSize;
-        this.storageQueue = storageQueue;
+        this.storageQueue = pizzeria.getStorageQueue();
     }
 
     @Override
     public void run() {
         while (!lastOrder.isEndWork()) {
             while (bagFilling < maxBagSize && !storageQueue.isEmpty()) {
+                synchronized (storageQueue) {
+                    lastOrder = storageQueue.pop();
+                }
+                storageQueue.notifyAll();
+
                 try {
                     takePizza();
                 } catch (InterruptedException e) {
@@ -41,12 +51,48 @@ public class Supplier implements Runnable {
     }
 
     private void takePizza() throws InterruptedException {
-        lastOrder = storageQueue.take();
         bagFilling++;
     }
 
     private void deliverPizza() throws InterruptedException {
         wait(deliveryTime);
         bagFilling--;
+    }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "maxBagSize=" + maxBagSize +
+                ", bagFilling=" + bagFilling +
+                ", lastOrder=" + lastOrder +
+                '}';
+    }
+
+    public int getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public int getMaxBagSize() {
+        return maxBagSize;
+    }
+
+    public int getBagFilling() {
+        return bagFilling;
+    }
+
+    public void setBagFilling(int bagFilling) {
+        this.bagFilling = bagFilling;
+    }
+
+    public Order getLastOrder() {
+        return lastOrder;
+    }
+
+    public void setLastOrder(Order lastOrder) {
+        this.lastOrder = lastOrder;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

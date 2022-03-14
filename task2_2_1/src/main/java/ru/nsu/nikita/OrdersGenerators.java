@@ -1,17 +1,17 @@
 package ru.nsu.nikita;
 
-import java.util.concurrent.BlockingQueue;
+import java.util.Deque;
 
 public class OrdersGenerators {
 
-    public static class StaticGenerator implements OrdersGenerator {
+    public static class StaticGenerator {
 
         private final int cap;
         private boolean endWork;
         private int counter;
-        private BlockingQueue<Order> queue;
+        private final Deque<Order> queue;
 
-        public StaticGenerator(int cap, BlockingQueue<Order> orderQueue) {
+        public StaticGenerator(int cap, Deque<Order> orderQueue) {
             this.cap = cap;
             counter = 0;
             queue = orderQueue;
@@ -33,16 +33,16 @@ public class OrdersGenerators {
         }
     }
 
-    public static class DynamicGenerator implements OrdersGenerator, Runnable {
+    public static class DynamicGenerator extends Thread {
         private final int delay;
         private final int cap;
         private int counter;
 
-        private BlockingQueue<Order> queue;
+        private final Deque<Order> queue;
 
         private boolean endWork;
 
-        public DynamicGenerator(int delay, int cap, BlockingQueue<Order> orderQueue) {
+        public DynamicGenerator(int delay, int cap, Deque<Order> orderQueue) {
             this.delay = delay;
             this.cap = cap;
             this.queue = orderQueue;
@@ -54,7 +54,9 @@ public class OrdersGenerators {
         public void run() {
             while (counter < cap) {
                 try {
-                    queue.put(new Order(counter++));
+                    synchronized (queue) {
+                        queue.push(new Order(counter++));
+                    }
                     wait(delay);
                 } catch (InterruptedException e) {
                     if (endWork) {
