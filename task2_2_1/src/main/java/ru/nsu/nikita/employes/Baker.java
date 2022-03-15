@@ -32,6 +32,7 @@ public class Baker extends Thread {
         while (!currentOrder.isEndWork()) {
             synchronized (orderQueue) {
                 currentOrder = orderQueue.pop();
+                System.out.println(currentOrder.toString());
             }
             orderQueue.notifyAll();
 
@@ -45,6 +46,7 @@ public class Baker extends Thread {
                 synchronized (storageQueue) {
                     if (storageQueue.size() < pizzeria.getStorageSize()) {
                         pushToStorage();
+                        System.out.println(currentOrder.toString());
                     }
                 }
             } catch (InterruptedException e) {
@@ -61,6 +63,7 @@ public class Baker extends Thread {
     }
 
     public void pushToStorage() throws InterruptedException {
+        currentOrder.setInStorage(true);
         storageQueue.push(currentOrder);
         inWork = false;
     }

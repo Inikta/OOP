@@ -56,8 +56,8 @@ public class OrdersGenerators {
                 try {
                     synchronized (queue) {
                         queue.push(new Order(counter++));
+                        wait(delay);
                     }
-                    wait(delay);
                 } catch (InterruptedException e) {
                     if (endWork) {
                         System.out.println("Day is over. No more orders.");

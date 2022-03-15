@@ -4,6 +4,7 @@ public class Order {
 
     private final int number;
     private boolean ready;
+    private boolean inStorage;
     private boolean delivered;
 
     private boolean endWork;
@@ -12,7 +13,17 @@ public class Order {
         number = orderNum;
         ready = false;
         endWork = false;
+        inStorage = false;
         delivered = false;
+    }
+
+    public Order(boolean endWork) {
+        number = -1;
+        ready = false;
+        inStorage = false;
+        delivered = false;
+
+        this.endWork = endWork;
     }
 
     public int getNumber() {
@@ -41,6 +52,14 @@ public class Order {
 
     public void setDelivered(boolean delivered) {
         this.delivered = delivered;
+    }
+
+    public boolean isInStorage() {
+        return inStorage;
+    }
+
+    public void setInStorage(boolean inStorage) {
+        this.inStorage = inStorage;
     }
 
     @Override

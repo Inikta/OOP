@@ -32,7 +32,10 @@ public class Pizzeria {
     public Pizzeria(int bakersAmount,
                     int suppliersAmount,
                     int storageSize,
-                    int ordersCap) {
+                    int ordersCap,
+                    int bakeTime,
+                    int deliveryTime,
+                    int bagSize) {
         this.ordersCap = ordersCap;
         this.storageSize = storageSize;
 
@@ -41,18 +44,18 @@ public class Pizzeria {
 
         this.bakersAmount = bakersAmount;
         freeBakers = this.bakersAmount;
-        setBakeTime(30);
+        setBakeTime(bakeTime);
         for (int i = 0; i < bakersAmount; i++) {
-            bakersList.add(new Baker(i, bakeTime, this));
+            bakersList.add(new Baker(i, this.bakeTime, this));
         }
         bakersList.forEach(b -> b.setPriority(5));
 
         this.suppliersAmount = suppliersAmount;
         freeSuppliers = this.suppliersAmount;
-        setDeliveryTime(80);
-        setBagSize(3);
+        setDeliveryTime(deliveryTime);
+        setBagSize(bagSize);
         for (int i = 0; i < bakersAmount; i++) {
-            suppliersList.add(new Supplier(i, deliveryTime, bagSize, this));
+            suppliersList.add(new Supplier(i, deliveryTime, this.bagSize, this));
         }
         suppliersList.forEach(s -> s.setPriority(7));
     }
@@ -60,6 +63,9 @@ public class Pizzeria {
     public void makeOrders(int mode) {
         if (mode == 0) {
             new OrdersGenerators.StaticGenerator(ordersCap, ordersQueue).addOrders();
+            for (int i = 0; i < bakersAmount; i++) {
+                ordersQueue.add(new Order(true));
+            }
         } else if (mode == 1) {
             generator = new OrdersGenerators.DynamicGenerator(30, 1000, ordersQueue);
             generator.setPriority(7);
@@ -72,6 +78,28 @@ public class Pizzeria {
         bakersList.forEach(Thread::start);
         suppliersList.forEach(Thread::start);
     }
+
+    public void roughEndWork() {
+        generator.interrupt();
+        for (Baker b : bakersList) {
+            b.interrupt();
+        }
+        for (Supplier s : suppliersList) {
+            s.interrupt();
+        }
+    }
+
+    /*public void endWork() {
+        generator.setEndWork(true);
+        generator.interrupt();
+        for (int i = 0; i < bakersAmount; i++) {
+            ordersQueue.addFirst(new Order(true));
+        }
+
+        for (int i = 0; i < bakersAmount; i++) {
+            storageQueue.addFirst(new Order(true));
+        }
+    }*/
 
     public int getBakeTime() {
         return bakeTime;
