@@ -3,6 +3,7 @@ package ru.nsu.nikita.employes;
 import ru.nsu.nikita.Order;
 import ru.nsu.nikita.Pizzeria;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 public class Supplier extends Thread {
@@ -14,6 +15,8 @@ public class Supplier extends Thread {
 
     private final int number;
 
+    private ArrayList<Order> bag;
+
     public Supplier(int number,
                     int deliveryTime,
                     int maxBagSize,
@@ -22,27 +25,32 @@ public class Supplier extends Thread {
         this.deliveryTime = deliveryTime;
         this.maxBagSize = maxBagSize;
         this.storageQueue = pizzeria.getStorageQueue();
+        this.bag = new ArrayList<>(maxBagSize);
     }
 
     @Override
     public void run() {
         while (!lastOrder.isEndWork()) {
             while (bagFilling < maxBagSize && !storageQueue.isEmpty()) {
-                synchronized (storageQueue) {
-                    lastOrder = storageQueue.pop();
+
+                if (lastOrder.isEndWork()) {
+                    break;
                 }
-                storageQueue.notifyAll();
 
                 try {
                     takePizza();
+                    System.out.println(lastOrder.toString());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                storageQueue.notifyAll();
+
             }
 
-            while (bagFilling > 0) {
+            for (Order pizza : bag) {
                 try {
-                    deliverPizza();
+                    deliverPizza(pizza);
+                    System.out.println(pizza);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -51,11 +59,20 @@ public class Supplier extends Thread {
     }
 
     private void takePizza() throws InterruptedException {
+        synchronized (storageQueue) {
+            lastOrder = storageQueue.pop();
+            System.out.println(lastOrder.toString());
+        }
+        bag.add(lastOrder);
+        lastOrder.setInStorage(false);
+
         bagFilling++;
     }
 
-    private void deliverPizza() throws InterruptedException {
+    private void deliverPizza(Order pizza) throws InterruptedException {
         wait(deliveryTime);
+        pizza.setDelivered(true);
+        bag.remove(pizza);
         bagFilling--;
     }
 
