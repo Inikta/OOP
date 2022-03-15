@@ -30,21 +30,19 @@ public class Supplier extends Thread {
 
     @Override
     public void run() {
-        while (!lastOrder.isEndWork()) {
+        while (true) {
             while (bagFilling < maxBagSize && !storageQueue.isEmpty()) {
+                try {
+                    takePizza();
+                    System.out.println(lastOrder.toString());
+                    storageQueue.notifyAll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 if (lastOrder.isEndWork()) {
                     break;
                 }
-
-                try {
-                    takePizza();
-                    System.out.println(lastOrder.toString());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                storageQueue.notifyAll();
-
             }
 
             for (Order pizza : bag) {

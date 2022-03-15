@@ -29,12 +29,12 @@ public class Baker extends Thread {
 
     @Override
     public void run() {
-        while (!currentOrder.isEndWork()) {
+        do {
             synchronized (orderQueue) {
                 currentOrder = orderQueue.pop();
                 System.out.println(currentOrder.toString());
+                orderQueue.notifyAll();
             }
-            orderQueue.notifyAll();
 
             try {
                 makePizza();
@@ -47,13 +47,15 @@ public class Baker extends Thread {
                     if (storageQueue.size() < pizzeria.getStorageSize()) {
                         pushToStorage();
                         System.out.println(currentOrder.toString());
+                        storageQueue.notifyAll();
                     }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            storageQueue.notifyAll();
-        }
+
+
+        } while (!currentOrder.isEndWork());
     }
 
     private void makePizza() throws InterruptedException {
