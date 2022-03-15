@@ -4,6 +4,7 @@ import ru.nsu.nikita.employes.Baker;
 import ru.nsu.nikita.employes.Supplier;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class Pizzeria {
         this.bakersAmount = bakersAmount;
         freeBakers = this.bakersAmount;
         setBakeTime(bakeTime);
+
+        bakersList = new ArrayList<>(this.bakersAmount);
         for (int i = 0; i < bakersAmount; i++) {
             bakersList.add(new Baker(i, this.bakeTime, this));
         }
@@ -54,6 +57,8 @@ public class Pizzeria {
         freeSuppliers = this.suppliersAmount;
         setDeliveryTime(deliveryTime);
         setBagSize(bagSize);
+
+        suppliersList = new ArrayList<>(suppliersAmount);
         for (int i = 0; i < bakersAmount; i++) {
             suppliersList.add(new Supplier(i, deliveryTime, this.bagSize, this));
         }
