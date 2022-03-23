@@ -10,11 +10,9 @@ public class Supplier extends Thread {
     private final int deliveryTime;
     private final int maxBagSize;
     private final Deque<Order> storageQueue;
+    private final int number;
     private int bagFilling;
     private Order lastOrder;
-
-    private final int number;
-
     private ArrayList<Order> bag;
 
     public Supplier(int number,
@@ -30,12 +28,16 @@ public class Supplier extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            while (bagFilling < maxBagSize && !storageQueue.isEmpty()) {
+        do {
+            while (bagFilling < maxBagSize) {
                 try {
-                    takePizza();
-                    System.out.println(lastOrder.toString());
-                    storageQueue.notifyAll();
+                    if (!storageQueue.isEmpty()) {
+                        takePizza();
+                        System.out.println(lastOrder.toString());
+                        storageQueue.notifyAll();
+                    } else {
+                        wait();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -53,7 +55,7 @@ public class Supplier extends Thread {
                     e.printStackTrace();
                 }
             }
-        }
+        } while (!lastOrder.isEndWork());
     }
 
     private void takePizza() throws InterruptedException {
@@ -68,7 +70,7 @@ public class Supplier extends Thread {
     }
 
     private void deliverPizza(Order pizza) throws InterruptedException {
-        wait(deliveryTime);
+        Thread.sleep(deliveryTime);
         pizza.setDelivered(true);
         bag.remove(pizza);
         bagFilling--;

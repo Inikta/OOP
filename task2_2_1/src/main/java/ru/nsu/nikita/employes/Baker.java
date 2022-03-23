@@ -29,11 +29,20 @@ public class Baker extends Thread {
 
     @Override
     public void run() {
+        currentOrder = new Order();
         do {
-            synchronized (orderQueue) {
-                currentOrder = orderQueue.pop();
-                System.out.println(currentOrder.toString());
-                orderQueue.notifyAll();
+            if (!orderQueue.isEmpty() & !currentOrder.isInQueue()) {
+                synchronized (orderQueue) {
+                    currentOrder = orderQueue.pop();
+                    System.out.println(currentOrder.toString());
+                    orderQueue.notifyAll();
+                }
+            } else {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             try {
@@ -43,25 +52,26 @@ public class Baker extends Thread {
             }
 
             try {
-                synchronized (storageQueue) {
-                    if (storageQueue.size() < pizzeria.getStorageSize()) {
+                if (storageQueue.size() < pizzeria.getStorageSize()) {
+                    synchronized (storageQueue) {
                         pushToStorage();
                         System.out.println(currentOrder.toString());
                         storageQueue.notifyAll();
                     }
+                } else {
+                    wait();
                 }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
         } while (!currentOrder.isEndWork());
     }
 
     private void makePizza() throws InterruptedException {
         inWork = true;
-        wait(bakeTime);
-        currentOrder.setReady(true);
+        Thread.sleep(bakeTime);
+        currentOrder.setInQueue(true);
     }
 
     public void pushToStorage() throws InterruptedException {

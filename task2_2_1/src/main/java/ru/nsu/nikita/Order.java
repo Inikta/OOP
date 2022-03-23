@@ -3,7 +3,7 @@ package ru.nsu.nikita;
 public class Order {
 
     private final int number;
-    private boolean ready;
+    private boolean inQueue;
     private boolean inStorage;
     private boolean delivered;
 
@@ -11,7 +11,7 @@ public class Order {
 
     public Order(int orderNum) {
         number = orderNum;
-        ready = false;
+        inQueue = false;
         endWork = false;
         inStorage = false;
         delivered = false;
@@ -19,23 +19,31 @@ public class Order {
 
     public Order(boolean endWork) {
         number = -1;
-        ready = false;
+        inQueue = false;
         inStorage = false;
         delivered = false;
 
         this.endWork = endWork;
     }
 
+    public Order() {
+        number = 0;
+        inQueue = false;
+        endWork = false;
+        inStorage = false;
+        delivered = false;
+    }
+
     public int getNumber() {
         return number;
     }
 
-    public boolean isReady() {
-        return ready;
+    public boolean isInQueue() {
+        return inQueue;
     }
 
-    public void setReady(boolean ready) {
-        this.ready = ready;
+    public void setInQueue(boolean inQueue) {
+        this.inQueue = inQueue;
     }
 
     public boolean isEndWork() {
@@ -66,7 +74,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "number=" + number +
-                ", ready=" + ready +
+                ", ready=" + inQueue +
                 ", delivered=" + delivered +
                 ", endWork=" + endWork +
                 '}';
