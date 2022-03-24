@@ -28,29 +28,30 @@ public class Supplier extends Thread {
 
     @Override
     public void run() {
+        lastOrder = new Order();
         do {
+            //take pizza from storage while it is not empty or bag is full
+            //or last taken order was to end work
             while (bagFilling < maxBagSize) {
                 try {
-                    if (!storageQueue.isEmpty()) {
-                        takePizza();
-                        System.out.println(lastOrder.toString());
-                        storageQueue.notifyAll();
-                    } else {
-                        wait();
-                    }
+                    boolean stop = takePizza();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                if (lastOrder.isEndWork()) {
-                    break;
-                }
             }
 
+            storageQueue.notifyAll();
+
+            //deliver all pizza
             for (Order pizza : bag) {
                 try {
-                    deliverPizza(pizza);
-                    System.out.println(pizza);
+                    if (!pizza.isEndWork()) {
+                        deliverPizza(pizza);
+                        System.out.println(pizza);
+                    } else {
+                        break;
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -58,15 +59,23 @@ public class Supplier extends Thread {
         } while (!lastOrder.isEndWork());
     }
 
-    private void takePizza() throws InterruptedException {
-        synchronized (storageQueue) {
+    private synchronized boolean takePizza() throws InterruptedException {
+        if (!storageQueue.isEmpty()) {
             lastOrder = storageQueue.pop();
             System.out.println(lastOrder.toString());
-        }
-        bag.add(lastOrder);
-        lastOrder.setInStorage(false);
+            bag.add(lastOrder);
+            lastOrder.setInStorage(false);
 
-        bagFilling++;
+            bagFilling++;
+            System.out.println(lastOrder.toString());
+            if (lastOrder.isEndWork()) {
+                return true;
+            }
+        } else {
+            this.wait();
+        }
+
+        return false;
     }
 
     private void deliverPizza(Order pizza) throws InterruptedException {
