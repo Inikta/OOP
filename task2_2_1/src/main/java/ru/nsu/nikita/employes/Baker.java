@@ -31,12 +31,30 @@ public class Baker extends Thread {
     public void run() {
         currentOrder = new Order();
         do {
-            if (!orderQueue.isEmpty() & !currentOrder.isInQueue()) {
-                synchronized (orderQueue) {
-                    currentOrder = orderQueue.pop();
-                    System.out.println(currentOrder.toString());
-                    orderQueue.notifyAll();
+            //take order from queue
+            //and make it, if bakery is not filled with pizza in production/ready
+            if (!orderQueue.isEmpty() & !currentOrder.isInBakery()) {
+                takeOrder();
+                //end work, if new order was actually a signal to end
+                if (currentOrder.isEndWork()) {
+                    break;
                 }
+                try {
+                    makePizza();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            //push ready pizza to storage if storage has place for it
+            } else if (currentOrder.isInBakery() & storageQueue.size() < pizzeria.getStorageLimit()) {
+                try {
+                    pushToStorage();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            //wait until storage will have place for ready pizza
+            //or order for new pizza appears
             } else {
                 try {
                     wait();
@@ -45,39 +63,30 @@ public class Baker extends Thread {
                 }
             }
 
-            try {
-                makePizza();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (storageQueue.size() < pizzeria.getStorageSize()) {
-                    synchronized (storageQueue) {
-                        pushToStorage();
-                        System.out.println(currentOrder.toString());
-                        storageQueue.notifyAll();
-                    }
-                } else {
-                    wait();
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        //end work, if new order was actually a signal to end
         } while (!currentOrder.isEndWork());
+    }
+
+    private synchronized void takeOrder() {
+        currentOrder = orderQueue.pop();
+        System.out.println(currentOrder.toString());
+        orderQueue.notifyAll();
     }
 
     private void makePizza() throws InterruptedException {
         inWork = true;
         Thread.sleep(bakeTime);
-        currentOrder.setInQueue(true);
+        currentOrder.setInBakery(true);
     }
 
-    public void pushToStorage() throws InterruptedException {
+    public synchronized void pushToStorage() throws InterruptedException {
         currentOrder.setInStorage(true);
-        storageQueue.push(currentOrder);
+        currentOrder.setInBakery(false);
+        storageQueue.addLast(currentOrder);
         inWork = false;
+
+        System.out.println(currentOrder.toString());
+        storageQueue.notifyAll();
     }
 
     public boolean isDone() {

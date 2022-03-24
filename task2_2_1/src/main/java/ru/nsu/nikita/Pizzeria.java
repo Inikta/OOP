@@ -3,10 +3,7 @@ package ru.nsu.nikita;
 import ru.nsu.nikita.employes.Baker;
 import ru.nsu.nikita.employes.Supplier;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Pizzeria {
 
@@ -26,9 +23,10 @@ public class Pizzeria {
     private Deque<Order> storageQueue;
 
     private int ordersCap;
-    private int storageSize;
+    private int storageLimit;
 
     private OrdersGenerators.DynamicGenerator generator;
+    private OrdersGenerators.ManualOrdering manGenerator;
 
     public Pizzeria(int bakersAmount,
                     int suppliersAmount,
@@ -38,7 +36,7 @@ public class Pizzeria {
                     int deliveryTime,
                     int bagSize) {
         this.ordersCap = ordersCap;
-        this.storageSize = storageSize;
+        this.storageLimit = storageSize;
 
         ordersQueue = new ArrayDeque<>(ordersCap);
         storageQueue = new ArrayDeque<>(storageSize);
@@ -51,7 +49,7 @@ public class Pizzeria {
         for (int i = 0; i < bakersAmount; i++) {
             bakersList.add(new Baker(i, this.bakeTime, this));
         }
-        bakersList.forEach(b -> b.setPriority(5));
+        //bakersList.forEach(b -> b.setPriority(5));
 
         this.suppliersAmount = suppliersAmount;
         freeSuppliers = this.suppliersAmount;
@@ -62,24 +60,28 @@ public class Pizzeria {
         for (int i = 0; i < bakersAmount; i++) {
             suppliersList.add(new Supplier(i, deliveryTime, this.bagSize, this));
         }
-        suppliersList.forEach(s -> s.setPriority(7));
+        //suppliersList.forEach(s -> s.setPriority(7));
     }
 
-    public void makeOrders(int mode) {
+    public void makeOrdersMode(int mode) {
         if (mode == 0) {
-            new OrdersGenerators.StaticGenerator(ordersCap, ordersQueue).addOrders();
+            new OrdersGenerators.StaticGenerator(ordersCap, this).addOrders();
             for (int i = 0; i < bakersAmount; i++) {
                 ordersQueue.add(new Order(true));
             }
         } else if (mode == 1) {
-            generator = new OrdersGenerators.DynamicGenerator(30, 1000, ordersQueue);
+            generator = new OrdersGenerators.DynamicGenerator(30, 1000, this);
             generator.setPriority(7);
             generator.start();
+        } else if (mode == 2) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Pizzeria manual control mode is on.");
+            manGenerator = new OrdersGenerators.ManualOrdering(this);
         }
     }
 
     public void startWork(int mode) {
-        makeOrders(mode);
+        makeOrdersMode(mode);
         bakersList.forEach(Thread::start);
         suppliersList.forEach(Thread::start);
     }
@@ -194,11 +196,11 @@ public class Pizzeria {
         this.ordersCap = ordersCap;
     }
 
-    public int getStorageSize() {
-        return storageSize;
+    public int getStorageLimit() {
+        return storageLimit;
     }
 
-    public void setStorageSize(int storageSize) {
-        this.storageSize = storageSize;
+    public void setStorageLimit(int storageLimit) {
+        this.storageLimit = storageLimit;
     }
 }
