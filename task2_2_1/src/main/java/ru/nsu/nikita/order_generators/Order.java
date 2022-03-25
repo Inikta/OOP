@@ -95,4 +95,17 @@ public class Order {
     public void setEndWork(boolean endWork) {
         this.endWork = endWork;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "number=" + number +
+                ", inWork=" + inWork +
+                ", ready=" + ready +
+                ", inStorage=" + inStorage +
+                ", inBag=" + inBag +
+                ", delivered=" + delivered +
+                ", endWork=" + endWork +
+                '}';
+    }
 }
