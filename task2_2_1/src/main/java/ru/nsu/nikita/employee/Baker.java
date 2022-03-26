@@ -63,6 +63,7 @@ public class Baker extends Thread {
     private void takeOrder() {
         currentOrder = pizzeria.getOrdersQueue().pop();
         currentOrder.setInWork(true);
+        System.out.println("Baker #" + number + ": " + currentOrder.toString());
     }
 
     private void makePizza() throws InterruptedException {
@@ -71,6 +72,7 @@ public class Baker extends Thread {
             currentOrder.setInWork(false);
             currentOrder.setReady(true);
         }
+        System.out.println("Baker #" + number + ": " + currentOrder.toString());
     }
 
     private void pushToStorage() {
@@ -78,6 +80,7 @@ public class Baker extends Thread {
             pizzeria.getStorageQueue().addLast(currentOrder);
             currentOrder.setInStorage(true);
         }
+        System.out.println("Baker #" + number + ": " + currentOrder.toString());
     }
 
     public int getNumber() {
@@ -94,9 +97,8 @@ public class Baker extends Thread {
 
     @Override
     public String toString() {
-        return "Baker{" +
-                "number=" + number +
-                ", currentOrder=" + currentOrder +
+        return "Baker #" + number + " {" +
+                "\n\tcurrentOrder:\n" + currentOrder.toString() +
                 '}';
     }
 }
