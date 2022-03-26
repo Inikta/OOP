@@ -11,10 +11,8 @@ public class AutoGenerator {
     }
 
     public void generate(int ordersAmount) {
-        synchronized (pizzeria.getOrdersQueue()) {
-            for (int i = 0; i < ordersAmount; i++) {
-                pizzeria.getOrdersQueue().addLast(new Order(pizzeria.orderCounter.getAndAdd(1)));
-            }
+        for (int i = 0; i < ordersAmount; i++) {
+            pizzeria.getOrdersQueue().addLast(new Order(pizzeria.orderCounter.getAndAdd(1)));
         }
     }
 }

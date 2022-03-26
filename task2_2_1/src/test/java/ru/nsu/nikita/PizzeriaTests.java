@@ -1,0 +1,16 @@
+package ru.nsu.nikita;
+
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+public class PizzeriaTests {
+
+    public static void main(String[] args) throws IOException {
+        int bakersAmount = 3;
+        int suppliersAmount = 3;
+        int storageSize = 5;
+        Pizzeria pizzeria = PizzeriasMaker.makeNewPizzeriaToFile(bakersAmount, suppliersAmount, storageSize, "test1");
+        pizzeria.startWork();
+    }
+}

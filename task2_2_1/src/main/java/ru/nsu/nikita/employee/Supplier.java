@@ -32,6 +32,11 @@ public class Supplier extends Thread {
     @Override
     public synchronized void run() {
         do {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             do {
                 if (!pizzeria.getStorageQueue().isEmpty()) {
                     takePizza();
@@ -65,6 +70,7 @@ public class Supplier extends Thread {
         bag.addLast(lastOrder);
         lastOrder.setInStorage(false);
         lastOrder.setInBag(true);
+        System.out.println("Supplier #" + number + ": " + lastOrder.toString());
     }
 
     private void deliverPizza() throws InterruptedException {
@@ -72,6 +78,7 @@ public class Supplier extends Thread {
         lastRemovedOrder = bag.removeFirst();
         lastRemovedOrder.setInBag(false);
         lastRemovedOrder.setDelivered(true);
+        System.out.println("Supplier #" + number + ": " + lastRemovedOrder.toString());
     }
 
     public Pizzeria getPizzeria() {
@@ -102,5 +109,14 @@ public class Supplier extends Thread {
         return lastRemovedOrder;
     }
 
-
+    @Override
+    public String toString() {
+        return "Supplier #" + number + " {" +
+                "\n\tBag: " + bag.size() + "/" + bagLimit +
+                "\n\tbag=" + bag +
+                "\n\tdeliveryTime=" + deliveryTime +
+                "\n\tlastOrder=" + lastOrder +
+                "\n\tlastRemovedOrder=" + lastRemovedOrder +
+                '}';
+    }
 }

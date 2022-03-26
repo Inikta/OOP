@@ -6,13 +6,10 @@ import ru.nsu.nikita.order_generators.AutoGenerator;
 import ru.nsu.nikita.order_generators.ManualGenerator;
 import ru.nsu.nikita.order_generators.Order;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Pizzeria extends Thread {
+public class Pizzeria {
 
     private final int bakersAmount;
     private final int suppliersAmount;
@@ -22,6 +19,8 @@ public class Pizzeria extends Thread {
     private List<Baker> bakers;
     private List<Supplier> suppliers;
     private int storageLimit;
+
+    private Scanner reader;
 
     public Pizzeria(int bakersAmount,
                     int suppliersAmount,
@@ -34,7 +33,12 @@ public class Pizzeria extends Thread {
         ordersQueue = new ArrayDeque<>();
         storageQueue = new ArrayDeque<>(storageLimit);
 
-        orderCounter.set(0);
+        orderCounter = new AtomicInteger(0);
+
+        reader = new Scanner(System.in);
+
+        bakers = new ArrayList<>();
+        suppliers = new ArrayList<>();
 
         configureBakers();
         configureSuppliers();
@@ -42,10 +46,9 @@ public class Pizzeria extends Thread {
 
     private void configureBakers() {
         System.out.println("Configure bakers.");
-        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < bakersAmount; i++) {
-            System.out.println("Bake time: ");
-            int newBakeTime = scanner.nextInt();
+            System.out.println("Baker #" + i + " - bake time: ");
+            int newBakeTime = reader.nextInt();
 
             bakers.add(new Baker(i, newBakeTime, this));
         }
@@ -53,39 +56,44 @@ public class Pizzeria extends Thread {
 
     private void configureSuppliers() {
         System.out.println("Configure suppliers.");
-        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < suppliersAmount; i++) {
-            System.out.println("Bag size: ");
-            int newBagSize = scanner.nextInt();
+            System.out.println("Supplier #" + i);
+            System.out.println("\tBag size: ");
+            int newBagSize = reader.nextInt();
 
-            System.out.println("Delivery time: ");
-            int newDeliverTime = scanner.nextInt();
+            System.out.println("\tDelivery time: ");
+            int newDeliverTime = reader.nextInt();
 
             suppliers.add(new Supplier(i, newBagSize, newDeliverTime, this));
         }
     }
 
-    @Override
-    public void run() {
+    public void startWork() {
         AutoGenerator autoGenerator;
         ManualGenerator manualGenerator;
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("""
                 Generate orders automatically [0]?
                 OR
                 Generate orders manually [1]?
                 """);
-        int mode = scanner.nextInt();
+        int mode = reader.nextInt();
         if (mode == 0) {
             autoGenerator = new AutoGenerator(this);
 
             System.out.println("How much orders to generate?");
-            int ordersAmount = scanner.nextInt();
+            int ordersAmount = reader.nextInt();
             autoGenerator.generate(ordersAmount);
         } else if (mode == 1) {
-            manualGenerator = new ManualGenerator(this);
+            manualGenerator = new ManualGenerator(this, reader);
             manualGenerator.start();
+        }
+
+        for (Baker baker : bakers) {
+            baker.start();
+        }
+        for (Supplier supplier : suppliers) {
+            supplier.start();
         }
     }
 
