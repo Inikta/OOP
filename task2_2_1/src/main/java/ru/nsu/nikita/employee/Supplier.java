@@ -30,21 +30,18 @@ public class Supplier extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         do {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             do {
-                if (!pizzeria.getStorageQueue().isEmpty()) {
-                    takePizza();
-                } else if (bag.isEmpty()) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                synchronized (pizzeria.getStorageQueue()) {
+                    if (!pizzeria.getStorageQueue().isEmpty()) {
+                        takePizza();
+                    } else if (bag.isEmpty()) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             } while (

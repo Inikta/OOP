@@ -15,7 +15,7 @@ public class Pizzeria {
     private final int suppliersAmount;
     private final Deque<Order> ordersQueue;
     private final Deque<Order> storageQueue;
-    public volatile AtomicInteger orderCounter;
+    public AtomicInteger orderCounter;
     private List<Baker> bakers;
     private List<Supplier> suppliers;
     private int storageLimit;
@@ -92,6 +92,7 @@ public class Pizzeria {
         for (Baker baker : bakers) {
             baker.start();
         }
+
         for (Supplier supplier : suppliers) {
             supplier.start();
         }
