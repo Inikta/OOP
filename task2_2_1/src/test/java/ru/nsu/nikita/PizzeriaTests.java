@@ -10,7 +10,7 @@ public class PizzeriaTests {
         int bakersAmount = 3;
         int suppliersAmount = 3;
         int storageSize = 5;
-        Pizzeria pizzeria = PizzeriasMaker.makeNewPizzeriaToFile(bakersAmount, suppliersAmount, storageSize, "test1");
+        Pizzeria pizzeria = PizzeriasMaker.makeNewPizzeria(bakersAmount, suppliersAmount, storageSize);
         pizzeria.startWork();
     }
 }

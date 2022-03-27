@@ -47,6 +47,11 @@ public class Baker extends Thread {
                 if (pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()) {
                     pushToStorage();
                     notifyAll();
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     if (currentOrder.isReady()) {
                         try {
