@@ -11,6 +11,7 @@ public class PizzeriaTests {
         int suppliersAmount = 3;
         int storageSize = 5;
         Pizzeria pizzeria = PizzeriasMaker.makeNewPizzeria(bakersAmount, suppliersAmount, storageSize);
+        //pizzeria.saveToJson("pizza1");
         pizzeria.startWork();
     }
 }

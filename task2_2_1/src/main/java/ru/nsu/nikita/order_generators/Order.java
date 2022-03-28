@@ -4,15 +4,17 @@ public class Order {
     private int number;
     private boolean inWork;
     private boolean ready;
+    private boolean inBakery;
     private boolean inStorage;
     private boolean inBag;
     private boolean delivered;
     private boolean endWork;
 
     public Order() {
-        this.number = 0;
+        this.number = -1;
         this.inWork = false;
         this.ready = false;
+        this.inBakery = false;
         this.inStorage = false;
         this.inBag = false;
         this.delivered = false;
@@ -23,6 +25,7 @@ public class Order {
         this.number = number;
         this.inWork = false;
         this.ready = false;
+        this.inBakery = false;
         this.inStorage = false;
         this.inBag = false;
         this.delivered = false;
@@ -32,12 +35,13 @@ public class Order {
     public Order(boolean endWork, int number) {
         this.number = number;
         this.inWork = false;
-        this.ready = true;
+        this.ready = false;
+        this.inBakery = false;
         this.inStorage = false;
         this.inBag = false;
         this.delivered = false;
 
-        this.endWork = true;
+        this.endWork = endWork;
     }
 
     public int getNumber() {
@@ -96,12 +100,21 @@ public class Order {
         this.endWork = endWork;
     }
 
+    public boolean isInBakery() {
+        return inBakery;
+    }
+
+    public void setInBakery(boolean inBakery) {
+        this.inBakery = inBakery;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "number=" + number +
                 ", inWork=" + inWork +
                 ", ready=" + ready +
+                ", inBakery=" + inBakery +
                 ", inStorage=" + inStorage +
                 ", inBag=" + inBag +
                 ", delivered=" + delivered +

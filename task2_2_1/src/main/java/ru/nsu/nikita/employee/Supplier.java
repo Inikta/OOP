@@ -32,47 +32,46 @@ public class Supplier extends Thread {
     @Override
     public void run() {
         do {
-            do {
-                synchronized (pizzeria.getStorageQueue()) {
-                    if (!pizzeria.getStorageQueue().isEmpty()) {
-                        takePizza();
-                    } else if (bag.isEmpty()) {
-                        try {
-                            wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+            while (bag.size() < bagLimit) {
+                try {
+                    takePizza();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } while (
-                    (bag.size() < bagLimit & !pizzeria.getStorageQueue().isEmpty())
-                            || bag.isEmpty()
-                            || !lastOrder.isEndWork());
+                System.out.println(this);
+            }
 
-            notifyAll();
-
-            do {
+            while (!bag.isEmpty()) {
+                System.out.println(this);
                 try {
                     deliverPizza();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } while (!bag.isEmpty());
-
+            }
         } while (!lastRemovedOrder.isEndWork());
     }
 
-    private void takePizza() {
-        lastOrder = pizzeria.getStorageQueue().getFirst();
-        bag.addLast(lastOrder);
-        lastOrder.setInStorage(false);
-        lastOrder.setInBag(true);
-        System.out.println("Supplier #" + number + ": " + lastOrder.toString());
+    private void takePizza() throws InterruptedException {
+        synchronized (pizzeria.getStorageQueue()) {
+            if (!pizzeria.getStorageQueue().isEmpty()) {
+                lastOrder = pizzeria.getStorageQueue().pop();
+                bag.addLast(lastOrder);
+                lastOrder.setInStorage(false);
+                lastOrder.setInBag(true);
+                System.out.println("Supplier #" + number + ": " + lastOrder.toString());
+                pizzeria.getStorageQueue().notifyAll();
+                wait();
+            } else {
+                wait();
+            }
+            System.out.println("Supplier #" + number + ": " + lastOrder.toString());
+        }
     }
 
     private void deliverPizza() throws InterruptedException {
         Thread.sleep(deliveryTime);
-        lastRemovedOrder = bag.removeFirst();
+        lastRemovedOrder = bag.pop();
         lastRemovedOrder.setInBag(false);
         lastRemovedOrder.setDelivered(true);
         System.out.println("Supplier #" + number + ": " + lastRemovedOrder.toString());

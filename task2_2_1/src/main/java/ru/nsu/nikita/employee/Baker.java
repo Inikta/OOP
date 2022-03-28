@@ -19,73 +19,61 @@ public class Baker extends Thread {
     }
 
     @Override
-    public synchronized void run() {
-        while (true) {
-            if (!pizzeria.getOrdersQueue().isEmpty()) {
+    public void run() {
+        while (!currentOrder.isEndWork()) {
+            try {
                 takeOrder();
-            } else {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            notifyAll();
-
-            if (currentOrder.isEndWork()) {
-                break;
-            }
-
             try {
                 makePizza();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            do {
-                if (pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()) {
-                    pushToStorage();
-                    notifyAll();
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    if (currentOrder.isReady()) {
-                        try {
-                            wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            } while (!currentOrder.isInStorage());
+            try {
+                pushToStorage();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void takeOrder() {
-        currentOrder = pizzeria.getOrdersQueue().pop();
-        currentOrder.setInWork(true);
-        System.out.println("Baker #" + number + ": " + currentOrder.toString());
+    private void takeOrder() throws InterruptedException {
+        synchronized (pizzeria.getOrdersQueue()) {
+            if (!pizzeria.getOrdersQueue().isEmpty() & !currentOrder.isInBakery()) {
+                currentOrder = pizzeria.getOrdersQueue().pop();
+                currentOrder.setInBakery(true);
+                currentOrder.setInWork(true);
+                System.out.println("Baker #" + number + ": " + currentOrder.toString());
+                pizzeria.getOrdersQueue().notifyAll();
+                //wait();
+            }
+        }
     }
 
     private void makePizza() throws InterruptedException {
-        if (!currentOrder.isEndWork()) {
+        if (!currentOrder.isEndWork() & currentOrder.isInWork()) {
             Thread.sleep(bakeTime);
             currentOrder.setInWork(false);
             currentOrder.setReady(true);
+            System.out.println("Baker #" + number + ": " + currentOrder.toString());
         }
-        System.out.println("Baker #" + number + ": " + currentOrder.toString());
     }
 
-    private void pushToStorage() {
-        if (!currentOrder.isEndWork()) {
-            pizzeria.getStorageQueue().addLast(currentOrder);
-            currentOrder.setInStorage(true);
+    private void pushToStorage() throws InterruptedException {
+        synchronized (pizzeria.getStorageQueue()) {
+            if (!currentOrder.isEndWork()
+                    & pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()
+                    & currentOrder.isReady()) {
+                currentOrder.setInBakery(false);
+                currentOrder.setInStorage(true);
+                pizzeria.getStorageQueue().push(currentOrder);
+                System.out.println("Baker #" + number + ": " + currentOrder.toString());
+                pizzeria.getStorageQueue().notifyAll();
+                //wait();
+            }
         }
-        System.out.println("Baker #" + number + ": " + currentOrder.toString());
     }
 
     public int getNumber() {
