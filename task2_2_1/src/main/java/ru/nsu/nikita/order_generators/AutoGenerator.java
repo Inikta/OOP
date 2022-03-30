@@ -14,5 +14,8 @@ public class AutoGenerator {
         for (int i = 0; i < ordersAmount; i++) {
             pizzeria.getOrdersQueue().addLast(new Order(pizzeria.orderCounter.getAndAdd(1)));
         }
+        for (int i = 0; i < pizzeria.getBakersAmount(); i++) {
+            pizzeria.getOrdersQueue().addLast(new Order(true, pizzeria.orderCounter.getAndAdd(-100)));
+        }
     }
 }

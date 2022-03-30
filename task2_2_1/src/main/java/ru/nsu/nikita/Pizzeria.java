@@ -1,8 +1,11 @@
 package ru.nsu.nikita;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.JsonAdapter;
 import ru.nsu.nikita.employee.Baker;
+import ru.nsu.nikita.employee.BakerAttributes;
 import ru.nsu.nikita.employee.Supplier;
+import ru.nsu.nikita.employee.SupplierAttributes;
 import ru.nsu.nikita.order_generators.AutoGenerator;
 import ru.nsu.nikita.order_generators.ManualGenerator;
 import ru.nsu.nikita.order_generators.Order;
@@ -19,11 +22,10 @@ public class Pizzeria {
     private final int suppliersAmount;
     private final Deque<Order> ordersQueue;
     private final Deque<Order> storageQueue;
-    private final Scanner reader;
     public AtomicInteger orderCounter;
-    GsonBuilder builder;
-    private List<Baker> bakers;
-    private List<Supplier> suppliers;
+    //GsonBuilder builder;
+    private List<BakerAttributes> bakersAttributes;
+    private List<SupplierAttributes> suppliersAttributes;
     private int storageLimit;
 
     public Pizzeria(int bakersAmount,
@@ -39,18 +41,21 @@ public class Pizzeria {
 
         orderCounter = new AtomicInteger(0);
 
-        reader = new Scanner(System.in);
+        Scanner reader = new Scanner(System.in);
 
-        bakers = new ArrayList<>();
-        suppliers = new ArrayList<>();
+        bakersAttributes = new ArrayList<>();
+        suppliersAttributes = new ArrayList<>();
 
-        int param = 0;
+        System.out.println("[0] - Automatic configuration of bakers and suppliers\n" +
+                "[1] - Manual configuration of bakers and suppliers");
+        int param = reader.nextInt();
+        reader.close();
 
         configureBakers(param);
         configureSuppliers(param);
     }
 
-    public void saveToJson(String fileName) throws IOException {
+    /*public void saveToJson(String fileName) throws IOException {
         builder = new GsonBuilder();
         String data = builder.create().toJson(this);
         File file = new File("../data/" + fileName + ".json");
@@ -60,40 +65,43 @@ public class Pizzeria {
 
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(data);
-    }
+    }*/
 
     private void configureBakers(int mode) {
+        Scanner reader = new Scanner(System.in);
         System.out.println("Configure bakers.");
         if (mode == 1) {
             for (int i = 0; i < bakersAmount; i++) {
-                System.out.println("Baker #" + i + " - bake time: ");
+                System.out.print("Baker #" + i + " - bake time: ");
                 int newBakeTime = reader.nextInt();
 
-                bakers.add(new Baker(i, newBakeTime, this));
+                bakersAttributes.add(new BakerAttributes(i, newBakeTime));
             }
         } else {
             for (int i = 0; i < bakersAmount; i++) {
                 System.out.print("Baker #" + i + " - bake time: ");
                 int newBakeTime = Math.abs(((Double) (Math.random() * 10000)).intValue());
-                System.out.println(newBakeTime);
+                System.out.print(newBakeTime);
 
-                bakers.add(new Baker(i, newBakeTime, this));
+                bakersAttributes.add(new BakerAttributes(i, newBakeTime));
             }
         }
+        reader.close();
     }
 
     private void configureSuppliers(int mode) {
+        Scanner reader = new Scanner(System.in);
         System.out.println("Configure suppliers.");
         if (mode == 1) {
             for (int i = 0; i < suppliersAmount; i++) {
                 System.out.println("Supplier #" + i);
-                System.out.println("\tBag size: ");
+                System.out.print("\tBag size: ");
                 int newBagSize = reader.nextInt();
 
-                System.out.println("\tDelivery time: ");
+                System.out.print("\tDelivery time: ");
                 int newDeliverTime = reader.nextInt();
 
-                suppliers.add(new Supplier(i, newBagSize, newDeliverTime, this));
+                suppliersAttributes.add(new SupplierAttributes(i, newBagSize, newDeliverTime));
             }
         } else {
             for (int i = 0; i < suppliersAmount; i++) {
@@ -104,19 +112,45 @@ public class Pizzeria {
                 int newDeliverTime = Math.abs(((Double) (Math.random() * 10000)).intValue());
                 System.out.println("\tDelivery time: " + newDeliverTime);
 
-                suppliers.add(new Supplier(i, newBagSize, newDeliverTime, this));
+                suppliersAttributes.add(new SupplierAttributes(i, newBagSize, newDeliverTime));
             }
         }
+        reader.close();
+    }
+
+    private List<Baker> createBakers() {
+        System.out.println("Creating bakers...");
+        List<Baker> bakersList = new ArrayList<>();
+        for (BakerAttributes attr : bakersAttributes) {
+            bakersList.add(new Baker(attr, this));
+        }
+        System.out.println("Done!");
+
+        return bakersList;
+    }
+
+    private List<Supplier> createSuppliers() {
+        System.out.println("Creating suppliers...");
+        List<Supplier> supplierList = new ArrayList<>();
+        for (SupplierAttributes attr : suppliersAttributes) {
+            supplierList.add(new Supplier(attr, this));
+        }
+        System.out.println("Done!");
+        return supplierList;
     }
 
     public void startWork() {
+        Scanner reader = new Scanner(System.in);
         AutoGenerator autoGenerator;
         ManualGenerator manualGenerator;
 
-        System.out.println("""
+        List<Baker> bakerList = createBakers();
+        List<Supplier> supplierList = createSuppliers();
+
+        System.out.print("""
                 Generate orders automatically [0]?
                 OR
-                Generate orders manually [1]?
+                Generate orders manually [1] [Disabled]?
                 """);
         int mode = reader.nextInt();
         if (mode == 0) {
@@ -130,10 +164,11 @@ public class Pizzeria {
             manualGenerator.start();
         }
 
-        suppliers.forEach(t -> t.setPriority(9));
+        supplierList.forEach(t -> t.setPriority(9));
 
-        bakers.forEach(Thread::start);
-        suppliers.forEach(Thread::start);
+        bakerList.forEach(Thread::start);
+        supplierList.forEach(Thread::start);
+        reader.close();
     }
 
     public int getBakersAmount() {
@@ -152,12 +187,12 @@ public class Pizzeria {
         this.storageLimit = storageLimit;
     }
 
-    public List<Baker> getBakers() {
-        return bakers;
+    public List<BakerAttributes> getBakerAttributes() {
+        return bakersAttributes;
     }
 
-    public List<Supplier> getSuppliers() {
-        return suppliers;
+    public List<SupplierAttributes> getSuppliersAttributes() {
+        return suppliersAttributes;
     }
 
     public Deque<Order> getOrdersQueue() {
