@@ -18,10 +18,10 @@ public class Supplier extends Thread {
     private Order lastRemovedOrder;
 
 
-    public Supplier(int number, int bagLimit, int deliveryTime, Pizzeria pizzeria) {
-        this.number = number;
-        this.bagLimit = bagLimit;
-        this.deliveryTime = deliveryTime;
+    public Supplier(SupplierAttributes supplierAttributes, Pizzeria pizzeria) {
+        this.number = supplierAttributes.getNumber();
+        this.bagLimit = supplierAttributes.getBagLimit();
+        this.deliveryTime = supplierAttributes.getDeliveryTime();
         this.pizzeria = pizzeria;
 
         bag = new ArrayDeque<>(bagLimit);
@@ -32,21 +32,17 @@ public class Supplier extends Thread {
     @Override
     public void run() {
         do {
-            while (bag.size() < bagLimit) {
-                try {
-                    takePizza();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(this);
+            try {
+                takePizza();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             while (!bag.isEmpty()) {
-                System.out.println(this);
                 try {
                     deliverPizza();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Supplier #" + number + ": the work is over.");
                 }
             }
         } while (!lastRemovedOrder.isEndWork());
@@ -54,27 +50,42 @@ public class Supplier extends Thread {
 
     private void takePizza() throws InterruptedException {
         synchronized (pizzeria.getStorageQueue()) {
-            if (!pizzeria.getStorageQueue().isEmpty()) {
-                lastOrder = pizzeria.getStorageQueue().pop();
-                bag.addLast(lastOrder);
-                lastOrder.setInStorage(false);
-                lastOrder.setInBag(true);
-                System.out.println("Supplier #" + number + ": " + lastOrder.toString());
-                pizzeria.getStorageQueue().notifyAll();
-                wait();
-            } else {
-                wait();
+            while (bag.size() < bagLimit) {
+
+                if (!pizzeria.getStorageQueue().isEmpty()) {
+                    if (!pizzeria.getStorageQueue().getFirst().isEndWork()) {
+                        lastOrder = pizzeria.getStorageQueue().pop();
+                    } else {
+                        lastOrder = pizzeria.getStorageQueue().getFirst();
+                    }
+                    bag.addLast(lastOrder);
+                    lastOrder.setInStorage(false);
+                    lastOrder.setInBag(true);
+                    synchronized (System.out) {
+                        System.out.println("In bag " + bag.size() + "/" + bagLimit + " :" + "Supplier #" + number + ": " + lastOrder.getNumber());
+                    }
+                    pizzeria.getStorageQueue().notifyAll();
+                }
+                if ((pizzeria.getStorageQueue().isEmpty() & !bag.isEmpty()) || lastOrder.isEndWork()) {
+                    return;
+                }
+
+                pizzeria.getStorageQueue().wait();
             }
-            System.out.println("Supplier #" + number + ": " + lastOrder.toString());
         }
     }
 
     private void deliverPizza() throws InterruptedException {
-        Thread.sleep(deliveryTime);
         lastRemovedOrder = bag.pop();
+        if (lastRemovedOrder.isEndWork()) {
+            this.interrupt();
+        }
+        Thread.sleep(deliveryTime);
         lastRemovedOrder.setInBag(false);
         lastRemovedOrder.setDelivered(true);
-        System.out.println("Supplier #" + number + ": " + lastRemovedOrder.toString());
+        synchronized (System.out) {
+            System.out.println("Delivered " + bag.size() + "/" + bagLimit + " :" + "Supplier #" + number + ": " + lastRemovedOrder.getNumber());
+        }
     }
 
     public Pizzeria getPizzeria() {

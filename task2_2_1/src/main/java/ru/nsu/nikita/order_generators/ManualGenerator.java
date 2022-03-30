@@ -15,7 +15,7 @@ public class ManualGenerator extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         System.out.println("""
                 Help:
                 0 - help
@@ -35,27 +35,36 @@ public class ManualGenerator extends Thread {
                         666 - end work. All remaining orders will not be completed.
                         """);
                 case 10 -> {
+                    synchronized (pizzeria.getOrdersQueue()) {
                         pizzeria.getOrdersQueue().addLast(new Order(pizzeria.orderCounter.getAndAdd(1)));
-                        notifyAll();
+                        pizzeria.getOrdersQueue().notifyAll();
+                    }
                 }
                 case 11 -> {
                     System.out.print("Orders to add: ");
                     int parameter = reader.nextInt();
+                    synchronized (pizzeria.getOrdersQueue()) {
                         for (int i = 0; i < parameter; i++) {
                             pizzeria.getOrdersQueue().addLast(new Order(pizzeria.orderCounter.getAndAdd(1)));
                         }
-                        notifyAll();
+                        pizzeria.getOrdersQueue().notifyAll();
+                    }
                 }
                 case 666 -> {
+                    synchronized (pizzeria.getOrdersQueue()) {
+
                         for (int i = 0; i < pizzeria.getBakersAmount(); i++) {
                             pizzeria.getOrdersQueue().addFirst(new Order(true, pizzeria.orderCounter.getAndAdd(1)));
                         }
-                        notifyAll();
+                        pizzeria.getOrdersQueue().notifyAll();
+                    }
+                    synchronized (pizzeria.getStorageQueue()) {
+
                         for (int i = 0; i < pizzeria.getSuppliersAmount(); i++) {
                             pizzeria.getStorageQueue().addFirst(new Order(true, pizzeria.orderCounter.getAndAdd(1)));
-                        notifyAll();
+                        }
+                        pizzeria.getStorageQueue().notifyAll();
                     }
-
                     reader.close();
                 }
             }

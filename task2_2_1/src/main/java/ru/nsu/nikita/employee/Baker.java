@@ -11,9 +11,9 @@ public class Baker extends Thread {
 
     private Order currentOrder;
 
-    public Baker(int number, int bakeTime, Pizzeria pizzeria) {
-        this.number = number;
-        this.bakeTime = bakeTime;
+    public Baker(BakerAttributes bakerAttributes, Pizzeria pizzeria) {
+        this.number = bakerAttributes.getNumber();
+        this.bakeTime = bakerAttributes.getBakeTime();
         this.pizzeria = pizzeria;
         currentOrder = new Order();
     }
@@ -21,11 +21,9 @@ public class Baker extends Thread {
     @Override
     public void run() {
         while (!currentOrder.isEndWork()) {
-            try {
-                takeOrder();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+            takeOrder();
+
             try {
                 makePizza();
             } catch (InterruptedException e) {
@@ -33,21 +31,25 @@ public class Baker extends Thread {
             }
             try {
                 pushToStorage();
+                if (currentOrder.isEndWork()) {
+                    System.out.println("Baker #" + number + ": the work is over.");
+                }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                return;
             }
         }
     }
 
-    private void takeOrder() throws InterruptedException {
+    private void takeOrder() {
         synchronized (pizzeria.getOrdersQueue()) {
             if (!pizzeria.getOrdersQueue().isEmpty() & !currentOrder.isInBakery()) {
                 currentOrder = pizzeria.getOrdersQueue().pop();
                 currentOrder.setInBakery(true);
                 currentOrder.setInWork(true);
-                System.out.println("Baker #" + number + ": " + currentOrder.toString());
+                synchronized (System.out) {
+                    System.out.println("Taken: Baker #" + number + " - order №" + currentOrder.getNumber());
+                }
                 pizzeria.getOrdersQueue().notifyAll();
-                //wait();
             }
         }
     }
@@ -57,21 +59,31 @@ public class Baker extends Thread {
             Thread.sleep(bakeTime);
             currentOrder.setInWork(false);
             currentOrder.setReady(true);
-            System.out.println("Baker #" + number + ": " + currentOrder.toString());
+            synchronized (System.out) {
+                System.out.println("Ready: Baker #" + number + " - order №" + currentOrder.getNumber());
+            }
+        } else if (currentOrder.isEndWork()) {
+            currentOrder.setInWork(false);
+            currentOrder.setReady(true);
         }
     }
 
     private void pushToStorage() throws InterruptedException {
         synchronized (pizzeria.getStorageQueue()) {
-            if (!currentOrder.isEndWork()
-                    & pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()
+            if (pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()
                     & currentOrder.isReady()) {
                 currentOrder.setInBakery(false);
                 currentOrder.setInStorage(true);
                 pizzeria.getStorageQueue().push(currentOrder);
-                System.out.println("Baker #" + number + ": " + currentOrder.toString());
+                synchronized (System.out) {
+                    System.out.println("In storage: Baker #" + number + " - order №" + currentOrder.getNumber());
+                }
                 pizzeria.getStorageQueue().notifyAll();
-                //wait();
+                if (currentOrder.isEndWork()) {
+                    return;
+                }
+            } else {
+                pizzeria.getStorageQueue().wait();
             }
         }
     }
