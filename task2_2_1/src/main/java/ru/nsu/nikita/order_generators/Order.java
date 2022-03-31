@@ -10,6 +10,7 @@ public class Order {
     private boolean delivered;
     private boolean endWork;
 
+
     public Order() {
         this.number = -1;
         this.inWork = false;
@@ -21,6 +22,10 @@ public class Order {
         this.endWork = false;
     }
 
+    /**
+     * Order data structure.
+     * @param number order id.
+     */
     public Order(int number) {
         this.number = number;
         this.inWork = false;
@@ -32,6 +37,11 @@ public class Order {
         this.endWork = false;
     }
 
+    /**
+     * Order data structure.
+     * @param endWork signal to end work. False at default.
+     * @param number order id.
+     */
     public Order(boolean endWork, int number) {
         this.number = number;
         this.inWork = false;
