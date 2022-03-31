@@ -12,6 +12,13 @@ public class Baker extends Thread {
 
     private Order currentOrder;
 
+    /**
+     * Baker thread, which takes orders, makes them and pushes to the storage if it is not full.
+     * If storage is full, then will wait until one place for order will be freed.
+     * If order is endWork, then will push it to the storage and end work.
+     * @param bakerAttributes parameters of this baker.
+     * @param pizzeria pizzeria, to which this baker belongs.
+     */
     public Baker(BakerAttributes bakerAttributes, Pizzeria pizzeria) {
         this.number = bakerAttributes.getNumber();
         this.bakeTime = bakerAttributes.getBakeTime();
@@ -22,7 +29,7 @@ public class Baker extends Thread {
 
     @Override
     public void run() {
-        while (!currentOrder.isEndWork()) {
+        while (!done) {
 
             takeOrder();
 
@@ -82,9 +89,6 @@ public class Baker extends Thread {
                     System.out.println("In storage: Baker #" + number + " - order №" + currentOrder.getNumber());
                 }
                 pizzeria.getStorageQueue().notifyAll();
-                if (currentOrder.isEndWork()) {
-                    return;
-                }
             } else {
                 pizzeria.getStorageQueue().wait();
             }

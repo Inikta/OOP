@@ -15,6 +15,16 @@ public class PizzeriaAttributes {
     private List<BakerAttributes> bakerAttributes;
     private List<SupplierAttributes> supplierAttributes;
 
+    /**
+     * Data structure for Pizzeria parameters.
+     * @param bakersAmount amount of bakers
+     * @param suppliersAmount amount of suppliers
+     * @param storageLimit maximum orders storage can contain.
+     * @param ordersAmount amount of orders in the queue. For automatic pre-generation.
+     * @param bakerAttributes bakers parameters for each baker.
+     * @param supplierAttributes suppliers parameters for each supplier.
+     */
+
     public PizzeriaAttributes(int bakersAmount,
                               int suppliersAmount,
                               int storageLimit,
@@ -86,5 +96,17 @@ public class PizzeriaAttributes {
 
     public void setOrdersAmount(int ordersAmount) {
         this.ordersAmount = ordersAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "PizzeriaAttributes{\n" +
+                " bakersAmount=" + bakersAmount + "" +
+                ",\n suppliersAmount=" + suppliersAmount +
+                ",\n storageLimit=" + storageLimit +
+                ",\n ordersAmount=" + ordersAmount +
+                ",\n bakerAttributes=" + bakerAttributes +
+                ",\n supplierAttributes=" + supplierAttributes +
+                '}';
     }
 }
