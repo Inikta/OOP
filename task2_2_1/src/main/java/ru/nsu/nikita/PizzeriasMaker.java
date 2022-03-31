@@ -111,7 +111,7 @@ public class PizzeriasMaker {
             nullExc.printStackTrace();
             throw nullExc;
         }
-        Path folderPath = FileSystems.getDefault().getPath(".." + delimiter + folder);
+        Path folderPath = FileSystems.getDefault().getPath(folder);
         Path path = FileSystems.getDefault().getPath(folder + delimiter + fileName + ".json");
 
         Gson gson = builder.create();
