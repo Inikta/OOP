@@ -8,6 +8,7 @@ public class Baker extends Thread {
     private final Pizzeria pizzeria;
     private final int number;
     private final int bakeTime;
+    private boolean done;
 
     private Order currentOrder;
 
@@ -15,6 +16,7 @@ public class Baker extends Thread {
         this.number = bakerAttributes.getNumber();
         this.bakeTime = bakerAttributes.getBakeTime();
         this.pizzeria = pizzeria;
+        this.done = false;
         currentOrder = new Order();
     }
 
@@ -33,6 +35,7 @@ public class Baker extends Thread {
                 pushToStorage();
                 if (currentOrder.isEndWork()) {
                     System.out.println("Baker #" + number + ": the work is over.");
+                    done = true;
                 }
             } catch (InterruptedException e) {
                 return;
@@ -70,7 +73,7 @@ public class Baker extends Thread {
 
     private void pushToStorage() throws InterruptedException {
         synchronized (pizzeria.getStorageQueue()) {
-            if (pizzeria.getStorageQueue().size() < pizzeria.getStorageLimit()
+            if (pizzeria.getStorageQueue().size() < pizzeria.getAttributes().getStorageLimit()
                     & currentOrder.isReady()) {
                 currentOrder.setInBakery(false);
                 currentOrder.setInStorage(true);
@@ -98,6 +101,10 @@ public class Baker extends Thread {
 
     public Order getCurrentOrder() {
         return currentOrder;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 
     @Override

@@ -53,14 +53,14 @@ public class ManualGenerator extends Thread {
                 case 666 -> {
                     synchronized (pizzeria.getOrdersQueue()) {
 
-                        for (int i = 0; i < pizzeria.getBakersAmount(); i++) {
+                        for (int i = 0; i < pizzeria.getAttributes().getBakersAmount(); i++) {
                             pizzeria.getOrdersQueue().addFirst(new Order(true, pizzeria.orderCounter.getAndAdd(1)));
                         }
                         pizzeria.getOrdersQueue().notifyAll();
                     }
                     synchronized (pizzeria.getStorageQueue()) {
 
-                        for (int i = 0; i < pizzeria.getSuppliersAmount(); i++) {
+                        for (int i = 0; i < pizzeria.getAttributes().getSuppliersAmount(); i++) {
                             pizzeria.getStorageQueue().addFirst(new Order(true, pizzeria.orderCounter.getAndAdd(1)));
                         }
                         pizzeria.getStorageQueue().notifyAll();

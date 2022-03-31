@@ -4,11 +4,13 @@ public class SupplierAttributes {
     private int number;
     private int bagLimit;
     private int deliveryTime;
+    private int waitingTime;
 
-    public SupplierAttributes(int number, int bagLimit, int deliveryTime) {
+    public SupplierAttributes(int number, int bagLimit, int deliveryTime, int waitingTime) {
         this.number = number;
         this.bagLimit = bagLimit;
         this.deliveryTime = deliveryTime;
+        this.waitingTime = waitingTime;
     }
 
     public int getNumber() {
@@ -33,5 +35,13 @@ public class SupplierAttributes {
 
     public void setDeliveryTime(int deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    public int getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
     }
 }

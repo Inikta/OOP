@@ -12,6 +12,8 @@ public class Supplier extends Thread {
     private final int number;
     private final int bagLimit;
     private final int deliveryTime;
+    private final int waitingTime;
+    private boolean done;
 
     private final Deque<Order> bag;
     private Order lastOrder;
@@ -22,7 +24,9 @@ public class Supplier extends Thread {
         this.number = supplierAttributes.getNumber();
         this.bagLimit = supplierAttributes.getBagLimit();
         this.deliveryTime = supplierAttributes.getDeliveryTime();
+        this.waitingTime = supplierAttributes.getWaitingTime();
         this.pizzeria = pizzeria;
+        this.done = false;
 
         bag = new ArrayDeque<>(bagLimit);
         lastOrder = new Order();
@@ -43,6 +47,7 @@ public class Supplier extends Thread {
                     deliverPizza();
                 } catch (InterruptedException e) {
                     System.out.println("Supplier #" + number + ": the work is over.");
+                    done = true;
                 }
             }
         } while (!lastRemovedOrder.isEndWork());
@@ -67,6 +72,7 @@ public class Supplier extends Thread {
                     pizzeria.getStorageQueue().notifyAll();
                 }
                 if ((pizzeria.getStorageQueue().isEmpty() & !bag.isEmpty()) || lastOrder.isEndWork()) {
+                    pizzeria.getStorageQueue().wait(waitingTime);
                     return;
                 }
 
@@ -116,6 +122,12 @@ public class Supplier extends Thread {
         return lastRemovedOrder;
     }
 
+    public int getWaitingTime() {return waitingTime;}
+
+    public boolean isDone() {
+        return done;
+    }
+
     @Override
     public String toString() {
         return "Supplier #" + number + " {" +
@@ -123,6 +135,7 @@ public class Supplier extends Thread {
                 "\n\tbag=" + bag +
                 "\n\tdeliveryTime=" + deliveryTime +
                 "\n\tlastOrder=" + lastOrder +
+                "\n\twaitingTime=" + waitingTime +
                 "\n\tlastRemovedOrder=" + lastRemovedOrder +
                 '}';
     }
