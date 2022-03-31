@@ -19,7 +19,12 @@ public class Supplier extends Thread {
     private Order lastOrder;
     private Order lastRemovedOrder;
 
-
+    /**
+     * Supplier thread, which waits for orders in the storage, takes them and delivers.
+     * If another order is endWork, then will deliver remaining orders in the bag and end work.
+     * @param supplierAttributes parameters of this supplier.
+     * @param pizzeria pizzeria, to which this supplier belongs.
+     */
     public Supplier(SupplierAttributes supplierAttributes, Pizzeria pizzeria) {
         this.number = supplierAttributes.getNumber();
         this.bagLimit = supplierAttributes.getBagLimit();
@@ -50,7 +55,7 @@ public class Supplier extends Thread {
                     done = true;
                 }
             }
-        } while (!lastRemovedOrder.isEndWork());
+        } while (!done);
     }
 
     private void takePizza() throws InterruptedException {

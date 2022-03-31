@@ -6,6 +6,13 @@ public class SupplierAttributes {
     private int deliveryTime;
     private int waitingTime;
 
+    /**
+     * Data structure for Supplier parameters.
+     * @param number id of the supplier.
+     * @param bagLimit maximum amount of pizzas supplier can rake
+     * @param deliveryTime time spending on delivering of each pizza.
+     * @param waitingTime time, which supplier will wait for new orders in storage if its empty, but there is/are pizza('s) in the bag.
+     */
     public SupplierAttributes(int number, int bagLimit, int deliveryTime, int waitingTime) {
         this.number = number;
         this.bagLimit = bagLimit;
@@ -43,5 +50,15 @@ public class SupplierAttributes {
 
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
+    }
+
+    @Override
+    public String toString() {
+        return "SupplierAttributes{" +
+                "number=" + number +
+                ", bagLimit=" + bagLimit +
+                ", deliveryTime=" + deliveryTime +
+                ", waitingTime=" + waitingTime +
+                '}';
     }
 }
