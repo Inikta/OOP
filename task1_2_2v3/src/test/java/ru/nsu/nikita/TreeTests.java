@@ -79,6 +79,7 @@ public class TreeTests {
         Assertions.assertEquals("1", tree.find(3).getContent());
 
         tree.add("4", 0, INSERT_BEFORE);
+
         Assertions.assertEquals("4", tree.getParent().getContent());
         Assertions.assertEquals("A", tree.find(0).getContent());
         Assertions.assertEquals("3", tree.find(1).getContent());
