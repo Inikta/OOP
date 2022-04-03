@@ -58,10 +58,18 @@ public class Supplier extends Thread {
         } while (!done);
     }
 
+    /**
+     * Takes pizza from storage. The idea is:
+     *  1) takes the earliest made pizza, if storage is not empty and notifies everyone about it;
+     *  2) if storage is empty, but there is a pizza in a bag, then waits some time for new pizza
+     *      and if new pizza has not appeared, then quits;
+     *  3) if storage is empty, then waits for opposite.
+     * @throws InterruptedException if was interrupted during waiting.
+     */
     private void takePizza() throws InterruptedException {
         synchronized (pizzeria.getStorageQueue()) {
             while (bag.size() < bagLimit) {
-
+                boolean hasWaited = false;
                 if (!pizzeria.getStorageQueue().isEmpty()) {
                     if (!pizzeria.getStorageQueue().getFirst().isEndWork()) {
                         lastOrder = pizzeria.getStorageQueue().pop();
@@ -72,20 +80,29 @@ public class Supplier extends Thread {
                     lastOrder.setInStorage(false);
                     lastOrder.setInBag(true);
                     synchronized (System.out) {
-                        System.out.println("In bag " + bag.size() + "/" + bagLimit + " :" + "Supplier #" + number + ": " + lastOrder.getNumber());
+                        System.out.println("In bag " + bag.size() + "/" + bagLimit + " :" +
+                                "Supplier #" + number + ": "
+                                + "order №" + lastOrder.getNumber());
                     }
                     pizzeria.getStorageQueue().notifyAll();
+                } else {
+                    pizzeria.getStorageQueue().wait();
                 }
                 if ((pizzeria.getStorageQueue().isEmpty() & !bag.isEmpty()) || lastOrder.isEndWork()) {
                     pizzeria.getStorageQueue().wait(waitingTime);
+                    hasWaited = true;
+                }
+                if (hasWaited & pizzeria.getStorageQueue().isEmpty()) {
                     return;
                 }
-
-                pizzeria.getStorageQueue().wait();
             }
         }
     }
 
+    /**
+     * Delivers pizza. Imitation of some work. If last order is an endWork order, then self-interrupts.
+     * @throws InterruptedException throws if was interrupted during delivery.
+     */
     private void deliverPizza() throws InterruptedException {
         lastRemovedOrder = bag.pop();
         if (lastRemovedOrder.isEndWork()) {
@@ -95,7 +112,9 @@ public class Supplier extends Thread {
         lastRemovedOrder.setInBag(false);
         lastRemovedOrder.setDelivered(true);
         synchronized (System.out) {
-            System.out.println("Delivered " + bag.size() + "/" + bagLimit + " :" + "Supplier #" + number + ": " + lastRemovedOrder.getNumber());
+            System.out.println("Delivered " + bag.size() + "/" + bagLimit + " :" +
+                    "Supplier #" + number + ": " +
+                    "order №" + lastRemovedOrder.getNumber());
         }
     }
 
