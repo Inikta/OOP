@@ -96,6 +96,10 @@ public class Supplier extends Thread {
                     return;
                 }
             }
+
+            if (bagLimit <= 0) {
+                interrupt();
+            }
         }
     }
 
