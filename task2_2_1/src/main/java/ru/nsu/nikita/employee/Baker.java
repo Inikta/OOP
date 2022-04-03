@@ -16,8 +16,9 @@ public class Baker extends Thread {
      * Baker thread, which takes orders, makes them and pushes to the storage if it is not full.
      * If storage is full, then will wait until one place for order will be freed.
      * If order is endWork, then will push it to the storage and end work.
+     *
      * @param bakerAttributes parameters of this baker.
-     * @param pizzeria pizzeria, to which this baker belongs.
+     * @param pizzeria        pizzeria, to which this baker belongs.
      */
     public Baker(BakerAttributes bakerAttributes, Pizzeria pizzeria) {
         this.number = bakerAttributes.getNumber();
@@ -31,7 +32,11 @@ public class Baker extends Thread {
     public void run() {
         while (!done) {
 
-            takeOrder();
+            try {
+                takeOrder();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             try {
                 makePizza();
@@ -50,7 +55,12 @@ public class Baker extends Thread {
         }
     }
 
-    private void takeOrder() {
+    /**
+     * Takes order and notifies everyone about it, if orders queue is not empty and baker is not already busied with order.
+     * Waits for changes in queue in other case.
+     * @throws InterruptedException throws if interrupted during waiting.
+     */
+    private void takeOrder() throws InterruptedException {
         synchronized (pizzeria.getOrdersQueue()) {
             if (!pizzeria.getOrdersQueue().isEmpty() & !currentOrder.isInBakery()) {
                 currentOrder = pizzeria.getOrdersQueue().pop();
@@ -60,10 +70,17 @@ public class Baker extends Thread {
                     System.out.println("Taken: Baker #" + number + " - order №" + currentOrder.getNumber());
                 }
                 pizzeria.getOrdersQueue().notifyAll();
+            } else {
+                pizzeria.getOrdersQueue().wait();
             }
         }
     }
 
+    /**
+     * Makes pizza if it is not done yet. Imitation of work.
+     * Not wasting time on baking, if it is endWork order.
+     * @throws InterruptedException throws, if was interrupted during baking.
+     */
     private void makePizza() throws InterruptedException {
         if (!currentOrder.isEndWork() & currentOrder.isInWork()) {
             Thread.sleep(bakeTime);
@@ -78,6 +95,11 @@ public class Baker extends Thread {
         }
     }
 
+    /**
+     * Pushes baked pizza into storage, if it has place for order.
+     * Waits in other case.
+     * @throws InterruptedException throws, if was interrupted during waiting.
+     */
     private void pushToStorage() throws InterruptedException {
         synchronized (pizzeria.getStorageQueue()) {
             if (pizzeria.getStorageQueue().size() < pizzeria.getAttributes().getStorageLimit()
@@ -89,8 +111,6 @@ public class Baker extends Thread {
                     System.out.println("In storage: Baker #" + number + " - order №" + currentOrder.getNumber());
                 }
                 pizzeria.getStorageQueue().notifyAll();
-            } else {
-                pizzeria.getStorageQueue().wait();
             }
         }
     }
