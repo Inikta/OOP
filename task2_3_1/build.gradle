@@ -12,7 +12,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.7.1'
+    junitVersion = '5.8.2'
 }
 
 sourceCompatibility = '16'
@@ -23,8 +23,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'ru.nsu.nikita.task2_3_1'
-    mainClass = 'ru.nsu.nikita.task2_3_1.HelloApplication'
+    mainModule = 'ru.nsu.nikita.view'
+    mainClass = 'ru.nsu.nikita.view.SnakeApplication'
 }
 
 javafx {

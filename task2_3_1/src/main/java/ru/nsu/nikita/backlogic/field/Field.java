@@ -2,9 +2,8 @@ package ru.nsu.nikita.backlogic.field;
 
 import ru.nsu.nikita.backlogic.Coordinates;
 import ru.nsu.nikita.backlogic.tiles.Tile;
-import ru.nsu.nikita.backlogic.tiles.TileFactory;
-import ru.nsu.nikita.backlogic.tiles.TileTypes;
-import static ru.nsu.nikita.backlogic.tiles.TileTypes.*;
+import ru.nsu.nikita.backlogic.tiles.TileType;
+import static ru.nsu.nikita.backlogic.tiles.TileType.*;
 
 public class Field {
     private int horizontalSize;
@@ -25,8 +24,7 @@ public class Field {
         int y = 0;
         for (Tile[] row : field) {
             for (Tile tile : row) {
-                tile.setType(GRASS);
-                tile.getCoordinates().setXY(x++, y);
+                tile = new Tile(x++, y, GRASS);
                 setNeighbors(tile);
             }
             x %= horizontalSize;
@@ -65,17 +63,17 @@ public class Field {
         return field[coordinates.getY()][coordinates.getY()];
     }
 
-    public void changeTile(Coordinates coordinates, TileTypes newType) throws Exception {
-        field[coordinates.getY()][coordinates.getX()].setType(newType);
+    public void changeTile(Coordinates coordinates, TileType newType) throws Exception {
+        getTile(coordinates).setType(newType);
     }
 
-    public void changeRow(int row, TileTypes newType) throws Exception {
+    public void changeRow(int row, TileType newType) throws Exception {
         for (Tile tile : field[row]) {
             changeTile(tile.getCoordinates(), newType);
         }
     }
 
-    public void changeColumn(int column, TileTypes newType) throws Exception {
+    public void changeColumn(int column, TileType newType) throws Exception {
         for (int i = 0; i < verticalSize; i++) {
             changeTile(field[i][column].getCoordinates(), newType);
         }
@@ -86,5 +84,17 @@ public class Field {
         changeRow(verticalSize - 1, OBSTACLE);
         changeColumn(0, OBSTACLE);
         changeColumn(horizontalSize - 1, OBSTACLE);
+    }
+
+    public int getHorizontalSize() {
+        return horizontalSize;
+    }
+
+    public int getVerticalSize() {
+        return verticalSize;
+    }
+
+    public Tile[][] getField() {
+        return field;
     }
 }

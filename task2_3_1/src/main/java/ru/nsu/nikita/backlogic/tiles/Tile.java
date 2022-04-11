@@ -2,23 +2,38 @@ package ru.nsu.nikita.backlogic.tiles;
 
 import ru.nsu.nikita.backlogic.Coordinates;
 
-public abstract class Tile {
-    protected Coordinates coordinates;
-    protected TileTypes type;
+import static ru.nsu.nikita.backlogic.tiles.TileType.*;
 
-    protected Coordinates leftNeighbor;
-    protected Coordinates rightNeighbor;
-    protected Coordinates upperNeighbor;
-    protected Coordinates downNeighbor;
+public class Tile {
+    private Coordinates coordinates;
+    private TileType type;
+    private Coordinates leftNeighbor;
+    private Coordinates rightNeighbor;
+    private Coordinates upperNeighbor;
+    private Coordinates downNeighbor;
 
-    public Tile() {}
+    private boolean hasFood;
 
-    public Tile(int x, int y) {
+    public Tile(int x, int y, TileType type) {
         coordinates = new Coordinates(x, y);
+        this.type = type;
+        hasFood = false;
     }
 
-    public Tile(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public boolean isHasFood() {
+        if (type != OBSTACLE) {
+            return hasFood;
+        } else {
+            return false;
+        }
+    }
+
+    public void setHasFood(boolean hasFood) {
+        if (type != OBSTACLE) {
+            this.hasFood = hasFood;
+        } else {
+            this.hasFood = false;
+        }
     }
 
     public Coordinates getCoordinates() {
@@ -29,11 +44,11 @@ public abstract class Tile {
         this.coordinates = coordinates;
     }
 
-    public TileTypes getType() {
+    public TileType getType() {
         return type;
     }
 
-    public void setType(TileTypes type) {
+    public void setType(TileType type) {
         this.type = type;
     }
 

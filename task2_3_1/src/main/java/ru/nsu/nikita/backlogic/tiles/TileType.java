@@ -1,6 +1,6 @@
 package ru.nsu.nikita.backlogic.tiles;
 
-public enum TileTypes {
+public enum TileType {
     GRASS,
     OBSTACLE
 }
