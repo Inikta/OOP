@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.nsu.nikita.view.MainViewController"
-            prefHeight="400.0" prefWidth="600.0"
-            fx:id="mainViewScreen"
-            visible="false">
-    <HBox prefHeight="Infinity" prefWidth="Infinity">
-        <fx:include source="field/Field.fxml" fx:id="playingField"/>
-        <fx:include source="statistics/Statistics.fxml" fx:id="stats"/>
-    </HBox>
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.MainViewController">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <HBox>
+                    <Pane fx:id="fieldPane" layoutX="5.0" layoutY="6.0" prefHeight="390.0" prefWidth="425.0"/>
+                    <VBox>
+                        <Label fx:id="scoreLabel" layoutX="435.0" layoutY="6.0" prefHeight="17.0" prefWidth="161.0"
+                               text="Score" textAlignment="CENTER"/>
+                        <TextField fx:id="scoreTextField" layoutX="435.0" layoutY="23.0"/>
+                    </VBox>
+                </HBox>
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>
