@@ -6,6 +6,7 @@ import ru.nsu.nikita.backlogic.tiles.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static ru.nsu.nikita.backlogic.tiles.TileType.*;
 
@@ -25,10 +26,10 @@ public class Field {
 
     private void createField() {
 
-        for (int x = 0; x < verticalSize; x++) {
+        for (int y = 0; y < verticalSize; y++) {
             field.add(new ArrayList<>());
-            for (int y = 0; y < horizontalSize; y++) {
-                field.get(x).add(new Tile(x, y, GRASS));
+            for (int x = 0; x < horizontalSize; x++) {
+                field.get(y).add(new Tile(x, y, GRASS));
             }
         }
 
@@ -68,30 +69,43 @@ public class Field {
     }
 
     public Tile getTile(Coordinates coordinates) {
-        return field.get(coordinates.getY()).get(coordinates.getY());
+        return field.get(coordinates.getY()).get(coordinates.getX());
     }
 
-    public void changeTile(Coordinates coordinates, TileType newType) throws Exception {
+    public void changeTile(Coordinates coordinates, TileType newType) {
         getTile(coordinates).setType(newType);
     }
 
-    public void changeRow(int row, TileType newType) throws Exception {
+    public void changeRow(int row, TileType newType) {
         for (Tile tile : field.get(row)) {
             changeTile(tile.getCoordinates(), newType);
         }
     }
 
-    public void changeColumn(int column, TileType newType) throws Exception {
+    public void changeColumn(int column, TileType newType) {
         for (int i = 0; i < verticalSize; i++) {
             changeTile(field.get(i).get(column).getCoordinates(), newType);
         }
     }
 
-    public void surroundField() throws Exception {
+    public void surroundField() {
         changeRow(0, OBSTACLE);
         changeRow(verticalSize - 1, OBSTACLE);
         changeColumn(0, OBSTACLE);
         changeColumn(horizontalSize - 1, OBSTACLE);
+    }
+
+    public List<Tile> getFreeTiles() {
+        List<Tile> freeTiles = new ArrayList<>();
+        for (List<Tile> row : field) {
+            for (Tile tile : row) {
+                if (tile.getType() == GRASS) {
+                    freeTiles.add(tile);
+                }
+            }
+        }
+
+        return freeTiles;
     }
 
     public int getHorizontalSize() {

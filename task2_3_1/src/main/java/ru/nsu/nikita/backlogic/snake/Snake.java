@@ -7,6 +7,8 @@ import ru.nsu.nikita.backlogic.tiles.TileType;
 
 import java.util.ArrayList;
 
+import static ru.nsu.nikita.backlogic.snake.Direction.*;
+
 public class Snake {
     private Coordinates headCoordinates;
     private Coordinates tailTrail;
@@ -22,6 +24,7 @@ public class Snake {
 
         tail = new ArrayList<>(length);
         alive = true;
+        lastDirection = NONE;
 
         this.field = field;
     }
@@ -42,11 +45,13 @@ public class Snake {
         Coordinates newHead = new Coordinates(
                 field.getTile(headCoordinates).getLeftNeighbor().getX(),
                 field.getTile(headCoordinates).getLeftNeighbor().getY());
-        if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-            headCoordinates.setXY(
-                    field.getTile(headCoordinates).getLeftNeighbor().getX(),
-                    field.getTile(headCoordinates).getLeftNeighbor().getY());
-            moveTail(oldHead);
+        if (length > 1) {
+            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
+                headCoordinates.setXY(
+                        field.getTile(headCoordinates).getLeftNeighbor().getX(),
+                        field.getTile(headCoordinates).getLeftNeighbor().getY());
+                moveTail(oldHead);
+            }
         }
     }
 
@@ -55,11 +60,13 @@ public class Snake {
         Coordinates newHead = new Coordinates(
                 field.getTile(headCoordinates).getRightNeighbor().getX(),
                 field.getTile(headCoordinates).getRightNeighbor().getY());
-        if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-            headCoordinates.setXY(
-                    field.getTile(headCoordinates).getRightNeighbor().getX(),
-                    field.getTile(headCoordinates).getRightNeighbor().getY());
-            moveTail(oldHead);
+        if (length > 1) {
+            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
+                headCoordinates.setXY(
+                        field.getTile(headCoordinates).getRightNeighbor().getX(),
+                        field.getTile(headCoordinates).getRightNeighbor().getY());
+                moveTail(oldHead);
+            }
         }
     }
 
@@ -68,11 +75,13 @@ public class Snake {
         Coordinates newHead = new Coordinates(
                 field.getTile(headCoordinates).getDownNeighbor().getX(),
                 field.getTile(headCoordinates).getDownNeighbor().getY());
-        if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-            headCoordinates.setXY(
-                    field.getTile(headCoordinates).getDownNeighbor().getX(),
-                    field.getTile(headCoordinates).getDownNeighbor().getY());
-            moveTail(oldHead);
+        if (length > 1) {
+            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
+                headCoordinates.setXY(
+                        field.getTile(headCoordinates).getDownNeighbor().getX(),
+                        field.getTile(headCoordinates).getDownNeighbor().getY());
+                moveTail(oldHead);
+            }
         }
     }
 
@@ -81,11 +90,13 @@ public class Snake {
         Coordinates newHead = new Coordinates(
                 field.getTile(headCoordinates).getUpperNeighbor().getX(),
                 field.getTile(headCoordinates).getUpperNeighbor().getY());
-        if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-            headCoordinates.setXY(
-                    field.getTile(headCoordinates).getUpperNeighbor().getX(),
-                    field.getTile(headCoordinates).getUpperNeighbor().getY());
-            moveTail(oldHead);
+        if (length > 1) {
+            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
+                headCoordinates.setXY(
+                        field.getTile(headCoordinates).getUpperNeighbor().getX(),
+                        field.getTile(headCoordinates).getUpperNeighbor().getY());
+                moveTail(oldHead);
+            }
         }
     }
 
@@ -107,7 +118,8 @@ public class Snake {
         switch (type) {
             case OBSTACLE -> die();
             case GRASS -> eat();
-            default -> {}
+            default -> {
+            }
         }
     }
 
@@ -129,6 +141,30 @@ public class Snake {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public Coordinates getHeadCoordinates() {
+        return headCoordinates;
+    }
+
+    public Coordinates getTailTrail() {
+        return tailTrail;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public ArrayList<Coordinates> getTail() {
+        return tail;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public Direction getLastDirection() {
+        return lastDirection;
     }
 }
 
