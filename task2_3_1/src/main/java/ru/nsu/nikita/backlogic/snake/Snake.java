@@ -14,7 +14,7 @@ public class Snake {
     private Coordinates tailTrail;
     private int length;
     private ArrayList<Coordinates> tail;
-    private boolean alive;
+    private boolean living;
     private Field field;
     private Direction lastDirection;
 
@@ -23,7 +23,7 @@ public class Snake {
         length = 1;
 
         tail = new ArrayList<>(length);
-        alive = true;
+        living = true;
         lastDirection = NONE;
 
         this.field = field;
@@ -31,73 +31,51 @@ public class Snake {
 
     public void move(Direction direction) {
         lastDirection = direction;
+        Coordinates oldHead = headCoordinates.clone();
+        Coordinates newHead;
         switch (direction) {
-            case LEFT -> moveLeft();
-            case RIGHT -> moveRight();
-            case UP -> moveUp();
-            case DOWN -> moveDown();
+            case LEFT -> newHead = moveLeft();
+            case RIGHT -> newHead = moveRight();
+            case UP -> newHead = moveUp();
+            case DOWN -> newHead = moveDown();
+            default -> {
+                return;
+            }
         }
+        if (length > 1) {
+            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
+                headCoordinates.setXY(newHead.getX(), newHead.getY());
+                moveTail(oldHead);
+            }
+        } else {
+            headCoordinates.setXY(newHead.getX(), newHead.getY());
+        }
+        tailTrail = oldHead;
         tileEvent();
     }
 
-    private void moveLeft() {
-        Coordinates oldHead = headCoordinates.clone();
-        Coordinates newHead = new Coordinates(
+    private Coordinates moveLeft() {
+        return new Coordinates(
                 field.getTile(headCoordinates).getLeftNeighbor().getX(),
                 field.getTile(headCoordinates).getLeftNeighbor().getY());
-        if (length > 1) {
-            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-                headCoordinates.setXY(
-                        field.getTile(headCoordinates).getLeftNeighbor().getX(),
-                        field.getTile(headCoordinates).getLeftNeighbor().getY());
-                moveTail(oldHead);
-            }
-        }
     }
 
-    private void moveRight() {
-        Coordinates oldHead = headCoordinates.clone();
-        Coordinates newHead = new Coordinates(
+    private Coordinates moveRight() {
+        return new Coordinates(
                 field.getTile(headCoordinates).getRightNeighbor().getX(),
                 field.getTile(headCoordinates).getRightNeighbor().getY());
-        if (length > 1) {
-            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-                headCoordinates.setXY(
-                        field.getTile(headCoordinates).getRightNeighbor().getX(),
-                        field.getTile(headCoordinates).getRightNeighbor().getY());
-                moveTail(oldHead);
-            }
-        }
     }
 
-    private void moveDown() {
-        Coordinates oldHead = headCoordinates.clone();
-        Coordinates newHead = new Coordinates(
+    private Coordinates moveDown() {
+        return new Coordinates(
                 field.getTile(headCoordinates).getDownNeighbor().getX(),
                 field.getTile(headCoordinates).getDownNeighbor().getY());
-        if (length > 1) {
-            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-                headCoordinates.setXY(
-                        field.getTile(headCoordinates).getDownNeighbor().getX(),
-                        field.getTile(headCoordinates).getDownNeighbor().getY());
-                moveTail(oldHead);
-            }
-        }
     }
 
-    private void moveUp() {
-        Coordinates oldHead = headCoordinates.clone();
-        Coordinates newHead = new Coordinates(
+    private Coordinates moveUp() {
+        return new Coordinates(
                 field.getTile(headCoordinates).getUpperNeighbor().getX(),
                 field.getTile(headCoordinates).getUpperNeighbor().getY());
-        if (length > 1) {
-            if (newHead.getX() != tail.get(0).getX() & newHead.getY() != tail.get(0).getY()) {
-                headCoordinates.setXY(
-                        field.getTile(headCoordinates).getUpperNeighbor().getX(),
-                        field.getTile(headCoordinates).getUpperNeighbor().getY());
-                moveTail(oldHead);
-            }
-        }
     }
 
     private void moveTail(Coordinates oldHead) {
@@ -136,11 +114,11 @@ public class Snake {
 
     public void die() {
         tail.clear();
-        alive = false;
+        living = false;
     }
 
-    public boolean isAlive() {
-        return alive;
+    public boolean isLiving() {
+        return living;
     }
 
     public Coordinates getHeadCoordinates() {

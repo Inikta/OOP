@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputHandler implements EventHandler<KeyEvent> {
-    final private Set<KeyCode> activeKeys = new HashSet<>(1);
+class InputHandler implements EventHandler<KeyEvent> {
+    private Set<KeyCode> activeKeys = new HashSet<>();
 
     @Override
     public void handle(KeyEvent event) {
@@ -21,6 +21,6 @@ public class InputHandler implements EventHandler<KeyEvent> {
     }
 
     public Set<KeyCode> getActiveKeys() {
-        return Collections.unmodifiableSet(activeKeys);
+        return new HashSet<>(activeKeys);
     }
 }
