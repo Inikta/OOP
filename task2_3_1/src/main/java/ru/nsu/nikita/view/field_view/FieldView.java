@@ -1,12 +1,11 @@
-package ru.nsu.nikita.view;
+package ru.nsu.nikita.view.field_view;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import ru.nsu.nikita.backlogic.Coordinates;
 import ru.nsu.nikita.backlogic.field.Field;
-import ru.nsu.nikita.backlogic.snake.Snake;
+import ru.nsu.nikita.backlogic.snake.SnakeHead;
 import ru.nsu.nikita.backlogic.tiles.Tile;
-import ru.nsu.nikita.backlogic.tiles.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class FieldView extends Pane {
     private double padding;
     private Random randomizer = new Random();
 
-    private List<TileRectangle> tileList;
+    private List<TileView> tileList;
 
     public FieldView(Field field, double x, double y, double padding, double tileWidth, double tileHeight) {
         this.tileWidth = tileWidth;
@@ -30,16 +29,16 @@ public class FieldView extends Pane {
         tileList = new ArrayList<>();
         for (List<Tile> row : field.getField()) {
             for (Tile tile : row) {
-                tileList.add(new TileRectangle(tile.getCoordinates(), x, y, padding, tileWidth, tileHeight, tile.getType()));
+                tileList.add(new TileView(tile.getCoordinates(), x, y, padding, tileWidth, tileHeight, tile.getType()));
             }
         }
         this.getChildren().addAll(tileList);
     }
 
-    public void update(Snake snakeData, double now, int spawnRate) {
-        if (field.getTile(snakeData.getHeadCoordinates()).isHasFood()) {
-            field.getTile(snakeData.getHeadCoordinates()).setHasFood(false);
-            removeTasty(snakeData.getHeadCoordinates());
+    public void update(SnakeHead snakeHead, double now, int spawnRate) {
+        if (field.getTile(snakeHead.getCoordinates()).isHasFood()) {
+            field.getTile(snakeHead.getCoordinates()).setHasFood(false);
+            removeTasty(snakeHead.getCoordinates());
         }
         if (now % spawnRate == 0) {
             spawnTasty();

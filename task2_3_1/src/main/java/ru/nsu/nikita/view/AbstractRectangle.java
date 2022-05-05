@@ -1,10 +1,11 @@
 package ru.nsu.nikita.view;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import ru.nsu.nikita.backlogic.Coordinates;
 
-public abstract class AbstractTile extends Rectangle {
+public abstract class AbstractRectangle extends Rectangle {
     protected Coordinates coordinates;
     protected double shiftX;
     protected double shiftY;
@@ -13,13 +14,13 @@ public abstract class AbstractTile extends Rectangle {
     protected double height;
     protected Color color;
 
-    public AbstractTile(Coordinates coordinates,
-                        double shiftX,
-                        double shiftY,
-                        double padding,
-                        double width,
-                        double height,
-                        Color color) {
+    public AbstractRectangle(Coordinates coordinates,
+                             double shiftX,
+                             double shiftY,
+                             double padding,
+                             double width,
+                             double height,
+                             Color color) {
         super(shiftX + coordinates.getX() * (width + padding), shiftY + coordinates.getY() * (height + padding), width, height);
         this.fillProperty().set(color);
 
