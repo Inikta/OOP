@@ -2,12 +2,16 @@ package ru.nsu.nikita.view;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ru.nsu.nikita.backlogic.field.Field;
@@ -20,6 +24,7 @@ import ru.nsu.nikita.view.field_view.FieldView;
 import ru.nsu.nikita.view.snake_view.SnakeHeadView;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -27,50 +32,44 @@ import java.util.Set;
 public class SnakeApplication extends Application {
 
     private Scene mainScene;
-    private Group root = new Group();
+    private final Pane preRoot = new Pane();
 
-
-
-    //Game part
-    private Label scoreLabel;
-    private Label scoreCounter;
-
-    private FieldView fieldView;
-    private SnakeHeadView snakeHead;
-
-    private AnimationTimer animationTimer;
-
-    private SnakeHead snakeHeadData;
-    private Field fieldData;
-
-    private Set<KeyCode> activeKeys = new HashSet<>();
-    //private InputHandler inputHandler = new InputHandler();
-    private EventHandler<KeyEvent> inputHandler;
-    private Direction currentDirection = NONE;
-    private Direction lastDirection = NONE;
+    private ScreenController screenController;
+    private BooleanProperty startGameProperty;
 
     @Override
     public void start(Stage stage) throws IOException {
+        mainScene = new Scene(preRoot, 1024, 800);
+        screenController = new ScreenController(mainScene);
 
-        //Scene Initialization
-        mainScene = new Scene(root, 800, 800);
-        stage.setScene(mainScene);
-        //Game loop
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/PrefaceView.fxml"));
+        screenController.addScreen("prefaceRoot", loader.load());
 
+        loader = new FXMLLoader(getClass().getResource("/GameView.fxml"));
+        screenController.addScreen("gameRoot", loader.load());
 
-        animationTimer.start();
-        stage.show();
+        screenController.activate("prefaceRoot");
+
+        startGameProperty.bind(mainScene.);
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    private void initializeSettings() {
-
+    public boolean isStartGameProperty() {
+        return startGameProperty.get();
     }
 
-    private void initializeGame() {
+    public BooleanProperty startGamePropertyProperty() {
+        return startGameProperty;
+    }
+
+    public void setStartGameProperty(boolean startGameProperty) {
+        this.startGameProperty.set(startGameProperty);
+    }
+
+    /*private void initializeGame() {
         fieldData = new Field(10, 10);
         //fieldData.surroundField();
         snakeHeadData = new SnakeHead(
@@ -136,5 +135,5 @@ public class SnakeApplication extends Application {
         }
 
         snakeHead.update(snakeHeadData);
-    }
+    }*/
 }
