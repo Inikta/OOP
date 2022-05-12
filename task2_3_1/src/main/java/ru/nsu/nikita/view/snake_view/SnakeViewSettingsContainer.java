@@ -10,7 +10,7 @@ public class SnakeViewSettingsContainer implements Cloneable {
     private double height;
     private Color color;
 
-    public SnakeViewSettingsContainer(double shiftX, double shiftY, double padding, double width, double height, Color color) {
+    public SnakeViewSettingsContainer(double shiftX, double shiftY, double width, double height, double padding, Color color) {
         this.shiftX = shiftX;
         this.shiftY = shiftY;
         this.padding = padding;

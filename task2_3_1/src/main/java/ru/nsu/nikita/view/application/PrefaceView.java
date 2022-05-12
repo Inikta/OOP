@@ -1,25 +1,19 @@
-package ru.nsu.nikita.view;
+package ru.nsu.nikita.view.application;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.css.ParsedValue;
-import javafx.css.converter.StringConverter;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.util.Locale;
 
-public class PrefaceView {
+public class PrefaceView extends Parent {
 
     @FXML
-    private VBox root;
+    public VBox root;
 
     @FXML
     private TextField xSizeTextField;
@@ -31,15 +25,30 @@ public class PrefaceView {
     @FXML
     private Button startButton;
 
+    private Scene gameScene;
+
     public IntegerProperty xSizeProperty;
     public IntegerProperty ySizeProperty;
     public IntegerProperty goalProperty;
 
     public BooleanProperty readyProperty;
 
-    private boolean xSizeReady = false;
-    private boolean ySizeReady = false;
-    private boolean goalReady = false;
+    private boolean xSizeReady;
+    private boolean ySizeReady;
+    private boolean goalReady;
+
+    @FXML
+    public void initialize() {
+        xSizeProperty = new SimpleIntegerProperty(0);
+        ySizeProperty = new SimpleIntegerProperty(0);
+        goalProperty = new SimpleIntegerProperty(0);
+
+        readyProperty = new SimpleBooleanProperty(false);
+
+        xSizeReady = false;
+        ySizeReady = false;
+        goalReady = false;
+    }
 
     @FXML
     public void onXSizeTextInput() {
@@ -57,12 +66,12 @@ public class PrefaceView {
     }
 
     private boolean onTextInput(TextField textField, IntegerProperty parameter) {
-        textField.setStyle("-fx-fill: DEFAULT");
+        textField.setStyle("-fx-background-color: DEFAULT");
 
         String input = textField.getText().toLowerCase(Locale.ROOT);
         boolean parameterReady = wrongInputHandler(input, textField, parameter, 1);
         if (parameterReady) {
-            textField.setStyle("-fx-fill: LIGHTGREEN");
+            textField.setStyle("-fx-background-color: rgba(144,238,144,0.75)");
             return true;
         } else {
             return false;
@@ -74,6 +83,9 @@ public class PrefaceView {
         if (xSizeReady & ySizeReady & goalReady) {
             readyProperty.set(true);
         }
+        startButton.setStyle("-fx-background-color: rgba(144,238,144,0.75)");
+
+
     }
 
     private boolean wrongInputHandler(String input, TextField textField, IntegerProperty parameter, Integer minNumber) {
@@ -81,13 +93,13 @@ public class PrefaceView {
         try {
             number = Integer.parseInt(input);
         } catch (NumberFormatException exception) {
-            textField.setStyle("-fx-fill: RED");
+            textField.setStyle("-fx-background-color: rgba(248,41,41,0.6)");
             parameter.set(-1);
             return false;
         }
 
         if (number < minNumber) {
-            textField.setStyle("-fx-fill: RED");
+            textField.setStyle("-fx-background-color: rgba(248,41,41,0.6)");
             parameter.set(-1);
             return false;
         }

@@ -17,9 +17,9 @@ public abstract class AbstractRectangle extends Rectangle {
     public AbstractRectangle(Coordinates coordinates,
                              double shiftX,
                              double shiftY,
-                             double padding,
                              double width,
                              double height,
+                             double padding,
                              Color color) {
         super(shiftX + coordinates.getX() * (width + padding), shiftY + coordinates.getY() * (height + padding), width, height);
         this.fillProperty().set(color);

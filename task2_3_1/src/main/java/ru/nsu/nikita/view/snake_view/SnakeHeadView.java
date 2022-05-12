@@ -43,7 +43,9 @@ public class SnakeHeadView extends SnakePartView {
         setX(newX);
         setY(newY);
 
-        nextPartView.moveTail();
+        if (snakeHead.getLength() > 0) {
+            nextPartView.moveTail();
+        }
     }
 
     private void grow() {
@@ -51,8 +53,11 @@ public class SnakeHeadView extends SnakePartView {
 
         newSnakePartView.setNextPartView(nextPartView);
         newSnakePartView.setPrevPartView(this);
-        nextPartView.setPrevPartView(newSnakePartView);
         setNextPartView(newSnakePartView);
+
+        if (nextPartView.nextPartView != null) {
+            nextPartView.nextPartView.setPrevPartView(nextPartView);
+        }
 
         tail.addFirst(newSnakePartView);
     }

@@ -1,87 +1,81 @@
-package ru.nsu.nikita.view;
+package ru.nsu.nikita.view.application;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.beans.property.BooleanProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ru.nsu.nikita.backlogic.field.Field;
-
-import static ru.nsu.nikita.backlogic.snake.Direction.*;
-
-import ru.nsu.nikita.backlogic.snake.Direction;
-import ru.nsu.nikita.backlogic.snake.SnakeHead;
-import ru.nsu.nikita.view.field_view.FieldView;
-import ru.nsu.nikita.view.snake_view.SnakeHeadView;
+import ru.nsu.nikita.view.field_view.FieldViewSettingsContainer;
+import ru.nsu.nikita.view.snake_view.SnakeViewSettingsContainer;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class SnakeApplication extends Application {
 
     private Scene mainScene;
-    private final Pane preRoot = new Pane();
-
-    private ScreenController screenController;
-    private BooleanProperty startGameProperty;
 
     @Override
     public void start(Stage stage) throws IOException {
-        mainScene = new Scene(preRoot, 1024, 800);
-        screenController = new ScreenController(mainScene);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/PrefaceView.fxml"));
-        screenController.addScreen("prefaceRoot", loader.load());
+        FXMLLoader prefaceLoader = new FXMLLoader(getClass().getResource("PrefaceView.fxml"));
+        mainScene = new Scene(prefaceLoader.load(), 1024, 800);
 
-        loader = new FXMLLoader(getClass().getResource("/GameView.fxml"));
-        screenController.addScreen("gameRoot", loader.load());
+        PrefaceView prefaceView = prefaceLoader.getController();
 
-        screenController.activate("prefaceRoot");
+        stage.setScene(mainScene);
 
-        startGameProperty.bind(mainScene.);
+        stage.setScene(mainScene);
+        stage.show();
+
+        prefaceView.readyProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                initializeGame(stage, prefaceView);
+            }
+        });
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    public boolean isStartGameProperty() {
-        return startGameProperty.get();
+    private void initializeGame(Stage stage, PrefaceView prefaceView) {
+        Field field = new Field(prefaceView.getxSizeProperty(), prefaceView.getySizeProperty());
+        GameData gameData = new GameData(
+                new FieldViewSettingsContainer(
+                        field,
+                        0, 0,
+                        30, 30, 1),
+                0,
+                prefaceView.getGoalProperty(),
+                field.getFreeTiles().get(new Random().nextInt(field.getFreeTiles().size())).getCoordinates(),
+                new SnakeViewSettingsContainer(
+                        0, 0,
+                        30, 30,
+                        1, Color.ORANGE),
+                new SnakeViewSettingsContainer(
+                        0, 0,
+                        30, 30,
+                        1, Color.DARKORANGE));
+
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+
+        Scene gameScene = null;
+        try {
+            gameScene = new Scene(gameLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        GameView gameView = gameLoader.getController();
+        gameView.manualInitialization(gameData);
+
+        stage.setScene(gameScene);
+        stage.show();
     }
 
-    public BooleanProperty startGamePropertyProperty() {
-        return startGameProperty;
-    }
-
-    public void setStartGameProperty(boolean startGameProperty) {
-        this.startGameProperty.set(startGameProperty);
-    }
-
-    /*private void initializeGame() {
-        fieldData = new Field(10, 10);
-        //fieldData.surroundField();
-        snakeHeadData = new SnakeHead(
-                fieldData.getFreeTiles().get(new Random().nextInt(fieldData.getFreeTiles().size())).getCoordinates(),
-                fieldData);
-
-        fieldView = new FieldView(fieldData, 0, 0, 5, 30, 30);
-        snakeHead = new SnakeHeadView(snakeHeadData, 0, 0, fieldView.getPad(), fieldView.getTileWidth(), fieldView.getTileHeight(), Color.ORANGE);
-
-        root.getChildren().addAll(fieldView, snakeHead);
-    }
-
+    /*
     private void initializeGameLoop() {
         animationTimer = new AnimationTimer() {
             int workFrame = 10;

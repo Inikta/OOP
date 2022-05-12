@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane fx:id="root" prefHeight="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.application.GameView">
+   <children>
+       <SplitPane dividerPositions="0.9">
+           <AnchorPane>
+               <padding>
+                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </padding>
+            <children>
+               <Pane fx:id="fieldPane" prefHeight="800.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </children>
+           </AnchorPane>
+           <AnchorPane>
+               <padding>
+                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </padding>
+               <VBox layoutX="3.0" layoutY="3.0">
+               <VBox>
+                  <children>
+                         <HBox alignment="CENTER">
+                             <Label text="Score: " textAlignment="CENTER">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label fx:id="currentScoreLabel" text="0">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label alignment="CENTER" text="/" textAlignment="CENTER">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label fx:id="goalScoreLabel" text="0">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                         </HBox>
+                         <Button fx:id="restartButton" contentDisplay="CENTER" mnemonicParsing="false" text="Restart" textAlignment="CENTER">
+                             <font>
+                                 <Font name="Century Gothic" size="18.0" />
+                             </font>
+                         </Button>
+                  </children>
+               </VBox>
+               </VBox>
+           </AnchorPane>
+       </SplitPane>
+   </children>
+</Pane>

@@ -20,13 +20,17 @@ public class TileView extends AbstractRectangle {
     }
 
     public TileView(Coordinates coordinates,
-                    double shiftX,
-                    double shiftY,
-                    double padding,
-                    double width,
-                    double height,
-                    TileType type) {
-        super(coordinates, shiftX, shiftY, padding, width, height, Color.WHITE);
+                    TileType type,
+                    TileViewSettingsContainer settingsContainer) {
+        super(
+                coordinates,
+                settingsContainer.getShiftX(),
+                settingsContainer.getShiftY(),
+                settingsContainer.getTileWidth(),
+                settingsContainer.getTileHeight(),
+                settingsContainer.getPadding(),
+                Color.WHITE);
+
         switch (type) {
             case GRASS -> color = Color.GREEN;
             case OBSTACLE -> color = Color.GRAY;

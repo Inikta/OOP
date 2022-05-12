@@ -6,9 +6,7 @@ import ru.nsu.nikita.backlogic.tiles.TileType;
 
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Queue;
 
 import static ru.nsu.nikita.backlogic.snake.Direction.*;
 
@@ -47,7 +45,7 @@ public class SnakeHead extends SnakePart {
             }
         }
         if (length > 0) {
-            if (newCoordinates.getX() != prevPart.getCoordinates().getX() & newCoordinates.getY() != prevPart.getCoordinates().getY()) {
+            if (newCoordinates.getX() != nextPart.getCoordinates().getX() & newCoordinates.getY() != nextPart.getCoordinates().getY()) {
                 setCoordinates(newCoordinates);
                 if (grows) {
                     grows = false;
@@ -107,8 +105,11 @@ public class SnakeHead extends SnakePart {
 
         newSnakePart.setPrevPart(this);
         newSnakePart.setNextPart(nextPart);
-        nextPart.setPrevPart(newSnakePart);
         setNextPart(newSnakePart);
+
+        if (nextPart.nextPart != null) {
+            nextPart.setPrevPart(newSnakePart);
+        }
 
         tail.addFirst(newSnakePart);
 

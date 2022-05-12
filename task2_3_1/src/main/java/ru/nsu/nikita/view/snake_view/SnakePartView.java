@@ -16,9 +16,9 @@ public class SnakePartView extends AbstractRectangle {
                 snakePart.getCoordinates(),
                 viewSettings.getShiftX(),
                 viewSettings.getShiftY(),
-                viewSettings.getPadding(),
                 viewSettings.getWidth(),
                 viewSettings.getHeight(),
+                viewSettings.getPadding(),
                 viewSettings.getColor()
         );
         this.snakePart = snakePart;

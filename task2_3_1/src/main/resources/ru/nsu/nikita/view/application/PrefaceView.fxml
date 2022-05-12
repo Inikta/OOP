@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.PrefaceView">
+<VBox fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.application.PrefaceView">
     <BorderPane>
         <center>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Snake the Game" textAlignment="CENTER" BorderPane.alignment="CENTER">
@@ -45,19 +45,19 @@
          <Insets top="10.0" />
       </VBox.margin>
     </Label>
-    <TextField onInputMethodTextChanged="#onXSizeTextInput" fx:id="xSizeTextField" />
+    <TextField onKeyTyped="#onXSizeTextInput" fx:id="xSizeTextField" />
     <Label fx:id="ySizeLabel" text="Vertical Size">
         <font>
             <Font name="Century Gothic" size="22.0" />
         </font>
     </Label>
-    <TextField fx:id="ySizeTextField" onInputMethodTextChanged="#onYSizeTextInput" />
+    <TextField fx:id="ySizeTextField" onKeyTyped="#onYSizeTextInput" />
     <Label fx:id="goalLabel" text="Goal">
         <font>
             <Font name="Century Gothic" size="22.0" />
         </font>
     </Label>
-    <TextField fx:id="goalTextField" onInputMethodTextChanged="#onGoalTextInput" />
+    <TextField fx:id="goalTextField" onKeyTyped="#onGoalTextInput" />
     <BorderPane>
         <center>
             <Button fx:id="startButton" mnemonicParsing="false" onAction="#onStartButtonPressed" text="Start" textAlignment="CENTER">
