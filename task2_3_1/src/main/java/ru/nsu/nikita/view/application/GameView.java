@@ -1,6 +1,10 @@
 package ru.nsu.nikita.view.application;
 
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,8 +49,15 @@ public class GameView {
     private Direction lastDirection = NONE;
     private AnimationTimer animationTimer;
 
+    private BooleanProperty restartProperty;
+
+    @FXML
+    public void onRestartPressed() {
+        restartProperty.setValue(true);
+    }
 
     public void manualInitialization(GameData gameData) {
+        restartProperty = new SimpleBooleanProperty(false);
         this.gameData = gameData;
         snakeHeadView = new SnakeHeadView(
                 new SnakeHead(gameData.getInitSnakeHeadCoordinates(), gameData.getFieldViewSettingsContainer().getField()),
@@ -183,11 +194,15 @@ public class GameView {
         this.gameData = gameData;
     }
 
-    /*public GameData getGameData() {
-        return gameData;
+    public Boolean getRestartProperty() {
+        return restartProperty.getValue();
     }
 
-    public void setGameData(GameData gameData) {
-        this.gameData = gameData;
-    }*/
+    public Property<Boolean> restartPropertyProperty() {
+        return restartProperty;
+    }
+
+    public void setRestartProperty(Boolean restartProperty) {
+        this.restartProperty.setValue(restartProperty);
+    }
 }

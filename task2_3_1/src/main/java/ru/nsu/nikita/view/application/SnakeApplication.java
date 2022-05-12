@@ -1,6 +1,10 @@
 package ru.nsu.nikita.view.application;
 
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -15,12 +19,17 @@ import java.util.Random;
 public class SnakeApplication extends Application {
 
     private Scene mainScene;
+    private Scene prefaceScene;
+    private Scene gameScene;
+
+    private BooleanProperty restartProperty = new SimpleBooleanProperty();
 
     @Override
     public void start(Stage stage) throws IOException {
 
         FXMLLoader prefaceLoader = new FXMLLoader(getClass().getResource("PrefaceView.fxml"));
-        mainScene = new Scene(prefaceLoader.load(), 1024, 800);
+        prefaceScene = new Scene(prefaceLoader.load(), 1024, 800);
+        mainScene = prefaceScene;
 
         PrefaceView prefaceView = prefaceLoader.getController();
 
@@ -61,7 +70,7 @@ public class SnakeApplication extends Application {
 
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("GameView.fxml"));
 
-        Scene gameScene = null;
+        gameScene = null;
         try {
             gameScene = new Scene(gameLoader.load());
         } catch (IOException e) {
@@ -70,6 +79,13 @@ public class SnakeApplication extends Application {
 
         GameView gameView = gameLoader.getController();
         gameView.manualInitialization(gameData);
+
+        gameView.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                stage.setScene(prefaceScene);
+                stage.show();
+            }
+        });
 
         stage.setScene(gameScene);
         stage.show();
