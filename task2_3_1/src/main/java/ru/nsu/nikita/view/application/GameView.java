@@ -57,6 +57,8 @@ public class GameView {
     }
 
     public void manualInitialization(GameData gameData) {
+        goalScoreLabel.setText(gameData.getGoalScore().toString());
+
         restartProperty = new SimpleBooleanProperty(false);
         this.gameData = gameData;
         snakeHeadView = new SnakeHeadView(
@@ -74,12 +76,10 @@ public class GameView {
         animationTimer.start();
     }
 
-    public void update(long now) {
-        int workFrame = 10;
-        int spawnRate = 1000;
-
+    public void update(long now, int spawnRate) {
         inputUpdate();
         fieldView.update(snakeHeadView.getSnakeHead(), now, spawnRate);
+        snakeHeadView.update();
     }
 
     private void updateCurrentScore() {
@@ -88,10 +88,16 @@ public class GameView {
 
     private void initializeGameLoop() {
         animationTimer = new AnimationTimer() {
-
+            int delay = 100;
             @Override
             public void handle(long now) {
-                update(now);
+                update(now, 5000);
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         };
     }
@@ -105,7 +111,7 @@ public class GameView {
             default -> snakeHeadView.getSnakeHead().move(lastDirection);
         }
 
-        snakeHeadView.update();
+        //snakeHeadView.update();
     }
 
     private void initializeEventHandler() {

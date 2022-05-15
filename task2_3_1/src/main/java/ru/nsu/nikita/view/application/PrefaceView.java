@@ -37,6 +37,10 @@ public class PrefaceView extends Parent {
     private boolean ySizeReady;
     private boolean goalReady;
 
+    private String defaultTextFieldStyle;
+    private String defaultButtonStyle;
+
+
     @FXML
     public void initialize() {
         xSizeProperty = new SimpleIntegerProperty(0);
@@ -48,6 +52,18 @@ public class PrefaceView extends Parent {
         xSizeReady = false;
         ySizeReady = false;
         goalReady = false;
+
+        defaultTextFieldStyle = xSizeTextField.getStyle();
+        defaultButtonStyle = startButton.getStyle();
+    }
+
+    public void onRestart() {
+        readyProperty.set(false);
+        xSizeTextField.setStyle(defaultTextFieldStyle);
+        ySizeTextField.setStyle(defaultTextFieldStyle);
+        goalTextField.setStyle(defaultTextFieldStyle);
+
+        startButton.setStyle(defaultButtonStyle);
     }
 
     @FXML
@@ -82,10 +98,8 @@ public class PrefaceView extends Parent {
     public void onStartButtonPressed() {
         if (xSizeReady & ySizeReady & goalReady) {
             readyProperty.set(true);
+            startButton.setStyle("-fx-background-color: rgba(144,238,144,0.75)");
         }
-        startButton.setStyle("-fx-background-color: rgba(144,238,144,0.75)");
-
-
     }
 
     private boolean wrongInputHandler(String input, TextField textField, IntegerProperty parameter, Integer minNumber) {

@@ -82,6 +82,7 @@ public class SnakeApplication extends Application {
 
         gameView.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
+                prefaceView.onRestart();
                 stage.setScene(prefaceScene);
                 stage.show();
             }

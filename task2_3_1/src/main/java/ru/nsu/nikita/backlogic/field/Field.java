@@ -45,8 +45,14 @@ public class Field {
         int y = tile.getCoordinates().getY();
 
         if (x == 0) {
-            tile.setLeftNeighbor(fieldMatrix.get(y).get(horizontalSize - 1).getCoordinates());
-            tile.setRightNeighbor(fieldMatrix.get(y).get(x + 1).getCoordinates());
+            if (horizontalSize == 1) {
+                tile.setRightNeighbor(fieldMatrix.get(y).get(x).getCoordinates());
+                tile.setLeftNeighbor(fieldMatrix.get(y).get(x).getCoordinates());
+            } else {
+                tile.setRightNeighbor(fieldMatrix.get(y).get(x + 1).getCoordinates());
+                tile.setLeftNeighbor(fieldMatrix.get(y).get(horizontalSize - 1).getCoordinates());
+            }
+
         } else if (x == horizontalSize - 1) {
             tile.setLeftNeighbor(fieldMatrix.get(y).get(x - 1).getCoordinates());
             tile.setRightNeighbor(fieldMatrix.get(y).get(0).getCoordinates());
@@ -56,8 +62,13 @@ public class Field {
         }
 
         if (y == 0) {
-            tile.setUpperNeighbor(fieldMatrix.get(verticalSize - 1).get(x).getCoordinates());
-            tile.setDownNeighbor(fieldMatrix.get(y + 1).get(x).getCoordinates());
+            if (verticalSize == 1) {
+                tile.setUpperNeighbor(fieldMatrix.get(y).get(x).getCoordinates());
+                tile.setDownNeighbor(fieldMatrix.get(y).get(x).getCoordinates());
+            } else {
+                tile.setUpperNeighbor(fieldMatrix.get(verticalSize - 1).get(x).getCoordinates());
+                tile.setDownNeighbor(fieldMatrix.get(y + 1).get(x).getCoordinates());
+            }
         } else if (y == verticalSize - 1) {
             tile.setUpperNeighbor(fieldMatrix.get(y - 1).get(x).getCoordinates());
             tile.setDownNeighbor(fieldMatrix.get(0).get(x).getCoordinates());
