@@ -24,10 +24,14 @@ public class SnakeHeadView extends SnakePartView {
 
     public void update() {
         if (snakeHead.isLiving()) {
-            if (snakeHead.isGrows()) {
+            moveHead();
+
+            if (tail.size() < snakeHead.getLength()) {
                 grow();
             }
-            moveHead();
+            if (snakeHead.getLength() > 0) {
+                nextPartView.moveTail();
+            }
         } else {
             this.die();
         }
@@ -38,14 +42,10 @@ public class SnakeHeadView extends SnakePartView {
         double newY = shiftY + snakeHead.getCoordinates().getY() * (height + padding);
 
         this.coordinates = snakeHead.getCoordinates();
-        setSnakePart(snakeHead);
+        //setSnakePart(snakeHead);
 
         setX(newX);
         setY(newY);
-
-        if (snakeHead.getLength() > 0) {
-            nextPartView.moveTail();
-        }
     }
 
     private void grow() {

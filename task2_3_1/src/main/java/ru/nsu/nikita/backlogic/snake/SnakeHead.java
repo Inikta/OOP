@@ -17,6 +17,8 @@ public class SnakeHead extends SnakePart {
     private Deque<SnakePart> tail;
     private Field field;
     private Direction lastDirection;
+    private Direction inverseLastDirection;
+    private Coordinates prevCoordinates;
 
     private boolean grows = false;
 
@@ -32,29 +34,53 @@ public class SnakeHead extends SnakePart {
     }
 
     public void move(Direction direction) {
-        lastDirection = direction;
-        Coordinates oldCoordinates = coordinates.clone();
+        prevCoordinates = coordinates.clone();
         Coordinates newCoordinates;
         switch (direction) {
-            case LEFT -> newCoordinates = moveLeft();
-            case RIGHT -> newCoordinates = moveRight();
-            case UP -> newCoordinates = moveUp();
-            case DOWN -> newCoordinates = moveDown();
+            case LEFT -> {
+                inverseLastDirection = RIGHT;
+                newCoordinates = moveLeft();
+            }
+            case RIGHT -> {
+                inverseLastDirection = LEFT;
+                newCoordinates = moveRight();
+            }
+            case UP -> {
+                inverseLastDirection = DOWN;
+                newCoordinates = moveUp();
+            }
+            case DOWN -> {
+                inverseLastDirection = UP;
+                newCoordinates = moveDown();
+            }
             default -> {
                 return;
             }
         }
         if (length > 0) {
-            if (newCoordinates.getX() != nextPart.getCoordinates().getX() & newCoordinates.getY() != nextPart.getCoordinates().getY()) {
+            if (direction != inverseLastDirection) {
                 setCoordinates(newCoordinates);
                 if (grows) {
                     grows = false;
-                } else {
-                    moveTail(oldCoordinates);
                 }
+                moveTail(prevCoordinates);
             }
+            tileEvent();
+            //return;
         } else {
             setCoordinates(newCoordinates);
+        }
+        setCoordinates(newCoordinates);
+
+        lastDirection = direction;
+        switch (lastDirection) {
+            case LEFT -> inverseLastDirection = RIGHT;
+            case RIGHT -> inverseLastDirection = LEFT;
+            case UP -> inverseLastDirection = DOWN;
+            case DOWN -> inverseLastDirection = UP;
+            default -> {
+                return;
+            }
         }
 
         tileEvent();

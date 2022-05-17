@@ -53,6 +53,7 @@ public class GameView {
 
     @FXML
     public void onRestartPressed() {
+        animationTimer.stop();
         restartProperty.setValue(true);
     }
 
@@ -79,7 +80,6 @@ public class GameView {
     public void update(long now, int spawnRate) {
         inputUpdate();
         fieldView.update(snakeHeadView.getSnakeHead(), now, spawnRate);
-        snakeHeadView.update();
     }
 
     private void updateCurrentScore() {
@@ -91,13 +91,12 @@ public class GameView {
             int delay = 100;
             @Override
             public void handle(long now) {
-                update(now, 5000);
+                update(now, 2000);
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         };
     }
@@ -111,7 +110,7 @@ public class GameView {
             default -> snakeHeadView.getSnakeHead().move(lastDirection);
         }
 
-        //snakeHeadView.update();
+        snakeHeadView.update();
     }
 
     private void initializeEventHandler() {
@@ -143,6 +142,8 @@ public class GameView {
         root.getScene().setOnKeyPressed(inputHandler);
         root.getScene().setOnKeyReleased(inputHandler);
     }
+
+
 
     public Pane getRoot() {
         return root;

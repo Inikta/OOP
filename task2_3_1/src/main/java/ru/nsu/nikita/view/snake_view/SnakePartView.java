@@ -33,7 +33,7 @@ public class SnakePartView extends AbstractRectangle {
         double newY = shiftY + prevPartView.coordinates.getY() * (height + padding);
 
         this.coordinates = prevPartView.coordinates;
-        setSnakePart(prevPartView.snakePart);
+        //setSnakePart(prevPartView.snakePart);
 
         setX(newX);
         setY(newY);
