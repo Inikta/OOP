@@ -6,18 +6,21 @@ import ru.nsu.nikita.backlogic.tiles.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static ru.nsu.nikita.backlogic.tiles.TileType.*;
 
 public class Field {
     private final int horizontalSize;
     private final int verticalSize;
+    private boolean randomTasties;
 
     private final List<List<Tile>> fieldMatrix;
 
     public Field(int horizontal, int vertical) {
         horizontalSize = horizontal;
         verticalSize = vertical;
+        randomTasties = false;
 
         fieldMatrix = new ArrayList<>();
         createField();
@@ -105,6 +108,19 @@ public class Field {
         changeColumn(horizontalSize - 1, OBSTACLE);
     }
 
+    public void makeRandomWalls() {
+        Random random = new Random();
+
+        for (List<Tile> row : fieldMatrix) {
+            for (Tile tile : row) {
+                int num = random.nextInt(20);
+                if (num % 15 == 0) {
+                    tile.setType(OBSTACLE);
+                }
+            }
+        }
+    }
+
     public List<Tile> getFreeTiles() {
         List<Tile> freeTiles = new ArrayList<>();
         for (List<Tile> row : fieldMatrix) {
@@ -128,5 +144,13 @@ public class Field {
 
     public List<List<Tile>> getFieldMatrix() {
         return fieldMatrix;
+    }
+
+    public boolean isRandomTasties() {
+        return randomTasties;
+    }
+
+    public void setRandomTasties(boolean randomTasties) {
+        this.randomTasties = randomTasties;
     }
 }

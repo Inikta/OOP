@@ -1,75 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.application.PrefaceView">
-    <BorderPane>
-        <center>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Snake the Game" textAlignment="CENTER" BorderPane.alignment="CENTER">
-                <font>
-                    <Font name="Century Gothic" size="58.0" />
-                </font>
-                <textFill>
-                    <LinearGradient startX="1.0" startY="0.4407582938388625">
-                        <stops>
-                            <Stop>
-                                <color>
-                                    <Color red="0.75" green="0.44907405972480774" blue="0.0555555559694767" />
-                                </color>
-                            </Stop>
-                            <Stop offset="1.0">
-                                <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                </color>
-                            </Stop>
-                        </stops>
-                    </LinearGradient>
-                </textFill>
-            </Label>
-        </center>
-    </BorderPane>
-    <Label text="Horizontal Size" fx:id="xSizeLabel">
-        <font>
-            <Font name="Century Gothic" size="22.0" />
-        </font>
+<VBox fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.application.PrefaceView">
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Snake the Game" textAlignment="CENTER">
+          <font>
+              <Font name="Century Gothic" size="61.0" />
+          </font>
+          <textFill>
+              <LinearGradient startX="1.0" startY="0.4407582938388625">
+                  <stops>
+                      <Stop>
+                          <color>
+                              <Color red="0.75" green="0.44907405972480774" blue="0.0555555559694767" />
+                          </color>
+                      </Stop>
+                      <Stop offset="1.0">
+                          <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                          </color>
+                      </Stop>
+                  </stops>
+              </LinearGradient>
+          </textFill>
+      </Label>
+   <VBox style="-fx-border-color: BLACK; -fx-border-radius: 7;">
+      <children>
+          <Label text="Horizontal Size" fx:id="xSizeLabel">
+              <font>
+                  <Font name="Century Gothic" size="22.0" />
+              </font>
+          </Label>
+          <TextField onKeyTyped="#onXSizeTextInput" fx:id="xSizeTextField" />
+          <Label fx:id="ySizeLabel" text="Vertical Size">
+              <font>
+                  <Font name="Century Gothic" size="22.0" />
+              </font>
+          </Label>
+          <TextField fx:id="ySizeTextField" onKeyTyped="#onYSizeTextInput" />
+          <Label fx:id="goalLabel" text="Goal">
+              <font>
+                  <Font name="Century Gothic" size="22.0" />
+              </font>
+          </Label>
+          <TextField fx:id="goalTextField" onKeyTyped="#onGoalTextInput" />
+      </children>
+      <padding>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </padding>
+   </VBox>
+   <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-border-color: BLACK; -fx-border-radius: 7;">
+      <children>
+         <CheckBox fx:id="surroundField" mnemonicParsing="false" onAction="#onSurroundFieldset" text="Surround &#10;field" textAlignment="CENTER">
+            <font>
+               <Font name="Century Gothic" size="14.0" />
+            </font>
+         </CheckBox>
+         <CheckBox fx:id="randomWalls" mnemonicParsing="false" onAction="#onRandomWallsSet" text="Random &#10;walls" textAlignment="CENTER">
+            <font>
+               <Font name="Century Gothic" size="14.0" />
+            </font>
+         </CheckBox>
+         <CheckBox fx:id="infiniteGame" mnemonicParsing="false" onAction="#onInfiniteGameSet" text="Infinite &#10;game" textAlignment="CENTER">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </CheckBox>
+         <CheckBox fx:id="randomFruits" mnemonicParsing="false" onAction="#onRandomFruitsSet" text="Fruits random &#10;spawn" textAlignment="CENTER">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </CheckBox>
+         <CheckBox fx:id="lethalSelfCrash" mnemonicParsing="false" onAction="#onLethalSelfCrashSet" text="Lethal &#10;self-clash" textAlignment="CENTER" />
+      </children>
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin>
-    </Label>
-    <TextField onKeyTyped="#onXSizeTextInput" fx:id="xSizeTextField" />
-    <Label fx:id="ySizeLabel" text="Vertical Size">
-        <font>
-            <Font name="Century Gothic" size="22.0" />
-        </font>
-    </Label>
-    <TextField fx:id="ySizeTextField" onKeyTyped="#onYSizeTextInput" />
-    <Label fx:id="goalLabel" text="Goal">
-        <font>
-            <Font name="Century Gothic" size="22.0" />
-        </font>
-    </Label>
-    <TextField fx:id="goalTextField" onKeyTyped="#onGoalTextInput" />
-    <BorderPane>
-        <center>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#onStartButtonPressed" text="Start" textAlignment="CENTER">
-                <font>
-                    <Font name="Century Gothic" size="22.0" />
-                </font>
-            </Button>
-        </center>
+      <padding>
+         <Insets left="10.0" right="10.0" />
+      </padding>
+   </HBox>
+   <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: BLACK; -fx-border-radius: 7;">
+      <children>
+         <CheckBox fx:id="difficultyIncrease" mnemonicParsing="false" onAction="#onDifficultyIncreaseSet" text="Difficulty&#10;increasing" textAlignment="CENTER">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </CheckBox>
+         <HBox alignment="CENTER">
+            <children>
+               <Label text="Difficulty:">
+                  <font>
+                     <Font name="Century Gothic" size="16.0" />
+                  </font>
+               </Label>
+               <TextField fx:id="initDifficulty" onKeyTyped="#onInitDifficultyInput" />
+            </children>
+         </HBox>
+      </children>
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin>
-    </BorderPane>
+      <padding>
+         <Insets left="10.0" right="10.0" />
+      </padding>
+   </HBox>
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#onStartButtonPressed" text="Start" textAlignment="CENTER">
+          <font>
+              <Font name="Century Gothic" size="24.0" />
+          </font>
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+      </Button>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>

@@ -25,18 +25,18 @@ public class SnakePartView extends AbstractRectangle {
         this.viewSettings = viewSettings;
     }
 
-    public void moveTail() {
-        if (nextPartView != null) {
-            nextPartView.moveTail();
-        }
-        double newX = shiftX + prevPartView.coordinates.getX() * (width + padding);
-        double newY = shiftY + prevPartView.coordinates.getY() * (height + padding);
+    public void moveTail(SnakePart snakePart) {
+        double newX = shiftX + snakePart.getCoordinates().getX() * (width + padding);
+        double newY = shiftY + snakePart.getCoordinates().getY() * (height + padding);
 
-        this.coordinates = prevPartView.coordinates;
-        //setSnakePart(prevPartView.snakePart);
+        this.coordinates = snakePart.getCoordinates();
 
         setX(newX);
         setY(newY);
+
+        if (nextPartView != null) {
+            nextPartView.moveTail(snakePart.getNextPart());
+        }
     }
 
     public void die() {

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -16,11 +17,27 @@ public class PrefaceView extends Parent {
     public VBox root;
 
     @FXML
+    public CheckBox randomWalls;
+    @FXML
+    public CheckBox surroundField;
+    @FXML
+    public CheckBox randomFruits;
+    @FXML
+    public CheckBox infiniteGame;
+    @FXML
+    private CheckBox lethalSelfCrash;
+
+    @FXML
     private TextField xSizeTextField;
     @FXML
     private TextField ySizeTextField;
     @FXML
     private TextField goalTextField;
+
+    @FXML
+    private CheckBox difficultyIncrease;
+    @FXML
+    private TextField initDifficulty;
 
     @FXML
     private Button startButton;
@@ -32,6 +49,15 @@ public class PrefaceView extends Parent {
     public IntegerProperty goalProperty;
 
     public BooleanProperty readyProperty;
+
+    public BooleanProperty surroundFieldProperty;
+    public BooleanProperty randomWallsProperty;
+    public BooleanProperty randomFruitsProperty;
+    public BooleanProperty infiniteGameProperty;
+    public BooleanProperty lethalSelfCrashProperty;
+
+    public BooleanProperty difficultyIncreaseProperty;
+    public IntegerProperty initDifficultyProperty;
 
     private boolean xSizeReady;
     private boolean ySizeReady;
@@ -49,12 +75,23 @@ public class PrefaceView extends Parent {
 
         readyProperty = new SimpleBooleanProperty(false);
 
+        surroundFieldProperty = new SimpleBooleanProperty(false);
+        randomWallsProperty = new SimpleBooleanProperty(false);
+        randomFruitsProperty = new SimpleBooleanProperty(false);
+        infiniteGameProperty = new SimpleBooleanProperty(false);
+        lethalSelfCrashProperty = new SimpleBooleanProperty(false);
+
+        difficultyIncreaseProperty = new SimpleBooleanProperty(false);
+        initDifficultyProperty = new SimpleIntegerProperty(0);
+
         xSizeReady = false;
         ySizeReady = false;
         goalReady = false;
 
         defaultTextFieldStyle = xSizeTextField.getStyle();
         defaultButtonStyle = startButton.getStyle();
+
+
     }
 
     public void onRestart() {
@@ -62,8 +99,39 @@ public class PrefaceView extends Parent {
         xSizeTextField.setStyle(defaultTextFieldStyle);
         ySizeTextField.setStyle(defaultTextFieldStyle);
         goalTextField.setStyle(defaultTextFieldStyle);
+        initDifficulty.setStyle(defaultTextFieldStyle);
 
         startButton.setStyle(defaultButtonStyle);
+    }
+
+    @FXML
+    public void onRandomWallsSet() {
+        randomWallsProperty.set(!randomWallsProperty.getValue());
+    }
+
+    @FXML
+    public void onSurroundFieldset() {
+        surroundFieldProperty.set(!surroundFieldProperty.getValue());
+    }
+
+    @FXML
+    public void onRandomFruitsSet() {
+        randomFruitsProperty.set(!randomFruitsProperty.getValue());
+    }
+
+    @FXML
+    public void onInfiniteGameSet() {
+        infiniteGameProperty.set(!infiniteGameProperty.getValue());
+    }
+
+    @FXML
+    public void onDifficultyIncreaseSet() {
+        difficultyIncreaseProperty.set(!difficultyIncreaseProperty.getValue());
+    }
+
+    @FXML
+    public void onLethalSelfCrashSet() {
+        lethalSelfCrashProperty.set(!lethalSelfCrashProperty.getValue());
     }
 
     @FXML
@@ -80,6 +148,12 @@ public class PrefaceView extends Parent {
     public void onGoalTextInput() {
         goalReady = onTextInput(goalTextField, goalProperty);
     }
+
+    @FXML
+    public void onInitDifficultyInput() {
+        onTextInput(initDifficulty, initDifficultyProperty);
+    }
+
 
     private boolean onTextInput(TextField textField, IntegerProperty parameter) {
         textField.setStyle("-fx-background-color: DEFAULT");

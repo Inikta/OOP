@@ -1,5 +1,7 @@
 package ru.nsu.nikita.view.snake_view;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.paint.Color;
 import ru.nsu.nikita.backlogic.snake.SnakeHead;
 
 import java.util.ArrayDeque;
@@ -13,6 +15,8 @@ public class SnakeHeadView extends SnakePartView {
     private SnakeViewSettingsContainer headViewSettings;
     private SnakeViewSettingsContainer bodyViewSettings;
 
+    private SimpleBooleanProperty living;
+
     public SnakeHeadView(SnakeHead snakeHead, SnakeViewSettingsContainer headViewSettings, SnakeViewSettingsContainer bodyViewSettings) {
         super(snakeHead, headViewSettings);
         tail = new ArrayDeque<>();
@@ -20,18 +24,17 @@ public class SnakeHeadView extends SnakePartView {
 
         this.headViewSettings = headViewSettings;
         this.bodyViewSettings = bodyViewSettings;
+
+        living = new SimpleBooleanProperty(true);
     }
 
     public void update() {
         if (snakeHead.isLiving()) {
-            moveHead();
-
             if (tail.size() < snakeHead.getLength()) {
                 grow();
             }
-            if (snakeHead.getLength() > 0) {
-                nextPartView.moveTail();
-            }
+            moveTail(snakeHead);
+
         } else {
             this.die();
         }
@@ -62,6 +65,12 @@ public class SnakeHeadView extends SnakePartView {
         tail.addFirst(newSnakePartView);
     }
 
+    @Override
+    public void die() {
+        super.die();
+        living.set(false);
+    }
+
     public SnakeViewSettingsContainer getHeadViewSettings() {
         return headViewSettings;
     }
@@ -84,5 +93,17 @@ public class SnakeHeadView extends SnakePartView {
 
     public SnakeHead getSnakeHead() {
         return snakeHead;
+    }
+
+    public boolean isLiving() {
+        return living.get();
+    }
+
+    public SimpleBooleanProperty livingProperty() {
+        return living;
+    }
+
+    public void setLiving(boolean living) {
+        this.living.set(living);
     }
 }

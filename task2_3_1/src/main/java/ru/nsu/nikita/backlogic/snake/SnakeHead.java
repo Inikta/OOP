@@ -6,7 +6,11 @@ import ru.nsu.nikita.backlogic.tiles.TileType;
 
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static ru.nsu.nikita.backlogic.snake.Direction.*;
 
@@ -22,9 +26,12 @@ public class SnakeHead extends SnakePart {
 
     private boolean grows = false;
 
+    private boolean selfCrash;
+
     public SnakeHead(Coordinates headCoordinates, Field field) {
         super(headCoordinates);
 
+        selfCrash = false;
         length = 0;
         living = true;
         lastDirection = NONE;
@@ -36,54 +43,61 @@ public class SnakeHead extends SnakePart {
     public void move(Direction direction) {
         prevCoordinates = coordinates.clone();
         Coordinates newCoordinates;
-        switch (direction) {
-            case LEFT -> {
-                inverseLastDirection = RIGHT;
-                newCoordinates = moveLeft();
-            }
-            case RIGHT -> {
-                inverseLastDirection = LEFT;
-                newCoordinates = moveRight();
-            }
-            case UP -> {
-                inverseLastDirection = DOWN;
-                newCoordinates = moveUp();
-            }
-            case DOWN -> {
-                inverseLastDirection = UP;
-                newCoordinates = moveDown();
-            }
-            default -> {
-                return;
-            }
-        }
-        if (length > 0) {
-            if (direction != inverseLastDirection) {
-                setCoordinates(newCoordinates);
-                if (grows) {
-                    grows = false;
-                }
-                moveTail(prevCoordinates);
-            }
-            tileEvent();
-            //return;
-        } else {
-            setCoordinates(newCoordinates);
-        }
-        setCoordinates(newCoordinates);
 
-        lastDirection = direction;
-        switch (lastDirection) {
-            case LEFT -> inverseLastDirection = RIGHT;
-            case RIGHT -> inverseLastDirection = LEFT;
-            case UP -> inverseLastDirection = DOWN;
-            case DOWN -> inverseLastDirection = UP;
-            default -> {
-                return;
+        if (direction == inverseLastDirection) {
+            newCoordinates = moveCoordinates(lastDirection);
+        } else {
+            newCoordinates = moveCoordinates(direction);
+
+            lastDirection = direction;
+            switch (lastDirection) {
+                case LEFT -> inverseLastDirection = RIGHT;
+                case RIGHT -> inverseLastDirection = LEFT;
+                case UP -> inverseLastDirection = DOWN;
+                case DOWN -> inverseLastDirection = UP;
+                default -> {
+                    return;
+                }
             }
         }
+        checkSnake(newCoordinates);
+        moveTail(newCoordinates);
 
         tileEvent();
+    }
+
+    private Coordinates moveCoordinates(Direction direction) {
+        Coordinates newCoordinates;
+
+        switch (direction) {
+            case LEFT -> newCoordinates = moveLeft();
+            case RIGHT -> newCoordinates = moveRight();
+            case UP -> newCoordinates = moveUp();
+            case DOWN -> newCoordinates = moveDown();
+            default -> newCoordinates = coordinates;
+        }
+
+        return newCoordinates;
+    }
+
+    private void checkSnake(Coordinates newCoordinates) {
+        List<SnakePart> partsToRemove = new ArrayList<>();
+        tail.forEach(snakePart -> {
+            if (newCoordinates.getX() == snakePart.getCoordinates().getX() &&
+                    newCoordinates.getY() == snakePart.getCoordinates().getY()) {
+                if (selfCrash) {
+                    die();
+                } else {
+                    SnakePart part = snakePart;
+                    while (part != null) {
+                        partsToRemove.add(part);
+                        part = part.nextPart;
+                    }
+                }
+            }
+        });
+
+        tail.removeAll(partsToRemove);
     }
 
     private Coordinates moveLeft() {
@@ -134,7 +148,7 @@ public class SnakeHead extends SnakePart {
         setNextPart(newSnakePart);
 
         if (nextPart.nextPart != null) {
-            nextPart.setPrevPart(newSnakePart);
+            nextPart.nextPart.setPrevPart(nextPart);
         }
 
         tail.addFirst(newSnakePart);
@@ -171,6 +185,14 @@ public class SnakeHead extends SnakePart {
 
     public boolean isGrows() {
         return grows;
+    }
+
+    public boolean isSelfCrash() {
+        return selfCrash;
+    }
+
+    public void setSelfCrash(boolean selfCrash) {
+        this.selfCrash = selfCrash;
     }
 }
 

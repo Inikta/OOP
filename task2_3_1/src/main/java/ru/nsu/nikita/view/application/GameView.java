@@ -1,22 +1,24 @@
 package ru.nsu.nikita.view.application;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import ru.nsu.nikita.backlogic.snake.Direction;
 import ru.nsu.nikita.backlogic.snake.SnakeHead;
 import ru.nsu.nikita.view.field_view.FieldView;
+import ru.nsu.nikita.view.screens_controllers.LosingScreenViewController;
 import ru.nsu.nikita.view.snake_view.SnakeHeadView;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,6 +52,17 @@ public class GameView {
     private AnimationTimer animationTimer;
 
     private BooleanProperty restartProperty;
+    private BooleanProperty difficultyIncreaseProperty;
+
+    private SimpleIntegerProperty currentScore;
+    private SimpleIntegerProperty goalScore;
+
+
+    private Stage loseWindow;
+    private Stage winWindow;
+
+    private Integer difficulty;
+    protected int delay;
 
     @FXML
     public void onRestartPressed() {
@@ -57,13 +70,18 @@ public class GameView {
         restartProperty.setValue(true);
     }
 
-    public void manualInitialization(GameData gameData) {
-        goalScoreLabel.setText(gameData.getGoalScore().toString());
-
-        restartProperty = new SimpleBooleanProperty(false);
+    public void manualInitialization(GameData gameData) throws IOException {
         this.gameData = gameData;
+
+        difficulty = gameData.getInitDifficulty();
+        goalScoreLabel.setText(gameData.getGoalScore().toString());
+        restartProperty = new SimpleBooleanProperty(false);
+        goalScore = new SimpleIntegerProperty(gameData.getGoalScore());
+        currentScore = new SimpleIntegerProperty(gameData.getCurrentScore());
+        difficultyIncreaseProperty = new SimpleBooleanProperty(false);
+
         snakeHeadView = new SnakeHeadView(
-                new SnakeHead(gameData.getInitSnakeHeadCoordinates(), gameData.getFieldViewSettingsContainer().getField()),
+                gameData.getSnakeHead(),
                 gameData.getSnakeHeadViewSettingsContainer(),
                 gameData.getSnakeBodyViewSettingsContainer());
         fieldView = new FieldView(gameData.getFieldViewSettingsContainer());
@@ -71,8 +89,37 @@ public class GameView {
         fieldPane.getChildren().add(fieldView);
         fieldPane.getChildren().add(snakeHeadView);
 
+
         initializeEventHandler();
+
+        delay = calculateInitDifficulty();
         initializeGameLoop();
+
+        FXMLLoader loseLoader = new FXMLLoader(getClass().getResource("LosingScreenView.fxml"));
+        loseWindow = new Stage();
+        Scene loseScene = new Scene(loseLoader.load());
+        loseWindow.setScene(loseScene);
+        LosingScreenViewController loseController = loseLoader.getController();
+        loseController.manualInit(currentScore, gameData.getGoalScore());
+        loseController.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
+            //if (newValue) {
+            loseWindow.close();
+            onRestartPressed();
+            //}
+        });
+
+
+        FXMLLoader winLoader = new FXMLLoader(getClass().getResource("WinningScreenView.fxml"));
+        winWindow = new Stage();
+        Scene winScene = new Scene(winLoader.load());
+        winWindow.setScene(winScene);
+        LosingScreenViewController winController = loseLoader.getController();
+        winController.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
+            //if (newValue) {
+            winWindow.close();
+            onRestartPressed();
+            //}
+        });
 
         animationTimer.start();
     }
@@ -80,15 +127,57 @@ public class GameView {
     public void update(long now, int spawnRate) {
         inputUpdate();
         fieldView.update(snakeHeadView.getSnakeHead(), now, spawnRate);
+        snakeHeadView.update();
+        loadSnake();
+
+        if (difficultyIncreaseProperty.get() & currentScore.get() < snakeHeadView.getSnakeHead().getLength()) {
+            delay -= 2;
+        }
+
+        updateCurrentScore();
+
+        if (!snakeHeadView.isLiving()) {
+            loseWindow.show();
+            animationTimer.stop();
+        }
+    }
+
+    public void loadSnake() {
+        snakeHeadView.getTail().forEach(t -> {
+            if (!fieldPane.getChildren().contains(t)) {
+                fieldPane.getChildren().add(t);
+            }
+        });
     }
 
     private void updateCurrentScore() {
+        if (currentScore.get() + 1 == snakeHeadView.getSnakeHead().getLength()) {
+            currentScore.set(currentScore.get() + 1);
+        } else if (currentScore.get() > snakeHeadView.getSnakeHead().getLength()) {
+            currentScore.set(currentScore.get());
+        }
 
+        currentScoreLabel.setText(currentScore.getValue().toString());
+
+
+        if (currentScore.get() == goalScore.get()) {
+            winWindow.show();
+            animationTimer.stop();
+        }
+    }
+
+    private int calculateInitDifficulty() {
+        int base = 200;
+        int initSub = difficulty * 20;
+        if (initSub > 180) {
+            initSub = 185;
+        }
+
+        return base - initSub;
     }
 
     private void initializeGameLoop() {
         animationTimer = new AnimationTimer() {
-            int delay = 100;
             @Override
             public void handle(long now) {
                 update(now, 2000);
@@ -110,7 +199,6 @@ public class GameView {
             default -> snakeHeadView.getSnakeHead().move(lastDirection);
         }
 
-        snakeHeadView.update();
     }
 
     private void initializeEventHandler() {
@@ -142,7 +230,6 @@ public class GameView {
         root.getScene().setOnKeyPressed(inputHandler);
         root.getScene().setOnKeyReleased(inputHandler);
     }
-
 
 
     public Pane getRoot() {
@@ -211,5 +298,17 @@ public class GameView {
 
     public void setRestartProperty(Boolean restartProperty) {
         this.restartProperty.setValue(restartProperty);
+    }
+
+    public boolean isDifficultyIncreaseProperty() {
+        return difficultyIncreaseProperty.get();
+    }
+
+    public BooleanProperty difficultyIncreasePropertyProperty() {
+        return difficultyIncreaseProperty;
+    }
+
+    public void setDifficultyIncreaseProperty(boolean difficultyIncreaseProperty) {
+        this.difficultyIncreaseProperty.set(difficultyIncreaseProperty);
     }
 }

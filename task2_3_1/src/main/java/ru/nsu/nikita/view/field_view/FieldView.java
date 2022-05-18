@@ -17,7 +17,10 @@ public class FieldView extends Pane {
 
     private List<TileView> tileList;
 
+    private boolean tastySpawned;
+
     public FieldView(FieldViewSettingsContainer settingsContainer) {
+        tastySpawned = false;
         this.settingsContainer = settingsContainer;
         tileList = new ArrayList<>();
         for (List<Tile> row : settingsContainer.getField().getFieldMatrix()) {
@@ -33,16 +36,27 @@ public class FieldView extends Pane {
     }
 
     public void update(SnakeHead snakeHead, double now, int spawnRate) {
+
         if (settingsContainer.getField().getTile(snakeHead.getCoordinates()).isHasFood()) {
             settingsContainer.getField().getTile(snakeHead.getCoordinates()).setHasFood(false);
             removeTasty(snakeHead.getCoordinates());
+            tastySpawned = false;
         }
-        if (now % spawnRate == 0) {
-            spawnTasty();
+
+        if (settingsContainer.getField().isRandomTasties()) {
+            if (now % spawnRate == 0) {
+                spawnTasty();
+            }
+        } else {
+            if (!tastySpawned) {
+                spawnTasty();
+            }
         }
     }
 
     public void spawnTasty() {
+        tastySpawned = true;
+
         Coordinates tastyPlace = settingsContainer.getField().getFreeTiles().get(randomizer.nextInt(settingsContainer.getField().getFreeTiles().size())).getCoordinates();
         settingsContainer.getField().getTile(tastyPlace).setHasFood(true);
         addTasty(tastyPlace);

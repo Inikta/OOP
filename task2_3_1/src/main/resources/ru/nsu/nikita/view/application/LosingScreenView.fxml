@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="losePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.screens_controllers.LosingScreenViewController">
+    <VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-background-color: RED;">
+        <padding>
+            <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
+        </padding>
+        <Label text="You lost!" textAlignment="CENTER">
+            <font>
+                <Font name="Centaur" size="82.0" />
+            </font>
+        </Label>
+        <Label text="Your score:">
+            <font>
+                <Font name="Centaur" size="32.0" />
+            </font>
+        </Label>
+        <HBox alignment="TOP_CENTER" spacing="10.0">
+            <Label fx:id="currentScoreLabel" text="0" textAlignment="CENTER">
+                <font>
+                    <Font name="Century Gothic" size="20.0" />
+                </font>
+            </Label>
+            <Label text="/" textAlignment="CENTER">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+            <Label fx:id="goalScoreLabel" text="0" textAlignment="CENTER">
+                <font>
+                    <Font name="Century Gothic" size="20.0" />
+                </font>
+            </Label>
+        </HBox>
+        <HBox alignment="TOP_CENTER" spacing="50.0">
+            <Button fx:id="restartButton" mnemonicParsing="false" text="Restart?">
+                <font>
+                    <Font name="Century Gothic" size="16.0" />
+                </font>
+            </Button>
+            <Button fx:id="quitButton" mnemonicParsing="false" text="Quit?">
+                <font>
+                    <Font name="Century Gothic" size="16.0" />
+                </font>
+            </Button>
+        </HBox>
+    </VBox>
+</Pane>
