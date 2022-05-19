@@ -19,6 +19,12 @@ public class TileView extends AbstractRectangle {
         type = newType;
     }
 
+    /**
+     * Tile view constructor
+     * @param coordinates coordinates of the tile
+     * @param type type of the tile
+     * @param settingsContainer view settings for the tile
+     */
     public TileView(Coordinates coordinates,
                     TileType type,
                     TileViewSettingsContainer settingsContainer) {

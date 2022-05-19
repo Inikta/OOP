@@ -1,7 +1,9 @@
 package ru.nsu.nikita.view.application;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +15,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ru.nsu.nikita.backlogic.snake.Direction;
-import ru.nsu.nikita.backlogic.snake.SnakeHead;
 import ru.nsu.nikita.view.field_view.FieldView;
 import ru.nsu.nikita.view.screens_controllers.LosingScreenViewController;
+import ru.nsu.nikita.view.screens_controllers.WinningScreenViewController;
 import ru.nsu.nikita.view.snake_view.SnakeHeadView;
 
 import java.io.IOException;
@@ -46,17 +48,21 @@ public class GameView {
 
     private GameData gameData;
 
-    private Set<KeyCode> activeKeys = new HashSet<>();
+    private final Set<KeyCode> activeKeys = new HashSet<>();
     private Direction currentDirection = NONE;
     private Direction lastDirection = NONE;
     private AnimationTimer animationTimer;
 
-    private BooleanProperty restartProperty;
-    private BooleanProperty difficultyIncreaseProperty;
+    public BooleanProperty restartProperty;
+    public BooleanProperty difficultyIncreaseProperty;
 
-    private SimpleIntegerProperty currentScore;
-    private SimpleIntegerProperty goalScore;
+    public SimpleIntegerProperty currentScore;
+    public SimpleIntegerProperty goalScore;
 
+    public SimpleBooleanProperty winRestartProperty;
+    public SimpleBooleanProperty loseRestartProperty;
+    public SimpleBooleanProperty winQuitProperty;
+    public SimpleBooleanProperty loseQuitProperty;
 
     private Stage loseWindow;
     private Stage winWindow;
@@ -70,7 +76,19 @@ public class GameView {
         restartProperty.setValue(true);
     }
 
+    /**
+     * Initialization of controller.
+     * Also sets listeners for properties of restart and quit buttons of winning and losing screens.
+     * @param gameData settings for the game
+     * @throws IOException throws, if an error occurs during loading FXML markup
+     */
     public void manualInitialization(GameData gameData) throws IOException {
+
+        winRestartProperty = new SimpleBooleanProperty(false);
+        loseRestartProperty = new SimpleBooleanProperty(false);
+        winQuitProperty = new SimpleBooleanProperty(false);
+        loseQuitProperty = new SimpleBooleanProperty(false);
+
         this.gameData = gameData;
 
         difficulty = gameData.getInitDifficulty();
@@ -101,11 +119,19 @@ public class GameView {
         loseWindow.setScene(loseScene);
         LosingScreenViewController loseController = loseLoader.getController();
         loseController.manualInit(currentScore, gameData.getGoalScore());
-        loseController.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
-            //if (newValue) {
-            loseWindow.close();
-            onRestartPressed();
-            //}
+
+        loseController.restartProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                loseWindow.close();
+                onRestartPressed();
+            }
+        });
+
+        loseController.quitProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                loseWindow.close();
+                loseQuitProperty.setValue(true);
+            }
         });
 
 
@@ -113,17 +139,31 @@ public class GameView {
         winWindow = new Stage();
         Scene winScene = new Scene(winLoader.load());
         winWindow.setScene(winScene);
-        LosingScreenViewController winController = loseLoader.getController();
-        winController.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
-            //if (newValue) {
-            winWindow.close();
-            onRestartPressed();
-            //}
+        WinningScreenViewController winController = winLoader.getController();
+        winController.manualInit();
+
+        winController.restartProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                winWindow.close();
+                onRestartPressed();
+            }
+        });
+
+        winController.quitProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                winWindow.close();
+                winQuitProperty.setValue(true);
+            }
         });
 
         animationTimer.start();
     }
 
+    /**
+     * Update game view with new data.
+     * @param now the timestamp of the current frame given in nanoseconds.
+     * @param spawnRate number responsible for rate of food spawn
+     */
     public void update(long now, int spawnRate) {
         inputUpdate();
         fieldView.update(snakeHeadView.getSnakeHead(), now, spawnRate);
@@ -136,13 +176,16 @@ public class GameView {
 
         updateCurrentScore();
 
-        if (!snakeHeadView.isLiving()) {
+        if (!snakeHeadView.living.get()) {
             loseWindow.show();
             animationTimer.stop();
         }
     }
 
-    public void loadSnake() {
+    /**
+     * Load new body parts of snake.
+     */
+    private void loadSnake() {
         snakeHeadView.getTail().forEach(t -> {
             if (!fieldPane.getChildren().contains(t)) {
                 fieldPane.getChildren().add(t);
@@ -150,6 +193,9 @@ public class GameView {
         });
     }
 
+    /**
+     * Update current score.
+     */
     private void updateCurrentScore() {
         if (currentScore.get() + 1 == snakeHeadView.getSnakeHead().getLength()) {
             currentScore.set(currentScore.get() + 1);
@@ -166,6 +212,10 @@ public class GameView {
         }
     }
 
+    /**
+     * Calculate initial difficulty.
+     * @return delay between game updates
+     */
     private int calculateInitDifficulty() {
         int base = 200;
         int initSub = difficulty * 20;
@@ -176,6 +226,9 @@ public class GameView {
         return base - initSub;
     }
 
+    /**
+     * Initialize animation timer with update(now, spawnRate) method and set delay between updates.
+     */
     private void initializeGameLoop() {
         animationTimer = new AnimationTimer() {
             @Override
@@ -190,6 +243,9 @@ public class GameView {
         };
     }
 
+    /**
+     * Move snake head according to current direction.
+     */
     private void inputUpdate() {
         switch (currentDirection) {
             case LEFT -> snakeHeadView.getSnakeHead().move(LEFT);
@@ -201,6 +257,9 @@ public class GameView {
 
     }
 
+    /**
+     * Initialize event handler for buttons pressing.
+     */
     private void initializeEventHandler() {
         EventHandler<KeyEvent> inputHandler = event -> {
             if (KeyEvent.KEY_PRESSED.equals(event.getEventType())) {
@@ -286,29 +345,5 @@ public class GameView {
 
     public void setGameData(GameData gameData) {
         this.gameData = gameData;
-    }
-
-    public Boolean getRestartProperty() {
-        return restartProperty.getValue();
-    }
-
-    public Property<Boolean> restartPropertyProperty() {
-        return restartProperty;
-    }
-
-    public void setRestartProperty(Boolean restartProperty) {
-        this.restartProperty.setValue(restartProperty);
-    }
-
-    public boolean isDifficultyIncreaseProperty() {
-        return difficultyIncreaseProperty.get();
-    }
-
-    public BooleanProperty difficultyIncreasePropertyProperty() {
-        return difficultyIncreaseProperty;
-    }
-
-    public void setDifficultyIncreaseProperty(boolean difficultyIncreaseProperty) {
-        this.difficultyIncreaseProperty.set(difficultyIncreaseProperty);
     }
 }

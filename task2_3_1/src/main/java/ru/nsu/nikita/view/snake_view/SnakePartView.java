@@ -11,6 +11,11 @@ public class SnakePartView extends AbstractRectangle {
 
     protected SnakeViewSettingsContainer viewSettings;
 
+    /**
+     * Snake body view constructor
+     * @param snakePart snake part itself
+     * @param viewSettings view settings
+     */
     public SnakePartView(SnakePart snakePart, SnakeViewSettingsContainer viewSettings) {
         super(
                 snakePart.getCoordinates(),
@@ -25,6 +30,10 @@ public class SnakePartView extends AbstractRectangle {
         this.viewSettings = viewSettings;
     }
 
+    /**
+     * Move self and next body parts
+     * @param snakePart snake part with data about movement
+     */
     public void moveTail(SnakePart snakePart) {
         double newX = shiftX + snakePart.getCoordinates().getX() * (width + padding);
         double newY = shiftY + snakePart.getCoordinates().getY() * (height + padding);
@@ -39,6 +48,9 @@ public class SnakePartView extends AbstractRectangle {
         }
     }
 
+    /**
+     * Color in RED, if snake dies
+     */
     public void die() {
         if (nextPartView != null) {
             nextPartView.die();

@@ -14,12 +14,23 @@ public class Tile {
 
     private boolean hasFood;
 
+    /**
+     * Tile constructor.
+     * @param x horizontal coordinate in the field
+     * @param y vertical coordinate in the field
+     * @param type type of the tile
+     */
     public Tile(int x, int y, TileType type) {
         coordinates = new Coordinates(x, y);
         this.type = type;
         hasFood = false;
     }
 
+    /**
+     * Checks, if tile has food on it.
+     * Always false, if tile is an OBSTACLE.
+     * @return state of tile
+     */
     public boolean isHasFood() {
         if (type != OBSTACLE) {
             return hasFood;
@@ -28,6 +39,11 @@ public class Tile {
         }
     }
 
+    /**
+     * Sets, if tile has food on it or not.
+     * Always false, if tile is an OBSTACLE.
+     * @return
+     */
     public void setHasFood(boolean hasFood) {
         if (type != OBSTACLE) {
             this.hasFood = hasFood;

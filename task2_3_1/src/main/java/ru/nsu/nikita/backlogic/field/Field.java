@@ -17,6 +17,11 @@ public class Field {
 
     private final List<List<Tile>> fieldMatrix;
 
+    /**
+     * Field constructor.
+     * @param horizontal amount of tiles in horizontal axis
+     * @param vertical amount of tiles in vertical axis
+     */
     public Field(int horizontal, int vertical) {
         horizontalSize = horizontal;
         verticalSize = vertical;
@@ -26,6 +31,9 @@ public class Field {
         createField();
     }
 
+    /**
+     * Fill list structure with tiles and set neighbours for each tile.
+     */
     private void createField() {
 
         for (int y = 0; y < verticalSize; y++) {
@@ -43,6 +51,10 @@ public class Field {
 
     }
 
+    /**
+     * Assign neighbours for each tile of the field.
+     * @param tile tile, for which neighbours will be assigned
+     */
     private void setNeighbors(Tile tile) {
         int x = tile.getCoordinates().getX();
         int y = tile.getCoordinates().getY();
@@ -81,26 +93,60 @@ public class Field {
         }
     }
 
+    /**
+     * Get tile from field by its coordinates.
+     * @param coordinates coordinates of the tile in the field.
+     * @return tile
+     */
     public Tile getTile(Coordinates coordinates) {
         return fieldMatrix.get(coordinates.getY()).get(coordinates.getX());
     }
 
+    /**
+     * Change tile type (GRASS or OBSTACLE) located in field by coordinates.
+     * @param coordinates tile coordinates
+     * @param newType new type of the tile
+     */
     public void changeTile(Coordinates coordinates, TileType newType) {
         getTile(coordinates).setType(newType);
     }
 
+    /**
+     * Assign new type for a whole row of the field.
+     * @param row number of the row
+     * @param newType new type
+     */
     public void changeRow(int row, TileType newType) {
-        for (Tile tile : fieldMatrix.get(row)) {
-            changeTile(tile.getCoordinates(), newType);
+        if (row > 0 & row < verticalSize) {
+            for (Tile tile : fieldMatrix.get(row)) {
+                changeTile(tile.getCoordinates(), newType);
+            }
+        } else {
+            IllegalArgumentException exc = new IllegalArgumentException("Number of row is out of bounds.");
+            exc.printStackTrace();
+            throw exc;
         }
     }
-
+    /**
+     * Assign new type for a whole column of the field.
+     * @param column number of the row
+     * @param newType new type
+     */
     public void changeColumn(int column, TileType newType) {
-        for (int i = 0; i < verticalSize; i++) {
-            changeTile(fieldMatrix.get(i).get(column).getCoordinates(), newType);
+        if (column > 0 & column < horizontalSize) {
+            for (int i = 0; i < verticalSize; i++) {
+                changeTile(fieldMatrix.get(i).get(column).getCoordinates(), newType);
+            }
+        } else {
+            IllegalArgumentException exc = new IllegalArgumentException("Number of column is out of bounds.");
+            exc.printStackTrace();
+            throw exc;
         }
     }
 
+    /**
+     * Surround field with walls: the first and the last rows and columns will be assigned to type OBSTACLE.
+     */
     public void surroundField() {
         changeRow(0, OBSTACLE);
         changeRow(verticalSize - 1, OBSTACLE);
@@ -108,6 +154,9 @@ public class Field {
         changeColumn(horizontalSize - 1, OBSTACLE);
     }
 
+    /**
+     * Randomly put OBSTACLES in field.
+     */
     public void makeRandomWalls() {
         Random random = new Random();
 
@@ -121,6 +170,10 @@ public class Field {
         }
     }
 
+    /**
+     * Get all tiles with type GRASS.
+     * @return all tiles of the field with type GRASS.
+     */
     public List<Tile> getFreeTiles() {
         List<Tile> freeTiles = new ArrayList<>();
         for (List<Tile> row : fieldMatrix) {

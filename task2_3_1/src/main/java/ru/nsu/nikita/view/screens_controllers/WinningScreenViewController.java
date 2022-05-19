@@ -1,7 +1,6 @@
 package ru.nsu.nikita.view.screens_controllers;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -16,31 +15,21 @@ public class WinningScreenViewController {
     @FXML
     private Pane winPane;
 
-    private SimpleBooleanProperty restartProperty;
+    public SimpleBooleanProperty restartProperty;
+    public SimpleBooleanProperty quitProperty;
 
-    @FXML
-    public void initialize() {
+    public void manualInit() {
         restartProperty = new SimpleBooleanProperty(false);
+        quitProperty = new SimpleBooleanProperty(false);
     }
 
     @FXML
     public void onRestartPressed() {
-        restartProperty.set(true);
+        restartProperty.setValue(true);
     }
 
     @FXML
     public void onQuitPressed() {
-    }
-
-    public boolean isRestartProperty() {
-        return restartProperty.get();
-    }
-
-    public SimpleBooleanProperty restartPropertyProperty() {
-        return restartProperty;
-    }
-
-    public void setRestartProperty(boolean restartProperty) {
-        this.restartProperty.set(restartProperty);
+        quitProperty.set(true);
     }
 }

@@ -5,8 +5,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -27,19 +25,17 @@ public class SnakeApplication extends Application {
     private Scene prefaceScene;
     private Scene gameScene;
 
-    private BooleanProperty restartProperty = new SimpleBooleanProperty();
+    public BooleanProperty surroundFieldProperty = new SimpleBooleanProperty();
+    public BooleanProperty randomWallsProperty = new SimpleBooleanProperty();
+    public BooleanProperty randomFruitsProperty = new SimpleBooleanProperty();
+    public BooleanProperty infiniteGameProperty = new SimpleBooleanProperty();
+    public BooleanProperty lethalSelfCrashProperty = new SimpleBooleanProperty();
+    public BooleanProperty difficultyIncreaseProperty = new SimpleBooleanProperty();
 
-    private BooleanProperty surroundFieldProperty = new SimpleBooleanProperty();
-    private BooleanProperty randomWallsProperty = new SimpleBooleanProperty();
-    private BooleanProperty randomFruitsProperty = new SimpleBooleanProperty();
-    private BooleanProperty infiniteGameProperty = new SimpleBooleanProperty();
-    private BooleanProperty lethalSelfCrashProperty = new SimpleBooleanProperty();
-    private BooleanProperty difficultyIncreaseProperty = new SimpleBooleanProperty();
-
-    private IntegerProperty xSizeProperty = new SimpleIntegerProperty();
-    private IntegerProperty ySizeProperty = new SimpleIntegerProperty();
-    private IntegerProperty goalProperty = new SimpleIntegerProperty();
-    private IntegerProperty initDifficultyProperty = new SimpleIntegerProperty();
+    public IntegerProperty xSizeProperty = new SimpleIntegerProperty();
+    public IntegerProperty ySizeProperty = new SimpleIntegerProperty();
+    public IntegerProperty goalProperty = new SimpleIntegerProperty();
+    public IntegerProperty initDifficultyProperty = new SimpleIntegerProperty();
 
 
     @Override
@@ -54,16 +50,18 @@ public class SnakeApplication extends Application {
         stage.setWidth(primaryScreenBounds.getWidth());
         stage.setHeight(primaryScreenBounds.getHeight());
 
+        //Set preface scene as the initial scene and show it
         prefaceScene = new Scene(prefaceLoader.load());
         mainScene = prefaceScene;
 
         PrefaceView prefaceView = prefaceLoader.getController();
 
         stage.setScene(mainScene);
-
         stage.setScene(mainScene);
         stage.show();
 
+        //Add event listener for parameters of the game.
+        //Initialize and start the game, if all necessary are set and Start pressed.
         prefaceView.readyProperty.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 try {
@@ -74,6 +72,7 @@ public class SnakeApplication extends Application {
             }
         });
 
+        //Add listeners for all game settings interface controls.
         prefaceView.xSizeProperty.addListener((observable, oldValue, newValue) -> xSizeProperty.setValue(newValue));
         prefaceView.ySizeProperty.addListener((observable, oldValue, newValue) -> ySizeProperty.setValue(newValue));
         prefaceView.goalProperty.addListener((observable, oldValue, newValue) -> goalProperty.setValue(newValue));
@@ -91,6 +90,10 @@ public class SnakeApplication extends Application {
         launch();
     }
 
+    /**
+     * Create field according to settings from preface.
+     * @return field
+     */
     private Field fieldMaker() {
         Field field = new Field(xSizeProperty.get(), ySizeProperty.get());
 
@@ -113,6 +116,12 @@ public class SnakeApplication extends Application {
         return field;
     }
 
+    /**
+     * Create snake according to settings from preface.
+     * Sets initial location of the snake as a random GRASS tile.
+     * @param field field of this snake
+     * @return snake head
+     */
     private SnakeHead snakeMaker(Field field) {
         SnakeHead snakeHead = new SnakeHead(
                 field.getFreeTiles().get(new Random().nextInt(field.getFreeTiles().size())).getCoordinates(),
@@ -126,14 +135,32 @@ public class SnakeApplication extends Application {
 
     }
 
+    /**
+     * Calculate horizontal size for tile according to the application window size and field sizes.
+     * @param stage current window
+     * @param field field
+     * @return horizontal size
+     */
     private double calculateTileXSize(Stage stage, Field field) {
-        return (stage.getWidth() * 0.91 - (field.getHorizontalSize() - 1)) / field.getHorizontalSize();
+        return (stage.getWidth() * 0.9 - (field.getHorizontalSize() - 1)) / field.getHorizontalSize();
     }
 
+    /**
+     * Calculate vertical size for tile according to the application window size and field sizes.
+     * @param stage current window
+     * @param field field
+     * @return vertical size
+     */
     private double calculateTileYSize(Stage stage, Field field) {
-        return (stage.getHeight() * 0.99 - (field.getVerticalSize() - 1)) / field.getVerticalSize();
+        return (stage.getHeight() * 0.95 - (field.getVerticalSize() - 1)) / field.getVerticalSize();
     }
 
+    /**
+     * Initialize and start the game with parameters assigned in preface.
+     * @param stage main application window
+     * @param prefaceView controller of the preface, used only for event listener in case of game restart.
+     * @throws IOException if an error occurs during loading FXML markup
+     */
     private void initializeGame(Stage stage, PrefaceView prefaceView) throws IOException {
         Field field = fieldMaker();
         SnakeHead snakeHead = snakeMaker(field);
@@ -170,13 +197,25 @@ public class SnakeApplication extends Application {
         gameView.getRoot().setPrefWidth(stage.getWidth() * 0.92);
         gameView.getRoot().setPrefHeight(stage.getHeight());
 
-        gameView.setDifficultyIncreaseProperty(difficultyIncreaseProperty.get());
+        gameView.difficultyIncreaseProperty.set(difficultyIncreaseProperty.get());
 
-        gameView.restartPropertyProperty().addListener((observable, oldValue, newValue) -> {
+        gameView.restartProperty.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 prefaceView.onRestart();
                 stage.setScene(prefaceScene);
                 stage.show();
+            }
+        });
+
+        gameView.winQuitProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                stage.close();
+            }
+        });
+
+        gameView.loseQuitProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                stage.close();
             }
         });
 

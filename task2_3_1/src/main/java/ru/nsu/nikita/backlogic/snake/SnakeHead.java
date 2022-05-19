@@ -9,8 +9,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static ru.nsu.nikita.backlogic.snake.Direction.*;
 
@@ -28,6 +26,11 @@ public class SnakeHead extends SnakePart {
 
     private boolean selfCrash;
 
+    /**
+     * Create snakeHead data structure with initial coordinates and field.
+     * @param headCoordinates initial coordinates
+     * @param field field, on which snake will be moving
+     */
     public SnakeHead(Coordinates headCoordinates, Field field) {
         super(headCoordinates);
 
@@ -40,6 +43,14 @@ public class SnakeHead extends SnakePart {
         this.field = field;
     }
 
+    /**
+     * Move snake head in provided direction. After it:
+     *  1. Checks, if head have intersections with body.
+     *  2. Will move the whole snake.
+     *  3. Checks for new tile event.
+     * Restricts movement in direction opposite to current.
+     * @param direction movement direction
+     */
     public void move(Direction direction) {
         prevCoordinates = coordinates.clone();
         Coordinates newCoordinates;
@@ -66,6 +77,11 @@ public class SnakeHead extends SnakePart {
         tileEvent();
     }
 
+    /**
+     * Compute coordinates of new head position.
+     * @param direction movement direction
+     * @return new coordinates
+     */
     private Coordinates moveCoordinates(Direction direction) {
         Coordinates newCoordinates;
 
@@ -80,6 +96,11 @@ public class SnakeHead extends SnakePart {
         return newCoordinates;
     }
 
+    /**
+     * Checks if snake head crosses its body.
+     * Have two modes: to die after crossing or remove body parts lower cross point (not working).
+     * @param newCoordinates current snake head coordinates
+     */
     private void checkSnake(Coordinates newCoordinates) {
         List<SnakePart> partsToRemove = new ArrayList<>();
         tail.forEach(snakePart -> {
@@ -124,6 +145,12 @@ public class SnakeHead extends SnakePart {
                 field.getTile(coordinates).getUpperNeighbor().getY());
     }
 
+    /**
+     * Check for something new in the current tile.
+     * Calls die() method, if tile is OBSTACLE;
+     * Calls eat() method, if tile is GRASS;
+     * Does nothing otherwise.
+     */
     private void tileEvent() {
         TileType type = field.getTile(coordinates).getType();
         switch (type) {
@@ -134,12 +161,19 @@ public class SnakeHead extends SnakePart {
         }
     }
 
+    /**
+     * Checks, if there is food on the tile.
+     * If it is true, then calls method grow().
+     */
     private void eat() {
         if (field.getTile(coordinates).isHasFood()) {
             grow();
         }
     }
 
+    /**
+     * Create new body part right after head and increase length by 1.
+     */
     public void grow() {
         SnakePart newSnakePart = new SnakePart(coordinates);
 
@@ -157,6 +191,9 @@ public class SnakeHead extends SnakePart {
         length++;
     }
 
+    /**
+     * Deletes snake parts recursively.
+     */
     @Override
     public void die() {
         super.die();

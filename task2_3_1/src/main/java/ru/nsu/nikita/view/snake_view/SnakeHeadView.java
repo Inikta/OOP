@@ -1,7 +1,6 @@
 package ru.nsu.nikita.view.snake_view;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.paint.Color;
 import ru.nsu.nikita.backlogic.snake.SnakeHead;
 
 import java.util.ArrayDeque;
@@ -9,14 +8,20 @@ import java.util.Deque;
 
 public class SnakeHeadView extends SnakePartView {
 
-    private Deque<SnakePartView> tail;
-    private SnakeHead snakeHead;
+    private final Deque<SnakePartView> tail;
+    private final SnakeHead snakeHead;
 
     private SnakeViewSettingsContainer headViewSettings;
     private SnakeViewSettingsContainer bodyViewSettings;
 
-    private SimpleBooleanProperty living;
+    public SimpleBooleanProperty living;
 
+    /**
+     * Snake head view constructor
+     * @param snakeHead snake head itself
+     * @param headViewSettings view settings for snake head
+     * @param bodyViewSettings view settings for snake body
+     */
     public SnakeHeadView(SnakeHead snakeHead, SnakeViewSettingsContainer headViewSettings, SnakeViewSettingsContainer bodyViewSettings) {
         super(snakeHead, headViewSettings);
         tail = new ArrayDeque<>();
@@ -28,6 +33,10 @@ public class SnakeHeadView extends SnakePartView {
         living = new SimpleBooleanProperty(true);
     }
 
+    /**
+     * Update snake state.
+     * Moves body parts and adds new.
+     */
     public void update() {
         if (snakeHead.isLiving()) {
             if (tail.size() < snakeHead.getLength()) {
@@ -40,17 +49,22 @@ public class SnakeHeadView extends SnakePartView {
         }
     }
 
+    /**
+     * Move snake head view
+     */
     private void moveHead() {
         double newX = shiftX + snakeHead.getCoordinates().getX() * (width + padding);
         double newY = shiftY + snakeHead.getCoordinates().getY() * (height + padding);
 
         this.coordinates = snakeHead.getCoordinates();
-        //setSnakePart(snakeHead);
 
         setX(newX);
         setY(newY);
     }
 
+    /**
+     * Add views of new body parts
+     */
     private void grow() {
         SnakePartView newSnakePartView = new SnakePartView(snakeHead.getNextPart(), bodyViewSettings);
 
@@ -65,6 +79,9 @@ public class SnakeHeadView extends SnakePartView {
         tail.addFirst(newSnakePartView);
     }
 
+    /**
+     * Destroy snake
+     */
     @Override
     public void die() {
         super.die();
@@ -93,17 +110,5 @@ public class SnakeHeadView extends SnakePartView {
 
     public SnakeHead getSnakeHead() {
         return snakeHead;
-    }
-
-    public boolean isLiving() {
-        return living.get();
-    }
-
-    public SimpleBooleanProperty livingProperty() {
-        return living;
-    }
-
-    public void setLiving(boolean living) {
-        this.living.set(living);
     }
 }

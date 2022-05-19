@@ -10,6 +10,15 @@ public class SnakeViewSettingsContainer implements Cloneable {
     private double height;
     private Color color;
 
+    /**
+     * View settings for snake part
+     * @param shiftX horizontal shift
+     * @param shiftY vertical shift
+     * @param width width of snake part
+     * @param height height of snake part
+     * @param padding distance between snake parts
+     * @param color color of the snake part
+     */
     public SnakeViewSettingsContainer(double shiftX, double shiftY, double width, double height, double padding, Color color) {
         this.shiftX = shiftX;
         this.shiftY = shiftY;
@@ -22,9 +31,8 @@ public class SnakeViewSettingsContainer implements Cloneable {
     @Override
     public SnakeViewSettingsContainer clone() {
         try {
-            SnakeViewSettingsContainer clone = (SnakeViewSettingsContainer) super.clone();
             // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
+            return (SnakeViewSettingsContainer) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

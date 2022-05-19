@@ -66,7 +66,6 @@ public class PrefaceView extends Parent {
     private String defaultTextFieldStyle;
     private String defaultButtonStyle;
 
-
     @FXML
     public void initialize() {
         xSizeProperty = new SimpleIntegerProperty(0);
@@ -82,7 +81,7 @@ public class PrefaceView extends Parent {
         lethalSelfCrashProperty = new SimpleBooleanProperty(false);
 
         difficultyIncreaseProperty = new SimpleBooleanProperty(false);
-        initDifficultyProperty = new SimpleIntegerProperty(0);
+        initDifficultyProperty = new SimpleIntegerProperty(5);
 
         xSizeReady = false;
         ySizeReady = false;
@@ -94,6 +93,9 @@ public class PrefaceView extends Parent {
 
     }
 
+    /**
+     * Set default style to text fields after restart of the game.
+     */
     public void onRestart() {
         readyProperty.set(false);
         xSizeTextField.setStyle(defaultTextFieldStyle);
@@ -159,7 +161,7 @@ public class PrefaceView extends Parent {
         textField.setStyle("-fx-background-color: DEFAULT");
 
         String input = textField.getText().toLowerCase(Locale.ROOT);
-        boolean parameterReady = wrongInputHandler(input, textField, parameter, 1);
+        boolean parameterReady = wrongInputHandler(input, textField, parameter);
         if (parameterReady) {
             textField.setStyle("-fx-background-color: rgba(144,238,144,0.75)");
             return true;
@@ -176,8 +178,8 @@ public class PrefaceView extends Parent {
         }
     }
 
-    private boolean wrongInputHandler(String input, TextField textField, IntegerProperty parameter, Integer minNumber) {
-        Integer number;
+    private boolean wrongInputHandler(String input, TextField textField, IntegerProperty parameter) {
+        int number;
         try {
             number = Integer.parseInt(input);
         } catch (NumberFormatException exception) {
@@ -186,7 +188,7 @@ public class PrefaceView extends Parent {
             return false;
         }
 
-        if (number < minNumber) {
+        if (number < 1 || number > 400) {
             textField.setStyle("-fx-background-color: rgba(248,41,41,0.6)");
             parameter.set(-1);
             return false;
@@ -194,41 +196,5 @@ public class PrefaceView extends Parent {
 
         parameter.set(number);
         return true;
-    }
-
-    public int getxSizeProperty() {
-        return xSizeProperty.get();
-    }
-
-    public IntegerProperty xSizePropertyProperty() {
-        return xSizeProperty;
-    }
-
-    public void setxSizeProperty(int xSizeProperty) {
-        this.xSizeProperty.set(xSizeProperty);
-    }
-
-    public int getySizeProperty() {
-        return ySizeProperty.get();
-    }
-
-    public IntegerProperty ySizePropertyProperty() {
-        return ySizeProperty;
-    }
-
-    public void setySizeProperty(int ySizeProperty) {
-        this.ySizeProperty.set(ySizeProperty);
-    }
-
-    public int getGoalProperty() {
-        return goalProperty.get();
-    }
-
-    public IntegerProperty goalPropertyProperty() {
-        return goalProperty;
-    }
-
-    public void setGoalProperty(int goalProperty) {
-        this.goalProperty.set(goalProperty);
     }
 }

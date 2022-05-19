@@ -12,13 +12,18 @@ import java.util.Random;
 
 public class FieldView extends Pane {
 
-    private FieldViewSettingsContainer settingsContainer;
-    private Random randomizer = new Random();
+    private final FieldViewSettingsContainer settingsContainer;
+    private final Random randomizer = new Random();
 
-    private List<TileView> tileList;
+    private final List<TileView> tileList;
 
     private boolean tastySpawned;
 
+    /**
+     * FieldView constructor with settings.
+     *
+     * @param settingsContainer settings container
+     */
     public FieldView(FieldViewSettingsContainer settingsContainer) {
         tastySpawned = false;
         this.settingsContainer = settingsContainer;
@@ -35,6 +40,13 @@ public class FieldView extends Pane {
         this.getChildren().addAll(tileList);
     }
 
+    /**
+     * Update field state
+     *
+     * @param snakeHead snake head for the snake head position
+     * @param now       current timestamp of animation timer
+     * @param spawnRate number responsible for food spawning rate
+     */
     public void update(SnakeHead snakeHead, double now, int spawnRate) {
 
         if (settingsContainer.getField().getTile(snakeHead.getCoordinates()).isHasFood()) {
@@ -54,6 +66,9 @@ public class FieldView extends Pane {
         }
     }
 
+    /**
+     * Spawn food on random free tile.
+     */
     public void spawnTasty() {
         tastySpawned = true;
 
@@ -62,13 +77,21 @@ public class FieldView extends Pane {
         addTasty(tastyPlace);
     }
 
+    /**
+     * Draw food on coordinates on the field
+     *
+     * @param coordinates coordinates of the tile
+     */
     private void addTasty(Coordinates coordinates) {
         tileList.get(coordinates.getY() * settingsContainer.getField().getHorizontalSize() + coordinates.getX()).fillProperty().set(Color.BLUE);
     }
 
+    /**
+     * Remove food on coordinates on the field
+     *
+     * @param coordinates coordinates of the tile
+     */
     private void removeTasty(Coordinates coordinates) {
         tileList.get(coordinates.getY() * settingsContainer.getField().getHorizontalSize() + coordinates.getX()).fillProperty().set(Color.GREEN);
     }
-
-
 }

@@ -1,6 +1,5 @@
 package ru.nsu.nikita.view.application;
 
-import ru.nsu.nikita.backlogic.Coordinates;
 import ru.nsu.nikita.backlogic.snake.SnakeHead;
 import ru.nsu.nikita.view.field_view.FieldViewSettingsContainer;
 import ru.nsu.nikita.view.snake_view.SnakeViewSettingsContainer;
@@ -14,7 +13,16 @@ public class GameData {
     private SnakeViewSettingsContainer snakeBodyViewSettingsContainer;
     private Integer initDifficulty;
 
-
+    /**
+     * Data structure with all settings needed for game initialization.
+     * @param fieldViewSettingsContainer view settings for field
+     * @param currentScore initial score
+     * @param goalScore winning score
+     * @param snakeHead snake head
+     * @param snakeHeadViewSettingsContainer view settings for snake head
+     * @param snakeBodyViewSettingsContainer view settings for snake body
+     * @param initDifficulty initial difficulty parameter
+     */
     public GameData(FieldViewSettingsContainer fieldViewSettingsContainer,
                     Integer currentScore,
                     Integer goalScore,

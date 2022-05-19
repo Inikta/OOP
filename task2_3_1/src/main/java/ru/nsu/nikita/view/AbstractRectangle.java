@@ -14,6 +14,16 @@ public abstract class AbstractRectangle extends Rectangle {
     protected double height;
     protected Color color;
 
+    /**
+     * Abstract class for tile and snake part view
+     * @param coordinates coordinates on field
+     * @param shiftX horizontal shift
+     * @param shiftY vertical shift
+     * @param width width of rectangle
+     * @param height height of rectangle
+     * @param padding distance between game objects
+     * @param color color of this rectangle
+     */
     public AbstractRectangle(Coordinates coordinates,
                              double shiftX,
                              double shiftY,
@@ -33,10 +43,18 @@ public abstract class AbstractRectangle extends Rectangle {
         this.color = color;
     }
 
+    /**
+     * Compute overall X position of this rectangle
+     * @return X coordinate
+     */
     protected double computeX() {
         return shiftX + coordinates.getX() * (width + padding);
     }
 
+    /**
+     * Compute overall Y position of this rectangle
+     * @return Y coordinate
+     */
     protected double computeY() {
         return shiftY + coordinates.getY() * (height + padding);
     }
