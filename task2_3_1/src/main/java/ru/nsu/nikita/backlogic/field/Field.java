@@ -19,8 +19,9 @@ public class Field {
 
     /**
      * Field constructor.
+     *
      * @param horizontal amount of tiles in horizontal axis
-     * @param vertical amount of tiles in vertical axis
+     * @param vertical   amount of tiles in vertical axis
      */
     public Field(int horizontal, int vertical) {
         horizontalSize = horizontal;
@@ -53,6 +54,7 @@ public class Field {
 
     /**
      * Assign neighbours for each tile of the field.
+     *
      * @param tile tile, for which neighbours will be assigned
      */
     private void setNeighbors(Tile tile) {
@@ -95,17 +97,26 @@ public class Field {
 
     /**
      * Get tile from field by its coordinates.
+     *
      * @param coordinates coordinates of the tile in the field.
      * @return tile
      */
     public Tile getTile(Coordinates coordinates) {
-        return fieldMatrix.get(coordinates.getY()).get(coordinates.getX());
+        if (coordinates.getY() >= 0 & coordinates.getY() < verticalSize &
+                coordinates.getX() >= 0 & coordinates.getX() < horizontalSize) {
+            return fieldMatrix.get(coordinates.getY()).get(coordinates.getX());
+        } else {
+            IndexOutOfBoundsException exc = new IndexOutOfBoundsException("Coordinates are out of range.");
+            exc.printStackTrace();
+            throw exc;
+        }
     }
 
     /**
      * Change tile type (GRASS or OBSTACLE) located in field by coordinates.
+     *
      * @param coordinates tile coordinates
-     * @param newType new type of the tile
+     * @param newType     new type of the tile
      */
     public void changeTile(Coordinates coordinates, TileType newType) {
         getTile(coordinates).setType(newType);
@@ -113,32 +124,35 @@ public class Field {
 
     /**
      * Assign new type for a whole row of the field.
-     * @param row number of the row
+     *
+     * @param row     number of the row
      * @param newType new type
      */
     public void changeRow(int row, TileType newType) {
-        if (row > 0 & row < verticalSize) {
+        if (row >= 0 & row < verticalSize) {
             for (Tile tile : fieldMatrix.get(row)) {
                 changeTile(tile.getCoordinates(), newType);
             }
         } else {
-            IllegalArgumentException exc = new IllegalArgumentException("Number of row is out of bounds.");
+            IndexOutOfBoundsException exc = new IndexOutOfBoundsException("Number of row is out of bounds.");
             exc.printStackTrace();
             throw exc;
         }
     }
+
     /**
      * Assign new type for a whole column of the field.
-     * @param column number of the row
+     *
+     * @param column  number of the row
      * @param newType new type
      */
     public void changeColumn(int column, TileType newType) {
-        if (column > 0 & column < horizontalSize) {
+        if (column >= 0 & column < horizontalSize) {
             for (int i = 0; i < verticalSize; i++) {
                 changeTile(fieldMatrix.get(i).get(column).getCoordinates(), newType);
             }
         } else {
-            IllegalArgumentException exc = new IllegalArgumentException("Number of column is out of bounds.");
+            IndexOutOfBoundsException exc = new IndexOutOfBoundsException("Number of column is out of bounds.");
             exc.printStackTrace();
             throw exc;
         }
@@ -172,6 +186,7 @@ public class Field {
 
     /**
      * Get all tiles with type GRASS.
+     *
      * @return all tiles of the field with type GRASS.
      */
     public List<Tile> getFreeTiles() {
