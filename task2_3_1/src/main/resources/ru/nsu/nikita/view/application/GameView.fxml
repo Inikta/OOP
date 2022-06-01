@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="root" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.nikita.view.application.GameView">
+   <children>
+      <HBox spacing="3.0">
+         <children>
+            <Pane fx:id="fieldPane" />
+               <VBox>
+               <VBox>
+                  <children>
+                         <HBox alignment="CENTER">
+                             <Label text="Score: " textAlignment="CENTER">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label fx:id="currentScoreLabel" text="0">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label alignment="CENTER" text="/" textAlignment="CENTER">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                             <Label fx:id="goalScoreLabel" text="0">
+                                 <font>
+                                     <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                             </Label>
+                         </HBox>
+                         <Button fx:id="restartButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onRestartPressed" text="Restart" textAlignment="CENTER">
+                             <font>
+                                 <Font name="Century Gothic" size="18.0" />
+                             </font>
+                         </Button>
+                  </children>
+               </VBox>
+               </VBox>
+         </children>
+      </HBox>
+   </children>
+</Pane>
