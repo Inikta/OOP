@@ -1,4 +1,4 @@
-package task_enums;
+package enums;
 
 public enum TestEnum {
     NONE,

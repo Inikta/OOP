@@ -1,6 +1,6 @@
 import groovy.lang.GroovyObjectSupport;
-import task_enums.CompileEnum;
-import task_enums.TestEnum;
+import enums.CompileEnum;
+import enums.TestEnum;
 
 import java.util.Date;
 

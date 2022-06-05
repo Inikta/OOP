@@ -1,5 +1,5 @@
-import task_enums.CompileEnum
-import task_enums.TestEnum
+import enums.CompileEnum
+import enums.TestEnum
 
 name = '20214'
 task1 = new Task(1, new Date(2022, 1, 1, 11, 11))
@@ -20,4 +20,4 @@ student1 = new Student(
         "main")
 student1.setStudentStats(new StudentStats([task1: 1] as Map<Task, Integer>, attendance))
 
-studentsGroup = new StudentsGroup(name, [student1])
+return new StudentsGroup(name, [student1])
