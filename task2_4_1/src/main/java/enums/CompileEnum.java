@@ -2,6 +2,6 @@ package enums;
 
 public enum CompileEnum {
     NONE,
-    COMPILABLE,
-    UNCOMPILABLE
+    COMPILED,
+    NOT_COMPILED
 }

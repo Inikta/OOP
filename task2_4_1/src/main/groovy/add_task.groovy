@@ -1,2 +1,0 @@
-class add_task {
-}

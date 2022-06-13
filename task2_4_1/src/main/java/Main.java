@@ -1,61 +1,46 @@
-import static enums.CommandsEnum.*;
-
-import enums.CommandsEnum;
+import configs.GroupConfig;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.util.DelegatingScript;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import picocli.CommandLine;
+import scripts.CompileScript;
+import scripts.DocsScript;
+import scripts.ReportScript;
+import scripts.TestScript;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.concurrent.Callable;
 
-public class Main {
-
-    private static Path mainPath = Path.of("../groovy/main.groovy").toAbsolutePath().normalize();
+@CommandLine.Command(name = "dsl", mixinStandardHelpOptions = true,
+        subcommands = {
+                CompileScript.class,
+                TestScript.class,
+                DocsScript.class,
+                ReportScript.class
+        }
+)
+public class Main implements Callable<Integer> {
+    private static CompilerConfiguration cc;
+    private static GroovyShell sh;
+    private static final String scriptsFolder = "src\\main\\groovy\\";
 
     public static void main(String[] args) throws IOException {
-        CompilerConfiguration cc = new CompilerConfiguration();
+        cc = new CompilerConfiguration();
         cc.setScriptBaseClass(DelegatingScript.class.getName()); // благодаря этой настройке все создаваемые groovy скрипты будут наследоваться от DelegatingScript
-        GroovyShell sh = new GroovyShell(Main.class.getClassLoader(), new Binding(), cc);
+        sh = new GroovyShell(Main.class.getClassLoader(), new Binding(), cc);
 
-        Scanner inputScanner = new Scanner(System.in);
-        CommandsEnum command = INIT;
-
-        while (command != EXIT) {
-            command = parseInput(inputScanner.nextLine());
-
-            DelegatingScript script = (DelegatingScript)sh.parse(mainPath.toFile());
-            script.setDelegate(inputScanner.nextLine());
-            script.run();
-            System.out.println(config.toString());
-        }
+        DelegatingScript script = (DelegatingScript) sh.parse(new File(scriptsFolder + "config.groovy"));
+        GroupConfig config = new GroupConfig(); // наш бин с конфигурацией
+        script.setDelegate(config);
+        System.out.println(config);
+        //int exitCode = new CommandLine(new Main()).execute(args);
+        //System.exit(exitCode);
     }
 
-    private static CommandsEnum parseInput(String input) {
-        List<String> args = Arrays.stream(input.trim().split(" ")).toList();
-        switch (args.get(0)) {
-            case "init" -> {
-
-            }
-            case "help" -> {
-
-            }
-            case "create-table" -> {
-
-            }
-            case "add-student" -> {
-
-            }
-            case "add-task" -> {
-
-            }
-            default -> {
-                System.out.println("No such command!");
-            }
-        }
+    @Override
+    public Integer call() throws Exception {
+        return null;
     }
 }

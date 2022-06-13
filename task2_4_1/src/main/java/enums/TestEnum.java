@@ -3,6 +3,5 @@ package enums;
 public enum TestEnum {
     NONE,
     PASSED,
-    NOT_PASSED,
-    SKIPPED
+    NOT_PASSED
 }
